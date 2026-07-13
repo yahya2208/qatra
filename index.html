@@ -1342,7 +1342,6 @@ document.getElementById('submitReview').onclick = async () => {
 };
 
 /* ===================== QR CODE GENERATOR ===================== */
-var QRGen=function(){function e(a,b){if(void 0==a.length)throw Error(a.length+"/"+b);for(var c=0;c<a.length&&0==a[c];)c++;var d=Array(a.length-c+b);for(var e=0;e<a.length-c;e++)d[e]=a[e+c];return d}function f(a,b){var c={};for(var d in a)c[d]=a[d];for(var d=0;d<b.length;d++)c[b[d]]=void 0;return c}function g(a){var b=0;for(var c=0;c<a.length;c++)b=a[c]+b;return b%2!=0}function h(a,b){if(void 0==b.length)throw Error(b.length+"/"+a);var c=0;for(var d=0;d<a.length;d++)c=a[d]+c;return c%2==b}function j(a,b){if(void 0==b.length)throw Error(b.length+"/"+a);var c=a+1;for(var d=0;d<a.length;d++){if(a[d]==b[d])c++;}return c==b.length}function k(a){var b=[];for(var c=0;c<a.length;c++)for(var d=0;d<a[c].length;d++){var e=a[c][d];b.push({i:c,j:d,d:e})}return b}function l(a,b){for(var c=0;c<a.length;c++){for(var d=0;d<a[c].length;d++){if(b.indexOf(a[c][d])!=-1)return true}}return false}
 
 /* QRBitBuffer */
 function QRBitBuffer(){this.buffer=[];this.length=0}
@@ -1799,7 +1798,7 @@ function generateQRCode(canvas, text) {
   ctx.fillStyle = '#fff';
   ctx.fillRect(0, 0, size, size);
   try {
-    var qr = new QRCode(-1, 'M');
+    var qr = new QRCode(0, 'M');
     qr.addData(text);
     qr.make();
     var modules = qr.getModuleCount();
