@@ -1345,7 +1345,7 @@ document.getElementById('submitReview').onclick = async () => {
 
 /* QRBitBuffer */
 function QRBitBuffer(){this.buffer=[];this.length=0}
-QRBitBuffer.prototype={getLength:function(){return this.length},getBuffer:function(){for(var a=[],b=0,c=this.buffer.length;b<c;b++){for(var d=7;d>=0;d--)a.push((this.buffer[b]>>>d&1)==1)}return a},put:function(a,b){for(var c=0;c<b;c++)this.putBit(((a>>>b-c-1&1)==1))},get:function(a){return((this.buffer[a>>3]>>>7-a%8&1)==1)},putBit:function(a){var b=this.length>>3;if(this.buffer.length<=b)this.buffer.push(0);if(a)this.buffer[b]|=(128>>>this.length%8);this.length++}};
+QRBitBuffer.prototype={getLength:function(){return this.length},getLengthInBits:function(){return this.length},getBuffer:function(){for(var a=[],b=0,c=this.buffer.length;b<c;b++){for(var d=7;d>=0;d--)a.push((this.buffer[b]>>>d&1)==1)}return a},put:function(a,b){for(var c=0;c<b;c++)this.putBit(((a>>>b-c-1&1)==1))},get:function(a){return((this.buffer[a>>3]>>>7-a%8&1)==1)},putBit:function(a){var b=this.length>>3;if(this.buffer.length<=b)this.buffer.push(0);if(a)this.buffer[b]|=(128>>>this.length%8);this.length++}};
 
 /* QRNumber */
 function QRNumber(a){this.mode=1;this.data=a}
