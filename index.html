@@ -352,6 +352,15 @@ color:var(--amber);font-size:12px;text-align:center;position:relative;z-index:1;
 .about-stat-num{font-size:22px;font-weight:900;font-family:'Orbitron';color:var(--cyan)}
 .about-stat-label{font-size:11.5px;color:var(--muted);margin-top:2px}
 .about-cta{margin-top:18px!important;font-size:16px!important;padding:16px!important}
+.poster-modal{max-width:420px!important;padding:14px 14px 18px!important}
+.poster-wrap{border-radius:14px;overflow:hidden;border:1px solid var(--border);margin-bottom:14px;background:#000}
+.poster-wrap canvas{width:100%;height:auto;display:block}
+.poster-actions{display:flex;gap:8px}
+.poster-dl,.poster-print{flex:1;font-size:13px!important;padding:12px 10px!important;border-radius:var(--radius-sm)!important;border:none;cursor:pointer;font-weight:700;transition:all .2s}
+.poster-dl{background:linear-gradient(135deg,var(--red),var(--red2));color:#fff}
+.poster-dl:hover{box-shadow:var(--glow-red)}
+.poster-print{background:var(--glass2);color:var(--cyan);border:1px solid var(--border)!important;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.poster-print:hover{box-shadow:var(--glow-cyan);border-color:rgba(0,229,255,0.4)!important}
 .brand-clickable{cursor:pointer;transition:transform .2s}
 .brand-clickable:hover{transform:scale(1.05)}
 .brand-clickable:active{transform:scale(0.97)}
@@ -585,15 +594,17 @@ border-radius:var(--radius);font-size:13px;color:var(--amber);line-height:1.7;
 
 <!-- Poster/QR Modal -->
 <div class="overlay" id="overlayPoster">
-  <div class="modal">
+  <div class="modal poster-modal">
     <div class="modal-head">
       <h2 data-i18n="posterModalTitle">ملصق QR للطباعة 🖨️</h2>
       <button class="close-x" data-close="overlayPoster">✕</button>
     </div>
-    <div class="qr-box">
-      <canvas id="qrCanvas" width="280" height="280" style="width:200px;height:200px;border-radius:14px;border:1px solid var(--border);background:#fff;padding:6px"></canvas>
-      <p style="margin-top:10px;font-weight:800;font-size:15px" data-i18n="posterCaption">تبرع بالدم ينقّي جسمك ويُطيل عمرك 🩸</p>
-      <p style="font-size:11.5px;color:var(--muted);margin-top:4px" data-i18n="posterHint">امسح الرمز وسجّل كمتبرع الآن — كن سبب في إنقاذ حياة</p>
+    <div class="poster-wrap">
+      <canvas id="posterCanvas" width="1080" height="1920"></canvas>
+    </div>
+    <div class="poster-actions">
+      <button class="submit-btn poster-dl" id="btnDownloadPoster" onclick="downloadPoster()">📥 تحميل كصورة JPEG</button>
+      <button class="submit-btn poster-print" id="btnPrintPoster" onclick="printPoster()">🖨️ طباعة مباشرة</button>
     </div>
   </div>
 </div>
@@ -787,6 +798,8 @@ const T = {
     posterModalTitle:"ملصق QR للطباعة 🖨️",
     posterCaption:"تبرع بالدم ينقّي جسمك ويُطيل عمرك 🩸",
     posterHint:"امسح الرمز وسجّل كمتبرع الآن — كن سبب في إنقاذ حياة",
+    posterDownload:"📥 تحميل كصورة JPEG",
+    posterPrint:"🖨️ طباعة مباشرة",
     alertFillRequired:"الرجاء تعبئة الاسم ورقم الهاتف وزمرة الدم والولاية والبلدية",
     alertSuggestEmpty:"الرجاء كتابة اقتراحك",
     loadingDonors:"جارٍ تحميل قائمة المتبرعين...",
@@ -838,6 +851,8 @@ const T = {
     posterModalTitle:"Printable QR Poster 🖨️",
     posterCaption:"Donating blood purifies your body and extends your life 🩸",
     posterHint:"Scan the code and register as a donor now — be the reason for saving a life",
+    posterDownload:"📥 Download as JPEG",
+    posterPrint:"🖨️ Print directly",
     alertFillRequired:"Please fill in name, phone, blood type, wilaya and commune",
     alertSuggestEmpty:"Please write your suggestion",
     loadingDonors:"Loading donor list...",
@@ -1343,42 +1358,200 @@ document.getElementById('submitReview').onclick = async () => {
   btn.disabled = false;
 };
 
-/* ===================== QR CODE (via libs/qrcode.js) ===================== */
-function generateQRCode(canvas, text) {
-  const ctx = canvas.getContext('2d');
-  const size = canvas.width;
-  ctx.clearRect(0, 0, size, size);
-  ctx.fillStyle = '#fff';
-  ctx.fillRect(0, 0, size, size);
+/* ===================== POSTER (via libs/qrcode.js) ===================== */
+if (!CanvasRenderingContext2D.prototype.roundRect) {
+  CanvasRenderingContext2D.prototype.roundRect = function(x, y, w, h, radii) {
+    var r = typeof radii === 'number' ? radii : (radii && radii[0]) || 0;
+    this.moveTo(x + r, y);
+    this.arcTo(x + w, y, x + w, y + h, r);
+    this.arcTo(x + w, y + h, x, y + h, r);
+    this.arcTo(x, y + h, x, y, r);
+    this.arcTo(x, y, x + w, y, r);
+    this.closePath();
+  };
+}
+function generatePoster(canvas, url) {
+  var ctx = canvas.getContext('2d');
+  var W = canvas.width, H = canvas.height;
+  ctx.clearRect(0, 0, W, H);
+
+  /* background */
+  var bg = ctx.createLinearGradient(0, 0, 0, H);
+  bg.addColorStop(0, '#05060B'); bg.addColorStop(0.5, '#0A0E1C'); bg.addColorStop(1, '#111630');
+  ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H);
+
+  /* grid overlay */
+  ctx.strokeStyle = 'rgba(255,255,255,0.018)'; ctx.lineWidth = 1;
+  for (var x = 0; x < W; x += 44) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke(); }
+  for (var y = 0; y < H; y += 44) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
+
+  var cx = W / 2, pad = 70;
+  var lang = currentLang || 'ar';
+  var isAR = lang === 'ar';
+
+  /* blood droplet */
+  ctx.save();
+  ctx.translate(cx, 130);
+  ctx.scale(2.8, 2.8);
+  var dg = ctx.createLinearGradient(0, -30, 0, 60);
+  dg.addColorStop(0, '#FF1B4C'); dg.addColorStop(1, '#cc0000');
+  ctx.fillStyle = dg;
+  ctx.beginPath(); ctx.moveTo(0, -30); ctx.bezierCurveTo(38, 10, 38, 30, 0, 55);
+  ctx.bezierCurveTo(-38, 30, -38, 10, 0, -30); ctx.closePath(); ctx.fill();
+  ctx.fillStyle = 'rgba(255,255,255,0.18)';
+  ctx.beginPath(); ctx.ellipse(-8, 10, 5, 12, -0.2, 0, Math.PI * 2); ctx.fill();
+  ctx.restore();
+
+  /* brand name */
+  ctx.fillStyle = '#FF1B4C'; ctx.font = '900 82px Cairo, Tajawal, sans-serif';
+  ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  ctx.fillText(isAR ? 'قطرة' : 'Qatra', cx, 250);
+
+  /* tagline */
+  ctx.fillStyle = '#00E5FF'; ctx.font = '700 30px Cairo, Rajdhani, sans-serif';
+  ctx.fillText(isAR ? 'تبرعك يُنقّي جسمك ويُنقذ حياة' : 'Your donation purifies & saves lives', cx, 310);
+
+  /* divider */
+  var divg = ctx.createLinearGradient(cx - 80, 0, cx + 80, 0);
+  divg.addColorStop(0, 'transparent'); divg.addColorStop(0.5, '#FF5D8F'); divg.addColorStop(1, 'transparent');
+  ctx.strokeStyle = divg; ctx.lineWidth = 3;
+  ctx.beginPath(); ctx.moveTo(cx - 80, 355); ctx.lineTo(cx + 80, 355); ctx.stroke();
+
+  /* QR code */
+  var qrSize = 340, qrMargin = 30;
   try {
     var qr = qrcode(0, 'M');
-    qr.addData(text);
-    qr.make();
-    var modCount = qr.getModuleCount();
-    var margin = 20;
-    var cellSize = (size - margin * 2) / modCount;
-    var offset = (size - cellSize * modCount) / 2;
+    qr.addData(url); qr.make();
+    var mc = qr.getModuleCount();
+    var cell = (qrSize - qrMargin * 2) / mc;
+    var off = (qrSize - cell * mc) / 2;
+    var qx = cx - qrSize / 2, qy = 395;
+
+    /* QR white bg */
+    ctx.fillStyle = '#ffffff';
+    ctx.beginPath();
+    ctx.roundRect(qx - 16, qy - 16, qrSize + 32, qrSize + 32, 20);
+    ctx.fill();
+
     ctx.fillStyle = '#cc0000';
-    for (var r = 0; r < modCount; r++) {
-      for (var c = 0; c < modCount; c++) {
+    for (var r = 0; r < mc; r++) {
+      for (var c = 0; c < mc; c++) {
         if (qr.isDark(r, c)) {
-          ctx.fillRect(offset + c * cellSize, offset + r * cellSize, cellSize + 0.5, cellSize + 0.5);
+          ctx.fillRect(qx + off + c * cell, qy + off + r * cell, cell + 0.5, cell + 0.5);
         }
       }
     }
-  } catch(e) {
-    ctx.fillStyle = '#cc0000';
-    ctx.font = '14px Cairo, sans-serif';
+  } catch(e) { console.error('QR render error:', e); }
+
+  /* scan hint */
+  ctx.fillStyle = '#6B7BA0'; ctx.font = '600 22px Cairo, Rajdhani, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText(isAR ? 'امسح الرمز وسجّل كمتبرع' : 'Scan & register as a donor', cx, 790);
+
+  /* motivational messages */
+  var msgs = [
+    { key: 'aboutMessage1', highlight: false },
+    { key: 'aboutMessage2', highlight: true },
+    { key: 'aboutMessage3', highlight: false }
+  ];
+  var msgY = 860;
+  msgs.forEach(function(m) {
+    var txt = t(m.key);
+    ctx.font = (m.highlight ? '800 26px' : '500 24px') + ' Cairo, Tajawal, sans-serif';
     ctx.textAlign = 'center';
-    ctx.fillText('QR Error: ' + e.message, size/2, size/2);
-    console.error('QR generate error:', e);
-  }
+    if (m.highlight) {
+      ctx.fillStyle = 'rgba(255,27,76,0.08)';
+      ctx.beginPath(); ctx.roundRect(pad - 10, msgY - 20, W - pad * 2 + 20, 130, 16); ctx.fill();
+      ctx.strokeStyle = 'rgba(255,27,76,0.2)'; ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.roundRect(pad - 10, msgY - 20, W - pad * 2 + 20, 130, 16); ctx.stroke();
+      ctx.fillStyle = '#FF5D8F';
+    } else {
+      ctx.fillStyle = '#EAF0FB';
+    }
+    wrapText(ctx, txt, cx, msgY + 30, W - pad * 2, 38);
+    msgY += m.highlight ? 165 : 140;
+  });
+
+  /* stats row */
+  var statY = msgY + 30;
+  ctx.strokeStyle = 'rgba(255,255,255,0.08)'; ctx.lineWidth = 1;
+  ctx.setLineDash([6, 4]);
+  ctx.beginPath(); ctx.moveTo(pad + 40, statY); ctx.lineTo(W - pad - 40, statY); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(pad + 40, statY + 100); ctx.lineTo(W - pad - 40, statY + 100); ctx.stroke();
+  ctx.setLineDash([]);
+
+  var statCount = document.getElementById('heroCount').textContent || '0';
+  var stats = [
+    { num: statCount, label: t('aboutStatDonors') },
+    { num: '58', label: t('aboutStatWilayas') },
+    { num: '1541', label: t('aboutStatCommunes') }
+  ];
+  var statGap = (W - pad * 2) / stats.length;
+  stats.forEach(function(s, i) {
+    var sx = pad + statGap * i + statGap / 2;
+    ctx.fillStyle = '#00E5FF'; ctx.font = '900 40px Orbitron, Rajdhani, sans-serif';
+    ctx.textAlign = 'center'; ctx.fillText(s.num, sx, statY + 50);
+    ctx.fillStyle = '#6B7BA0'; ctx.font = '500 20px Cairo, Rajdhani, sans-serif';
+    ctx.fillText(s.label, sx, statY + 82);
+  });
+
+  /* CTA */
+  var ctaY = statY + 150;
+  var ctaGrad = ctx.createLinearGradient(cx - 160, 0, cx + 160, 0);
+  ctaGrad.addColorStop(0, '#FF1B4C'); ctaGrad.addColorStop(1, '#FF5D8F');
+  ctx.fillStyle = ctaGrad;
+  ctx.beginPath(); ctx.roundRect(cx - 170, ctaY, 340, 64, 32); ctx.fill();
+  ctx.fillStyle = '#ffffff'; ctx.font = '800 26px Cairo, Rajdhani, sans-serif';
+  ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  ctx.fillText(isAR ? '🩸 سجّل كمتبرع الآن' : '🩸 Register as donor now', cx, ctaY + 32);
+
+  /* footer */
+  ctx.fillStyle = '#4A5678'; ctx.font = '400 18px Cairo, Rajdhani, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText(isAR ? 'qatra.app — دليل المتبرعين بالدم' : 'qatra.app — Blood Donor Directory', cx, H - 50);
 }
+
+function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
+  var words = text.split(' ');
+  var line = '';
+  var lines = [];
+  for (var i = 0; i < words.length; i++) {
+    var test = line + words[i] + ' ';
+    if (ctx.measureText(test).width > maxWidth && line !== '') {
+      lines.push(line.trim()); line = words[i] + ' ';
+    } else { line = test; }
+  }
+  lines.push(line.trim());
+  var startY = y - ((lines.length - 1) * lineHeight) / 2;
+  lines.forEach(function(l, idx) {
+    ctx.fillText(l, x, startY + idx * lineHeight);
+  });
+}
+
 function showQR() {
   try {
-    generateQRCode(document.getElementById('qrCanvas'), window.location.href);
+    generatePoster(document.getElementById('posterCanvas'), window.location.href);
   } catch(e) { console.error(e); }
   openModal('overlayPoster');
+}
+
+function downloadPoster() {
+  var canvas = document.getElementById('posterCanvas');
+  canvas.toBlob(function(blob) {
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'qatra-poster-' + Date.now() + '.jpeg';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    URL.revokeObjectURL(a.href);
+  }, 'image/jpeg', 0.92);
+}
+
+function printPoster() {
+  var canvas = document.getElementById('posterCanvas');
+  var dataURL = canvas.toDataURL('image/jpeg', 0.95);
+  var w = window.open('', '_blank');
+  w.document.write('<!DOCTYPE html><html><head><title>Qatra Poster</title><style>@page{size:A4 portrait;margin:0}body{margin:0;display:flex;justify-content:center;align-items:center;min-height:100vh;background:#fff}img{max-width:100%;max-height:100vh}</style></head><body><img src="' + dataURL + '" onload="window.print();window.close()"></body></html>');
+  w.document.close();
 }
 document.querySelector('.footer-note').onclick = (e) => { if (e.target.closest('.footer-note')) showQR(); };
 
