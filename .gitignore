@@ -1,0 +1,7 @@
+.git/
+*.json
+*.txt
+setup_all.sql
+schema.sql
+seed_communes.sql
+communes_data.js
