@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>قطرة | Qatra — دليل المتبرعين بالدم</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' style='stop-color:%23ff4444'/><stop offset='100%25' style='stop-color:%23cc0000'/></linearGradient></defs><path d='M50 5 C50 5,85 45,85 62 C85 82,68 95,50 95 C32 95,15 82,15 62 C15 45,50 5,50 5Z' fill='url(%23g)'/></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800;900&family=Rajdhani:wght@400;500;600;700&family=Tajawal:wght@400;500;700;800;900&family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -335,6 +336,75 @@ color:var(--amber);font-size:12px;text-align:center;position:relative;z-index:1;
 .container{max-width:560px}
 .hero h1{font-size:30px}
 }
+.about-modal{padding:0!important;overflow:hidden}
+.about-content{padding:36px 24px 28px;text-align:center}
+.about-droplet{margin:0 auto 16px;width:80px;animation:aboutFloat 3s ease-in-out infinite}
+.about-droplet svg{width:100%;filter:drop-shadow(0 0 30px rgba(255,27,76,0.5))}
+@keyframes aboutFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.about-brand{font-size:42px;font-weight:900;background:linear-gradient(135deg,#ff3030,#ff6b6b);-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:4px}
+.about-tagline{font-size:16px;color:var(--cyan);font-weight:700;margin-bottom:18px}
+.about-divider{width:60px;height:2px;background:linear-gradient(90deg,transparent,var(--red2),transparent);margin:0 auto 18px}
+.about-message{font-size:14.5px;color:var(--ink);line-height:1.85;margin-bottom:14px}
+.about-message.highlight{font-size:15.5px;font-weight:800;color:var(--red2);padding:14px;background:rgba(255,27,76,0.06);border-radius:var(--radius);border:1px solid rgba(255,27,76,0.15)}
+.about-stats-row{display:flex;justify-content:center;gap:24px;margin:20px 0;padding:14px 0;border-top:1px dashed var(--border);border-bottom:1px dashed var(--border)}
+.about-stat-num{font-size:22px;font-weight:900;font-family:'Orbitron';color:var(--cyan)}
+.about-stat-label{font-size:11.5px;color:var(--muted);margin-top:2px}
+.about-cta{margin-top:18px!important;font-size:16px!important;padding:16px!important}
+.brand-clickable{cursor:pointer;transition:transform .2s}
+.brand-clickable:hover{transform:scale(1.05)}
+.brand-clickable:active{transform:scale(0.97)}
+.fb-btn{
+  background:rgba(24,119,242,0.1);color:#1877F2;
+  border:1px solid rgba(24,119,242,0.3);
+}
+.fb-btn:hover{background:rgba(24,119,242,0.2)}
+.fb-link{
+  display:inline-flex;align-items:center;gap:5px;
+  color:#1877F2;font-size:12px;font-weight:600;text-decoration:none;
+  margin-top:4px;
+}
+.fb-link:hover{text-decoration:underline}
+.rating-bar{
+display:flex;align-items:center;gap:10px;justify-content:center;
+margin:12px 0 4px;cursor:pointer;
+}
+.rating-bar .star-icon{font-size:24px;color:rgba(255,255,255,0.12);transition:color .15s,transform .15s}
+.rating-bar .star-icon.lit{color:#ffd166;text-shadow:0 0 8px rgba(255,209,102,0.5)}
+.rating-bar .star-icon:hover{transform:scale(1.2)}
+.rating-summary{display:flex;align-items:center;gap:6px;justify-content:center;font-size:12px;color:var(--muted);margin-bottom:4px}
+.rating-summary b{color:#ffd166;font-family:'Orbitron'}
+.rating-stars-display{display:flex;gap:2px;justify-content:center}
+.rating-stars-display .sd{font-size:14px;color:rgba(255,255,255,0.12)}
+.rating-stars-display .sd.lit{color:#ffd166}
+.rating-toast{
+position:fixed;top:20px;left:50%;transform:translateX(-50%);
+background:linear-gradient(135deg,#ffd166,#ff9f43);color:#1a1a2e;
+padding:12px 24px;border-radius:999px;font-weight:700;font-size:13px;
+z-index:200;opacity:0;transition:opacity .3s;pointer-events:none;
+box-shadow:0 4px 20px rgba(255,209,102,0.4);
+}
+.rating-toast.show{opacity:1}
+.review-section{margin-top:8px}
+.review-section .review-title{font-size:12px;color:var(--muted);font-weight:600;margin-bottom:8px;text-align:center}
+.review-card{
+background:var(--glass);border:1px solid var(--border);border-radius:var(--radius-sm);
+padding:10px 12px;margin-bottom:8px;
+}
+.review-card .rc-stars{color:#ffd166;font-size:12px;margin-bottom:4px}
+.review-card .rc-text{font-size:12.5px;color:var(--ink);line-height:1.6}
+.review-card .rc-date{font-size:10.5px;color:var(--muted2);margin-top:4px}
+.review-prompt{
+text-align:center;margin-top:8px;padding:12px;
+background:rgba(255,209,102,0.05);border:1px dashed rgba(255,209,102,0.25);
+border-radius:var(--radius);font-size:12px;color:var(--amber);cursor:pointer;
+transition:all .18s;
+}
+.review-prompt:hover{background:rgba(255,209,102,0.1);border-color:rgba(255,209,102,0.4)}
+.review-prompt-msg{
+text-align:center;padding:12px;margin-bottom:12px;
+background:rgba(255,209,102,0.05);border:1px dashed rgba(255,209,102,0.25);
+border-radius:var(--radius);font-size:13px;color:var(--amber);line-height:1.7;
+}
 </style>
 </head>
 <body>
@@ -347,16 +417,25 @@ color:var(--amber);font-size:12px;text-align:center;position:relative;z-index:1;
 </button>
 
 <div id="configBanner" class="config-banner" style="display:none"></div>
+<div class="rating-toast" id="ratingToast"></div>
 
 <div class="container">
   <div class="hero">
-    <div class="brand">
+    <div class="brand brand-clickable" id="brandAbout">
       <div class="drop-logo"></div>
       <div class="brand-name" data-i18n="brand">قطرة</div>
     </div>
     <h1 data-i18n="heroTitle">ابحث عن متبرع بزمرتك في ثوانٍ</h1>
     <p data-i18n="heroSubtitle">دليل مجتمعي مباشر للمتبرعين بالدم — اختر الولاية والزمرة، واتصل مباشرة بأقرب متبرع.</p>
     <div class="stat-pill">🩸 <b id="heroCount">0</b> <span data-i18n="heroStatSuffix">متبرع مسجل</span></div>
+    <div class="rating-summary" id="ratingSummary"></div>
+    <div class="rating-bar" id="ratingBar">
+      <span class="star-icon" data-star="1">★</span>
+      <span class="star-icon" data-star="2">★</span>
+      <span class="star-icon" data-star="3">★</span>
+      <span class="star-icon" data-star="4">★</span>
+      <span class="star-icon" data-star="5">★</span>
+    </div>
     <div class="ekg-wrap">
       <svg viewBox="0 0 340 40" preserveAspectRatio="none">
         <path class="ekg-line" d="M0,20 L50,20 L65,4 L80,36 L95,20 L130,20 L145,8 L160,32 L175,20 L340,20"/>
@@ -385,6 +464,11 @@ color:var(--amber);font-size:12px;text-align:center;position:relative;z-index:1;
   <div class="results">
     <div class="results-count" id="resultsCount"></div>
     <div id="donorList"></div>
+    <div class="review-section" id="reviewSection">
+      <div class="review-title" data-i18n="reviewTitle">💬 ماذا يقول المستخدمون</div>
+      <div id="reviewList"></div>
+      <div class="review-prompt" id="reviewPrompt" data-i18n="reviewPrompt">هل استفدت من التطبيق؟ شارك تجربتك وشجع الآخرين!</div>
+    </div>
   </div>
 </div>
 
@@ -435,6 +519,9 @@ color:var(--amber);font-size:12px;text-align:center;position:relative;z-index:1;
         <span data-i18n="neverDonatedLabel">لم يسبق لي التبرع</span>
       </div>
 
+      <label data-i18n="labelFacebook" style="display:flex;align-items:center;gap:6px">🔗 فيسبوك <span style="font-weight:400;color:var(--muted);font-size:11px" data-i18n="optionalLabel">(اختياري)</span></label>
+      <input type="url" id="fFacebook" placeholder="https://facebook.com/username" dir="ltr" style="text-align:left">
+
       <button class="submit-btn" id="submitRegister" data-i18n="submitRegister">تسجيل بياناتي</button>
     </div>
     <div class="success-box" id="registerSuccess" style="display:none">
@@ -444,6 +531,7 @@ color:var(--amber);font-size:12px;text-align:center;position:relative;z-index:1;
       <div data-i18n="successCountSuffix" style="margin-top:-4px">متبرع منقذ</div>
       <div style="margin-top:8px;color:var(--muted);font-size:12.5px" data-i18n="successShareHint">شارك التطبيق لزيادة فرص إنقاذ الأرواح</div>
       <button class="share-link-btn" id="shareBtn" data-i18n="shareBtn">نسخ رابط المشاركة</button>
+      <div class="review-prompt" onclick="closeModal('overlayRegister');document.getElementById('reviewPrompt').click();" style="margin-top:12px" data-i18n="reviewAfterRegister">💬 هل حصلت على الزمرة التي تبحث عنها؟ شارك تجربتك!</div>
     </div>
   </div>
 </div>
@@ -501,6 +589,81 @@ color:var(--amber);font-size:12px;text-align:center;position:relative;z-index:1;
       <img id="qrImg" src="" alt="QR Code">
       <p style="margin-top:10px;font-weight:800;font-size:15px" data-i18n="posterCaption">امسح الرمز وكن سبب إنقاذ حياة 🩸</p>
       <p style="font-size:11.5px;color:var(--muted);margin-top:4px" data-i18n="posterHint">اطبع هذا الرمز وضعه في أي مكان</p>
+    </div>
+  </div>
+</div>
+
+<!-- About / Mission Modal -->
+<div class="overlay" id="overlayAbout">
+  <div class="modal about-modal">
+    <button class="close-x" data-close="overlayAbout" style="position:absolute;top:14px;left:14px;z-index:2">✕</button>
+    <div class="about-content">
+      <div class="about-droplet">
+        <svg viewBox="0 0 120 160" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="aboutGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#ff4444"/>
+              <stop offset="100%" style="stop-color:#cc0000"/>
+            </linearGradient>
+          </defs>
+          <path d="M60 8 C60 8, 110 65, 110 90 C110 120, 88 152, 60 152 C32 152, 10 120, 10 90 C10 65, 60 8, 60 8Z" fill="url(#aboutGrad)"/>
+          <ellipse cx="42" cy="80" rx="14" ry="20" fill="rgba(255,255,255,0.15)" transform="rotate(-12, 42, 80)"/>
+        </svg>
+      </div>
+      <div class="about-brand">قطرة</div>
+      <div class="about-tagline" data-i18n="aboutTagline">منقذك الشخصي في لحظة الحرج</div>
+      <div class="about-divider"></div>
+      <div class="about-message" data-i18n="aboutMessage1">
+        ربما في يوم ما تحتاج إلى جرعة دم عاجلة — لنفسك، لطفلك، لحبيبك. في تلك اللحظة، لا تريد أن تبحث. تريد أن تجد.
+      </div>
+      <div class="about-message highlight" data-i18n="aboutMessage2">
+        قطرة هنا من أجلك. ليس فقط لتُنقذ الآخرين — بل لتكون أنت أيضًا تحت الحماية.
+      </div>
+      <div class="about-stats-row">
+        <div class="about-stat">
+          <div class="about-stat-num" id="aboutDonorCount">0</div>
+          <div class="about-stat-label" data-i18n="aboutStatDonors">متبرع مسجل</div>
+        </div>
+        <div class="about-stat">
+          <div class="about-stat-num">58</div>
+          <div class="about-stat-label" data-i18n="aboutStatWilayas">ولاية</div>
+        </div>
+        <div class="about-stat">
+          <div class="about-stat-num">1541</div>
+          <div class="about-stat-label" data-i18n="aboutStatCommunes">بلدية</div>
+        </div>
+      </div>
+      <div class="about-message" data-i18n="aboutMessage3">
+        سجّل الآن كمتبرع — قد تنقذ حياتك أنت أو أحد أحبائك غدًا. معًا نصنع شبكة إنقاذ حقيقية.
+      </div>
+      <button class="submit-btn about-cta" id="aboutRegisterBtn" data-i18n="aboutCta">🩸 سجّل كمتبرع الآن</button>
+    </div>
+  </div>
+</div>
+
+<!-- Review Modal -->
+<div class="overlay" id="overlayReview">
+  <div class="modal">
+    <div class="modal-head">
+      <h2 data-i18n="reviewModalTitle">شارك تجربتك 💬</h2>
+      <button class="close-x" data-close="overlayReview">✕</button>
+    </div>
+    <div id="reviewFormWrap">
+      <div class="review-prompt-msg" data-i18n="reviewPromptMsg">💬 هل وجدت المتبرع الذي تبحث عنه؟ ترك تعليقك يشجع الآخرين على التسجيل ويساعد في إنقاذ أرواح!</div>
+      <div class="rating-bar" id="ratingBarModal" style="margin:16px 0">
+        <span class="star-icon" data-star="1">★</span>
+        <span class="star-icon" data-star="2">★</span>
+        <span class="star-icon" data-star="3">★</span>
+        <span class="star-icon" data-star="4">★</span>
+        <span class="star-icon" data-star="5">★</span>
+      </div>
+      <label data-i18n="labelReviewComment">تعليقك <span style="font-weight:400;color:var(--muted);font-size:11px" data-i18n="optionalLabel2">(اختياري)</span></label>
+      <textarea id="fReviewComment" data-i18n-ph="phReview" placeholder="اكتب تجربتك هنا... ساعد الآخرين بتعليقك!" rows="3"></textarea>
+      <button class="submit-btn" id="submitReview" data-i18n="submitReview">إرسال التقييم</button>
+    </div>
+    <div class="success-box" id="reviewSuccess" style="display:none">
+      <div class="drop-logo"></div>
+      <div data-i18n="reviewSuccessText">شكرًا لك! تقييمك يساعد في إنقاذ أرواح 🙏</div>
     </div>
   </div>
 </div>
@@ -629,7 +792,21 @@ const T = {
     loadingDonors:"جارٍ تحميل قائمة المتبرعين...",
     errorGeneric:"حدث خطأ، الرجاء المحاولة مجددًا",
     configWarning:"⚠️ لم يتم ربط قاعدة البيانات بعد. أضف بيانات Supabase في الكود لتفعيل التسجيل والبحث.",
-    km:"كم"
+    km:"كم",
+    aboutTagline:"منقذك الشخصي في لحظة الحرج",
+    aboutMessage1:"ربما في يوم ما تحتاج إلى جرعة دم عاجلة — لنفسك، لطفلك، لحبيبك. في تلك اللحظة، لا تريد أن تبحث. تريد أن تجد.",
+    aboutMessage2:"قطرة هنا من أجلك. ليس فقط لتُنقذ الآخرين — بل لتكون أنت أيضًا تحت الحماية.",
+    aboutStatDonors:"متبرع مسجل", aboutStatWilayas:"ولاية", aboutStatCommunes:"بلدية",
+    aboutMessage3:"سجّل الآن كمتبرع — قد تنقذ حياتك أنت أو أحد أحبائك غدًا. معًا نصنع شبكة إنقاذ حقيقية.",
+    aboutCta:"🩸 سجّل كمتبرع الآن",
+    labelFacebook:"فيسبوك", optionalLabel:"(اختياري)",
+    reviewTitle:"ماذا يقول المستخدمون", reviewPrompt:"هل استفدت من التطبيق؟ شارك تجربتك وشجع الآخرين!",
+    reviewModalTitle:"شارك تجربتك 💬", reviewPromptMsg:"💬 هل وجدت المتبرع الذي تبحث عنه؟ ترك تعليقك يشجع الآخرين على التسجيل ويساعد في إنقاذ أرواح!",
+    labelReviewComment:"تعليقك", optionalLabel2:"(اختياري)",
+    phReview:"اكتب تجربتك هنا... ساعد الآخرين بتعليقك!", submitReview:"إرسال التقييم",
+    reviewSuccessText:"شكرًا لك! تقييمك يساعد في إنقاذ أرواح 🙏",
+    ratingSuccess:"شكراً لتقييمك! ⭐", ratingFailed:"حدث خطأ، حاول مرة أخرى",
+    ratingCountSuffix:"تقييم", ratingSelectStars:"الرجاء اختيار عدد النجوم"
   },
   en: {
     brand:"Qatra", heroTitle:"Find a blood donor in seconds",
@@ -666,7 +843,21 @@ const T = {
     loadingDonors:"Loading donor list...",
     errorGeneric:"Something went wrong, please try again",
     configWarning:"⚠️ Database not connected. Add Supabase credentials in the code to enable registration and search.",
-    km:"km"
+    km:"km",
+    aboutTagline:"Your personal rescuer in the critical moment",
+    aboutMessage1:"Perhaps one day you'll need an urgent blood transfusion — for yourself, your child, your loved one. In that moment, you don't want to search. You want to find.",
+    aboutMessage2:"Qatra is here for you. Not just to save others — but so you too are protected.",
+    aboutStatDonors:"registered donors", aboutStatWilayas:"wilayas", aboutStatCommunes:"communes",
+    aboutMessage3:"Register now as a donor — you could save your own life or someone you love tomorrow. Together we build a real rescue network.",
+    aboutCta:"🩸 Register as donor now",
+    labelFacebook:"Facebook", optionalLabel:"(optional)",
+    reviewTitle:"What users say", reviewPrompt:"Did the app help? Share your experience!",
+    reviewModalTitle:"Share your experience 💬", reviewPromptMsg:"💬 Did you find the donor you were looking for? Leaving a comment encourages others to register and helps save lives!",
+    labelReviewComment:"Your comment", optionalLabel2:"(optional)",
+    phReview:"Write your experience here... Help others with your comment!", submitReview:"Submit rating",
+    reviewSuccessText:"Thank you! Your rating helps save lives 🙏",
+    ratingSuccess:"Thanks for rating! ⭐", ratingFailed:"Something went wrong, try again",
+    ratingCountSuffix:"ratings", ratingSelectStars:"Please select a star rating"
   }
 };
 
@@ -824,7 +1015,7 @@ async function loadDonors() {
     if (error) throw error;
     donors = (data || []).map(d => ({
       id: d.id, fullName: d.full_name, phone: d.phone, bloodType: d.blood_type,
-      wilayaCode: d.wilaya_id, communeIdx: d.commune_id,
+      wilayaCode: d.wilaya_id, communeIdx: d.commune_id, facebook: d.facebook_url || '',
       lastDonation: d.last_donation_date
     }));
   } catch (e) {
@@ -835,7 +1026,7 @@ async function loadDonors() {
 
 async function insertDonor(d) {
   const { error } = await sb.from('donors').insert([{
-    full_name: d.fullName, phone: d.phone, blood_type: d.bloodType,
+    full_name: d.fullName, phone: d.phone, blood_type: d.bloodType, facebook_url: d.facebook || null,
     wilaya_id: parseInt(d.wilayaCode), commune_id: parseInt(d.communeIdx),
     last_donation_date: d.lastDonation || null
   }]);
@@ -925,6 +1116,7 @@ function renderResults() {
         <div class="donor-actions">
           <a class="icon-btn call-btn" href="tel:${d.phone}">📞 ${t('call')}</a>
           <a class="icon-btn wa-btn" href="https://wa.me/213${d.phone.replace(/^0/,'')}" target="_blank" rel="noopener">💬 ${t('whatsapp')}</a>
+          ${d.facebook ? `<a class="icon-btn fb-btn" href="${esc(d.facebook)}" target="_blank" rel="noopener">🔗 فيسبوك</a>` : ''}
         </div>
       </div>
     </div>`;
@@ -943,6 +1135,15 @@ document.querySelectorAll('.overlay').forEach(o => {
   o.addEventListener('click', e => { if (e.target === o) o.classList.remove('show'); });
 });
 
+document.getElementById('brandAbout').onclick = () => {
+  const countEl = document.getElementById('aboutDonorCount');
+  if (countEl) countEl.textContent = donors.length || '0';
+  openModal('overlayAbout');
+};
+document.getElementById('aboutRegisterBtn').onclick = () => {
+  closeModal('overlayAbout');
+  document.getElementById('btnRegister').click();
+};
 document.getElementById('btnRegister').onclick = () => {
   document.getElementById('registerFormWrap').style.display = 'block';
   document.getElementById('registerSuccess').style.display = 'none';
@@ -977,7 +1178,8 @@ document.getElementById('submitRegister').onclick = async () => {
   btn.textContent = t('savingText'); btn.disabled = true;
 
   try {
-    await insertDonor({ fullName: name, phone, bloodType, wilayaCode, communeIdx, lastDonation });
+    const facebook = document.getElementById('fFacebook').value.trim();
+    await insertDonor({ fullName: name, phone, bloodType, wilayaCode, communeIdx, lastDonation, facebook });
     await loadDonors();
     document.getElementById('registerFormWrap').style.display = 'none';
     document.getElementById('registerSuccess').style.display = 'block';
@@ -992,6 +1194,7 @@ document.getElementById('submitRegister').onclick = async () => {
     document.getElementById('fLastDonation').value = '';
     document.getElementById('fNeverDonated').checked = false;
     document.getElementById('fLastDonation').disabled = false;
+    document.getElementById('fFacebook').value = '';
   } catch (e) {
     console.error(e); alert(t('errorGeneric'));
   } finally {
@@ -1027,6 +1230,118 @@ function copyText(text, btn) {
     setTimeout(() => btn.textContent = orig, 1500);
   }).catch(() => alert(text));
 }
+
+/* ===================== RATINGS & REVIEWS ===================== */
+let userRating = 0;
+
+async function loadRatings() {
+  if (!sb) return;
+  try {
+    const { data, error } = await sb.from('ratings').select('*').order('created_at', { ascending: false }).limit(20);
+    if (error) throw error;
+    const all = data || [];
+    const total = all.length;
+    const avg = total > 0 ? (all.reduce((s, r) => s + r.stars, 0) / total) : 0;
+    renderRatingSummary(avg, total);
+    renderReviews(all.slice(0, 10));
+  } catch (e) { console.error('loadRatings', e); }
+}
+
+function renderRatingSummary(avg, total) {
+  const el = document.getElementById('ratingSummary');
+  if (!el) return;
+  if (total === 0) { el.innerHTML = ''; return; }
+  const full = Math.round(avg);
+  let stars = '';
+  for (let i = 1; i <= 5; i++) stars += `<span class="sd${i <= full ? ' lit' : ''}">★</span>`;
+  el.innerHTML = `${stars} <b>${avg.toFixed(1)}</b> <span>(${total} ${t('ratingCountSuffix')})</span>`;
+}
+
+function renderReviews(list) {
+  const el = document.getElementById('reviewList');
+  if (!el) return;
+  if (list.length === 0) { el.innerHTML = ''; return; }
+  el.innerHTML = list.map(r => {
+    let stars = '';
+    for (let i = 1; i <= 5; i++) stars += i <= r.stars ? '★' : '☆';
+    const date = new Date(r.created_at).toLocaleDateString(currentLang === 'ar' ? 'ar-DZ' : 'en', { year: 'numeric', month: 'short', day: 'numeric' });
+    return `<div class="review-card">
+      <div class="rc-stars">${stars}</div>
+      ${r.comment ? `<div class="rc-text">${esc(r.comment)}</div>` : ''}
+      <div class="rc-date">${date}</div>
+    </div>`;
+  }).join('');
+}
+
+function setupRatingBar(containerId) {
+  const bar = document.getElementById(containerId);
+  if (!bar) return;
+  const stars = bar.querySelectorAll('.star-icon');
+  stars.forEach(s => {
+    s.onmouseenter = () => {
+      const val = parseInt(s.dataset.star);
+      stars.forEach(x => x.classList.toggle('lit', parseInt(x.dataset.star) <= val));
+    };
+    s.onclick = async () => {
+      const val = parseInt(s.dataset.star);
+      if (containerId === 'ratingBar') {
+        await submitRating(val, '');
+      } else {
+        userRating = val;
+      }
+    };
+  });
+  bar.onmouseleave = () => {
+    stars.forEach(x => x.classList.toggle('lit', parseInt(x.dataset.star) <= userRating));
+  };
+}
+
+async function submitRating(stars, comment) {
+  if (!sb) return;
+  try {
+    const { error } = await sb.from('ratings').insert([{ stars, comment: comment || null }]);
+    if (error) throw error;
+    showToast(t('ratingSuccess'));
+    userRating = stars;
+    setupRatingBar('ratingBar');
+    const stars2 = document.getElementById('ratingBar').querySelectorAll('.star-icon');
+    stars2.forEach(x => x.classList.toggle('lit', parseInt(x.dataset.star) <= stars));
+    await loadRatings();
+  } catch (e) {
+    console.error('submitRating', e);
+    showToast(t('ratingFailed'));
+  }
+}
+
+function showToast(msg) {
+  const el = document.getElementById('ratingToast');
+  if (!el) return;
+  el.textContent = msg;
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 2500);
+}
+
+document.getElementById('reviewPrompt').onclick = () => {
+  userRating = 0;
+  document.getElementById('reviewFormWrap').style.display = 'block';
+  document.getElementById('reviewSuccess').style.display = 'none';
+  document.getElementById('fReviewComment').value = '';
+  setupRatingBar('ratingBarModal');
+  openModal('overlayReview');
+};
+
+document.getElementById('submitReview').onclick = async () => {
+  if (userRating === 0) { alert(t('ratingSelectStars')); return; }
+  const comment = document.getElementById('fReviewComment').value.trim();
+  const btn = document.getElementById('submitReview');
+  btn.disabled = true;
+  try {
+    await submitRating(userRating, comment);
+    document.getElementById('reviewFormWrap').style.display = 'none';
+    document.getElementById('reviewSuccess').style.display = 'block';
+  } catch(e) { console.error(e); }
+  btn.disabled = false;
+};
 
 /* ===================== POSTER ===================== */
 document.querySelector('.footer-note').onclick = (e) => {
@@ -1083,6 +1398,9 @@ document.querySelector('.footer-note').onclick = (e) => {
   await loadDonors();
   document.getElementById('heroCount').textContent = donors.length;
   renderResults();
+  loadRatings();
+  setupRatingBar('ratingBar');
+  setupRatingBar('ratingBarModal');
 })();
 </script>
 </body>
