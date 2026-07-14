@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="حذف بياناتي — قطرة">
+<meta name="theme-color" content="#05060B">
+<meta name="robots" content="noindex, nofollow">
+<title>حذف بياناتي | Qatra — قطرة</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M50 5 C50 5,85 45,85 62 C85 82,68 95,50 95 C32 95,15 82,15 62 C15 45,50 5,50 5Z' fill='%23FF1B4C'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800;900&family=Rajdhani:wght@400;500;600;700&family=Tajawal:wght@400;500;700;800;900&family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" crossorigin="anonymous"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+--bg:#05060B;--bg2:#0A0E1C;--bg3:#111630;
+--glass:rgba(255,255,255,0.04);--glass2:rgba(255,255,255,0.07);--glass3:rgba(255,255,255,0.10);
+--border:rgba(255,255,255,0.08);--border2:rgba(255,255,255,0.14);
+--red:#FF1B4C;--red2:#FF5D8F;--red3:#FF8FB5;
+--cyan:#00E5FF;--cyan2:#00B8D4;
+--ink:#EAF0FB;--muted:#6B7BA0;--muted2:#4A5678;
+--green:#39FF9E;--amber:#FFD166;
+--radius:18px;--radius-sm:12px;
+--glow-red:0 0 24px rgba(255,27,76,0.4);--glow-cyan:0 0 20px rgba(0,229,255,0.3);
+--font-ar:'Cairo','Tajawal',sans-serif;
+--font-en:'Rajdhani','Orbitron',sans-serif;
+--font-display-ar:'Tajawal',sans-serif;
+--font-display-en:'Orbitron',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-ar);min-height:100vh;padding:16px 16px 80px;direction:rtl}
+html[dir="ltr"] body{font-family:var(--font-en);direction:ltr}
+body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,0.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.018) 1px,transparent 1px);background-size:44px 44px;mask-image:radial-gradient(ellipse at 50% 0%,black,transparent 70%);-webkit-mask-image:radial-gradient(ellipse at 50% 0%,black,transparent 70%)}
+body::after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(circle at 10% 0%,rgba(255,27,76,0.10),transparent 40%),radial-gradient(circle at 85% 10%,rgba(0,229,255,0.06),transparent 35%)}
+h1,h2,h3{font-family:var(--font-display-ar);font-weight:800}
+html[dir="ltr"] h1,html[dir="ltr"] h2,html[dir="ltr"] h3{font-family:var(--font-display-en);letter-spacing:0.3px}
+::selection{background:rgba(255,27,76,0.35);color:#fff}
+
+.lang-toggle{position:fixed;top:14px;inset-inline-end:14px;z-index:200;background:var(--glass2);border:1px solid var(--border);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);color:var(--cyan);font-weight:700;font-size:13px;padding:8px 16px;border-radius:999px;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:6px}
+.lang-toggle:hover{box-shadow:var(--glow-cyan);border-color:rgba(0,229,255,0.4)}
+.lang-toggle svg{width:16px;height:16px;fill:currentColor}
+.lang-cycle{display:flex;gap:4px}
+.lang-opt{padding:4px 8px;border-radius:6px;cursor:pointer;transition:all .15s;font-size:11px;font-weight:700}
+.lang-opt.active{background:rgba(0,229,255,0.15);color:var(--cyan)}
+.lang-opt:hover{color:var(--cyan)}
+
+.back-link{display:inline-flex;align-items:center;gap:6px;color:var(--cyan);text-decoration:none;font-size:13px;font-weight:700;margin-bottom:20px;padding:8px 14px;border-radius:var(--radius-sm);background:var(--glass);border:1px solid var(--border);transition:all .18s;position:relative;z-index:1}
+.back-link:hover{box-shadow:var(--glow-cyan);border-color:rgba(0,229,255,0.3)}
+
+.page-header{text-align:center;margin-bottom:28px;position:relative;z-index:1}
+.page-header h1{font-size:24px;margin-bottom:6px;background:linear-gradient(135deg,#fff,var(--red2),var(--red));-webkit-background-clip:text;background-clip:text;color:transparent}
+.page-header p{font-size:13px;color:var(--muted);line-height:1.6}
+
+.card{background:var(--glass);border:1px solid var(--border);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-radius:var(--radius);padding:20px;margin-bottom:16px;position:relative;z-index:1}
+
+label{display:block;font-size:13px;font-weight:700;margin-bottom:6px;color:var(--ink)}
+input[type=tel],select,textarea{width:100%;padding:12px 14px;border-radius:var(--radius-sm);border:1px solid var(--border);font-size:14px;outline:none;background:rgba(255,255,255,0.035);color:var(--ink);transition:border-color .2s,box-shadow .2s}
+html[dir="ar"] input,html[dir="ar"] select,html[dir="ar"] textarea{font-family:'Cairo'}
+html[dir="ltr"] input,html[dir="ltr"] select,html[dir="ltr"] textarea{font-family:'Rajdhani'}
+input:focus,select:focus,textarea:focus{border-color:var(--cyan);box-shadow:var(--glow-cyan)}
+input::placeholder,textarea::placeholder{color:var(--muted)}
+select option{background:var(--bg2);color:var(--ink)}
+
+.submit-btn{width:100%;background:linear-gradient(135deg,#cc0000,#ff4444);color:#fff;border:none;padding:13px;border-radius:var(--radius-sm);font-weight:800;font-size:15px;margin-top:14px;cursor:pointer;box-shadow:0 0 24px rgba(255,27,76,0.4);transition:all .2s}
+html[dir="ltr"] .submit-btn{font-family:'Orbitron';font-size:12px}
+.submit-btn:hover{box-shadow:0 0 40px rgba(255,27,76,0.4)}
+.submit-btn:active{transform:scale(0.98)}
+.submit-btn:disabled{opacity:0.5;cursor:not-allowed}
+
+.warning-box{padding:14px;border-radius:var(--radius-sm);background:rgba(255,209,102,0.06);border:1px solid rgba(255,209,102,0.3);color:var(--amber);font-size:13px;line-height:1.7;margin-bottom:14px}
+.danger-box{padding:14px;border-radius:var(--radius-sm);background:rgba(255,27,76,0.06);border:1px solid rgba(255,27,76,0.3);color:var(--red2);font-size:13px;line-height:1.7;margin-bottom:14px}
+
+.data-preview{margin-top:14px;display:none}
+.data-preview.show{display:block}
+.data-preview h3{font-size:14px;color:var(--red2);margin-bottom:10px}
+.preview-item{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px}
+.preview-item:last-child{border-bottom:none}
+.preview-label{color:var(--muted);font-weight:600}
+.preview-value{color:var(--ink);text-align:left;direction:ltr}
+html[dir="rtl"] .preview-value{direction:rtl;text-align:right}
+
+.check-row{display:flex;align-items:flex-start;gap:8px;margin-top:12px;font-size:13px;color:var(--muted);line-height:1.6}
+.check-row input[type=checkbox]{width:auto;accent-color:var(--red);margin-top:3px;flex-shrink:0}
+
+.retention-info{margin-top:14px;padding:14px;border-radius:var(--radius-sm);background:rgba(0,229,255,0.05);border:1px dashed rgba(0,229,255,0.3);color:var(--cyan);font-size:13px;line-height:1.7}
+
+.success-card{text-align:center;padding:30px 20px}
+.success-card .drop-logo{width:50px;height:50px;background:linear-gradient(135deg,var(--red),var(--red2));border-radius:50% 50% 50% 0;transform:rotate(45deg);margin:0 auto 16px;box-shadow:var(--glow-red)}
+.success-card h2{font-size:20px;margin-bottom:8px;color:var(--ink)}
+.success-card p{font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:6px}
+.success-card .req-id{font-family:'Orbitron',monospace;color:var(--cyan);font-size:14px;font-weight:700;padding:8px 16px;background:rgba(0,229,255,0.08);border:1px solid rgba(0,229,255,0.2);border-radius:8px;display:inline-block;margin:8px 0}
+.success-card .est-date{color:var(--amber);font-weight:700}
+
+.toast{position:fixed;top:20px;left:50%;transform:translateX(-50%);padding:12px 24px;border-radius:999px;font-weight:700;font-size:13px;z-index:300;opacity:0;transition:opacity .3s;pointer-events:none}
+.toast.success{background:linear-gradient(135deg,#39FF9E,#00C896);color:#000}
+.toast.error{background:linear-gradient(135deg,#FF1B4C,#FF5D8F);color:#fff;box-shadow:var(--glow-red)}
+.toast.show{opacity:1}
+
+@media(max-width:380px){.preview-item{flex-direction:column;gap:2px}}
+.page-enter{animation:fadeUp .35s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+
+<button class="lang-toggle" id="langToggle" aria-label="تبديل اللغة">
+  <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+  <div class="lang-cycle">
+    <span class="lang-opt active" data-lang="ar">AR</span>
+    <span class="lang-opt" data-lang="fr">FR</span>
+    <span class="lang-opt" data-lang="en">EN</span>
+  </div>
+</button>
+
+<div class="toast" id="toast"></div>
+
+<div style="max-width:520px;margin:0 auto">
+  <a href="index.html" class="back-link" data-i18n="backToApp">← العودة إلى التطبيق</a>
+
+  <div class="page-header page-enter">
+    <h1 data-i18n="pageTitle">حذف بياناتي</h1>
+    <p data-i18n="pageSubtitle">طلب حذف جميع بياناتك من منصة قطرة</p>
+  </div>
+
+  <!-- Step 1: Phone Input -->
+  <div class="card page-enter" id="step1">
+    <div class="danger-box" data-i18n="dangerNotice">
+      ⚠️ تحذير: هذا الإجراء سيحذف جميع بياناتك نهائياً. لا يمكن التراجع عن هذا القرار بعد المعالجة.
+    </div>
+    <label data-i18n="labelPhone">رقم الهاتف</label>
+    <input type="tel" id="phoneInput" placeholder="07xxxxxxxx" pattern="^0[5-7][0-9]{8}$" maxlength="10" required aria-label="رقم الهاتف">
+    <button class="submit-btn" id="searchBtn" data-i18n="searchBtn">البحث عن بياناتي</button>
+  </div>
+
+  <!-- Step 2: Confirmation -->
+  <div class="card" id="step2" style="display:none">
+    <h2 style="font-size:16px;margin-bottom:12px;color:var(--red2)" data-i18n="confirmTitle">تأكيد الحذف</h2>
+
+    <div class="data-preview show" id="dataPreview">
+      <h3 data-i18n="willBeDeleted">سيتم حذف البيانات التالية:</h3>
+      <div id="previewList"></div>
+    </div>
+
+    <div class="retention-info" data-i18n="retentionInfo">
+      📋 ملاحظة: سيتم حذف بياناتك نهائياً خلال 30 يوماً من تقديم هذا الطلب. يمكنك التواصل معنا خلال هذه الفترة للإلغاء.
+    </div>
+
+    <label data-i18n="reasonLabel">سبب الحذف (اختياري)</label>
+    <select id="reasonSelect">
+      <option value="" data-i18n="reasonNone">— اختر سبباً —</option>
+      <option value="no_longer_donating" data-i18n="reasonNoLonger">لم أعد أريد التبرع</option>
+      <option value="privacy" data-i18n="reasonPrivacy">مخاوف تتعلق بالخصوصية</option>
+      <option value="inaccurate" data-i18n="reasonInaccurate">بيانات غير دقيقة</option>
+      <option value="duplicate" data-i18n="reasonDuplicate">حساب مكرر</option>
+      <option value="other" data-i18n="reasonOther">أسباب أخرى</option>
+    </select>
+
+    <label data-i18n="additionalNotes">ملاحظات إضافية (اختياري)</label>
+    <textarea id="notesInput" rows="3" maxlength="500" data-i18n-ph="phNotes" placeholder="أي ملاحظات إضافية..."></textarea>
+
+    <div class="check-row">
+      <input type="checkbox" id="confirmCheck">
+      <span data-i18n="confirmCheckLabel">أؤكد أنني أريد حذف جميع بياناتي من منصة قطرة بشكل دائم</span>
+    </div>
+
+    <button class="submit-btn" id="deleteBtn" data-i18n="deleteBtn" disabled>🗑️ تأكيد الحذف نهائياً</button>
+  </div>
+
+  <!-- Step 3: Success -->
+  <div class="card" id="step3" style="display:none">
+    <div class="success-card">
+      <div class="drop-logo"></div>
+      <h2 data-i18n="successTitle">تم استلام طلب الحذف</h2>
+      <p data-i18n="successMsg1">تم تسجيل طلب حذف بياناتك بنجاح.</p>
+      <div class="req-id" id="requestId"></div>
+      <p data-i18n="successMsg2">رقم الطلب أعلاه — احتفظ به للمراجعة.</p>
+      <p data-i18n="successMsg3" style="margin-top:10px">⚠️ سيتم حذف بياناتك نهائياً خلال 30 يوماً.</p>
+      <p data-i18n="successMsg4">الموعد المتوقع للحذف الكامل: <span class="est-date" id="estDate"></span></p>
+      <p data-i18n="successMsg5" style="margin-top:12px;font-size:12px">للإلغاء أو الاستفسار: <a href="contact.html" style="color:var(--cyan);text-decoration:underline" data-i18n="contactLink">تواصل معنا</a></p>
+    </div>
+  </div>
+</div>
+
+<script>
+const SUPABASE_URL = "https://wqlhjcchqtnkcjcocejf.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndxbGhqY2NocXRua2NqY29jZWpmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM5NDE2NTAsImV4cCI6MjA5OTUxNzY1MH0.BwbJx8MSmHhKlSjNMR_l7h2xMi3MT-mWDERnm29-53g";
+const sb = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
+
+let currentLang = localStorage.getItem('qatra_lang') || 'ar';
+let donorData = null;
+let requestId = '';
+
+const FIELD_MAP = {
+  full_name: {ar:'الاسم الكامل', en:'Full Name', fr:'Nom complet'},
+  phone: {ar:'رقم الهاتف', en:'Phone', fr:'Téléphone'},
+  blood_type: {ar:'زمرة الدم', en:'Blood Type', fr:'Groupe sanguin'},
+  wilaya: {ar:'الولاية', en:'Wilaya', fr:'Wilaya'},
+  commune: {ar:'البلدية', en:'Commune', fr:'Commune'},
+  facebook_url: {ar:'رابط فيسبوك', en:'Facebook URL', fr:'Lien Facebook'},
+  last_donation_date: {ar:'تاريخ آخر تبرع', en:'Last Donation', fr:'Dernière don'},
+  is_available: {ar:'التوفر', en:'Availability', fr:'Disponibilité'},
+  created_at: {ar:'تاريخ التسجيل', en:'Registered', fr:'Inscrit le'}
+};
+
+const WILAYAS_AR = {
+"01":"أدرار","02":"الشلف","03":"الأغواط","04":"أم البواقي","05":"باتنة","06":"بجاية","07":"بسكرة","08":"بشار","09":"البليدة","10":"البويرة",
+"11":"تمنراست","12":"تبسة","13":"تلمسان","14":"تيارت","15":"تيزي وزو","16":"الجزائر","17":"الجلفة","18":"جيجل","19":"سطيف","20":"سعيدة",
+"21":"سكيكدة","22":"سيدي بلعباس","23":"عنابة","24":"قالمة","25":"قسنطينة","26":"المدية","27":"مستغانم","28":"المسيلة","29":"معسكر","30":"ورقلة",
+"31":"وهران","32":"البيض","33":"إليزي","34":"برج بوعريريج","35":"بومرداس","36":"الطارف","37":"تندوف","38":"تيسمسيلت","39":"الوادي","40":"خنشلة",
+"41":"سوق أهراس","42":"تيبازة","43":"ميلة","44":"عين الدفلى","45":"النعامة","46":"عين تموشنت","47":"غرداية","48":"غليزان","49":"تيميمون","50":"برج باجي مختار",
+"51":"أولاد جلال","52":"بني عباس","53":"عين صالح","54":"عين قزام","55":"توقرت","56":"جانت","57":"المغير","58":"المنيعة"
+};
+
+const T = {
+  ar: {
+    backToApp:'← العودة إلى التطبيق', pageTitle:'حذف بياناتي',
+    pageSubtitle:'طلب حذف جميع بياناتك من منصة قطرة',
+    dangerNotice:'⚠️ تحذير: هذا الإجراء سيحذف جميع بياناتك نهائياً. لا يمكن التراجع عن هذا القرار بعد المعالجة.',
+    labelPhone:'رقم الهاتف', searchBtn:'البحث عن بياناتي',
+    confirmTitle:'تأكيد الحذف',
+    willBeDeleted:'سيتم حذف البيانات التالية:',
+    retentionInfo:'📋 ملاحظة: سيتم حذف بياناتك نهائياً خلال 30 يوماً من تقديم هذا الطلب. يمكنك التواصل معنا خلال هذه الفترة للإلغاء.',
+    reasonLabel:'سبب الحذف (اختياري)',
+    reasonNone:'— اختر سبباً —', reasonNoLonger:'لم أعد أريد التبرع',
+    reasonPrivacy:'مخاوف تتعلق بالخصوصية', reasonInaccurate:'بيانات غير دقيقة',
+    reasonDuplicate:'حساب مكرر', reasonOther:'أسباب أخرى',
+    additionalNotes:'ملاحظات إضافية (اختياري)',
+    phNotes:'أي ملاحظات إضافية...',
+    confirmCheckLabel:'أؤكد أنني أريد حذف جميع بياناتي من منصة قطرة بشكل دائم',
+    deleteBtn:'🗑️ تأكيد الحذف نهائياً',
+    successTitle:'تم استلام طلب الحذف',
+    successMsg1:'تم تسجيل طلب حذف بياناتك بنجاح.',
+    successMsg2:'رقم الطلب أعلاه — احتفظ به للمراجعة.',
+    successMsg3:'⚠️ سيتم حذف بياناتك نهائياً خلال 30 يوماً.',
+    successMsg4:'الموعد المتوقع للحذف الكامل:',
+    successMsg5:'للإلغاء أو الاستفسار:',
+    contactLink:'تواصل معنا',
+    enterPhone:'أدخل رقم هاتفك للبحث عن بياناتك',
+    loading:'جارٍ البحث...',
+    noDataFound:'لم يتم العثور على بيانات مسجلة لهذا الرقم',
+    toastError:'حدث خطأ، حاول مجددًا',
+    mustConfirm:'يجب التأكيد أولاً',
+    notAvailable:'غير متوفر'
+  },
+  en: {
+    backToApp:'← Back to app', pageTitle:'Delete My Data',
+    pageSubtitle:'Request deletion of all your data from Qatra',
+    dangerNotice:'⚠️ Warning: This action will permanently delete all your data. This cannot be undone after processing.',
+    labelPhone:'Phone number', searchBtn:'Search for my data',
+    confirmTitle:'Confirm Deletion',
+    willBeDeleted:'The following data will be deleted:',
+    retentionInfo:'📋 Note: Your data will be permanently deleted within 30 days of this request. You can contact us during this period to cancel.',
+    reasonLabel:'Reason for deletion (optional)',
+    reasonNone:'— Select a reason —', reasonNoLonger:'I no longer wish to donate',
+    reasonPrivacy:'Privacy concerns', reasonInaccurate:'Inaccurate data',
+    reasonDuplicate:'Duplicate account', reasonOther:'Other reasons',
+    additionalNotes:'Additional notes (optional)',
+    phNotes:'Any additional notes...',
+    confirmCheckLabel:'I confirm that I want to permanently delete all my data from Qatra',
+    deleteBtn:'🗑️ Confirm permanent deletion',
+    successTitle:'Deletion Request Received',
+    successMsg1:'Your data deletion request has been recorded successfully.',
+    successMsg2:'Request ID above — keep it for your records.',
+    successMsg3:'⚠️ Your data will be permanently deleted within 30 days.',
+    successMsg4:'Expected full deletion date:',
+    successMsg5:'To cancel or inquire:',
+    contactLink:'Contact us',
+    enterPhone:'Enter your phone number to search your data',
+    loading:'Searching...',
+    noDataFound:'No data found for this phone number',
+    toastError:'Error, please try again',
+    mustConfirm:'You must confirm first',
+    notAvailable:'N/A'
+  },
+  fr: {
+    backToApp:'← Retour à l\'application', pageTitle:'Supprimer mes données',
+    pageSubtitle:'Demander la suppression de toutes vos données de Qatra',
+    dangerNotice:'⚠️ Attention : Cette action supprimera définitivement toutes vos données. Cette action est irréversible.',
+    labelPhone:'Numéro de téléphone', searchBtn:'Rechercher mes données',
+    confirmTitle:'Confirmer la suppression',
+    willBeDeleted:'Les données suivantes seront supprimées :',
+    retentionInfo:'📋 Note : Vos données seront définitivement supprimées dans les 30 jours. Vous pouvez nous contacter pendant cette période pour annuler.',
+    reasonLabel:'Raison de la suppression (optionnel)',
+    reasonNone:'— Sélectionner une raison —', reasonNoLonger:'Je ne souhaite plus donner',
+    reasonPrivacy:'Préoccupations de confidentialité', reasonInaccurate:'Données inexactes',
+    reasonDuplicate:'Compte en double', reasonOther:'Autres raisons',
+    additionalNotes:'Notes supplémentaires (optionnel)',
+    phNotes:'Notes supplémentaires...',
+    confirmCheckLabel:'Je confirme vouloir supprimer définitivement toutes mes données de Qatra',
+    deleteBtn:'🗑️ Confirmer la suppression définitive',
+    successTitle:'Demande de suppression reçue',
+    successMsg1:'Votre demande de suppression a été enregistrée avec succès.',
+    successMsg2:'Numéro de demande ci-dessus — conservez-le.',
+    successMsg3:'⚠️ Vos données seront supprimées définitivement dans les 30 jours.',
+    successMsg4:'Date prévue de suppression complète :',
+    successMsg5:'Pour annuler ou vous renseigner :',
+    contactLink:'Contactez-nous',
+    enterPhone:'Entrez votre numéro pour rechercher vos données',
+    loading:'Recherche...',
+    noDataFound:'Aucune donnée trouvée pour ce numéro',
+    toastError:'Erreur, veuillez réessayer',
+    mustConfirm:'Vous devez confirmer d\'abord',
+    notAvailable:'N/A'
+  }
+};
+
+function t(k){return T[currentLang][k]||T['ar'][k]||k}
+
+function applyLang(){
+  document.documentElement.lang=currentLang;
+  document.documentElement.dir=currentLang==='ar'?'rtl':'ltr';
+  document.title=currentLang==='ar'?'حذف بياناتي | قطرة':currentLang==='fr'?'Supprimer mes données | Qatra':'Delete My Data | Qatra';
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const k=el.dataset.i18n;
+    if(T[currentLang][k]!==undefined) el.textContent=T[currentLang][k];
+  });
+  document.querySelectorAll('[data-i18n-ph]').forEach(el=>{
+    const k=el.dataset.i18nPh;
+    if(T[currentLang][k]!==undefined) el.placeholder=T[currentLang][k];
+  });
+  document.querySelectorAll('.lang-opt').forEach(o=>{
+    o.classList.toggle('active',o.dataset.lang===currentLang);
+  });
+  document.getElementById('phoneInput').placeholder='07xxxxxxxx';
+}
+
+document.querySelectorAll('.lang-opt').forEach(o=>{
+  o.addEventListener('click',()=>{
+    currentLang=o.dataset.lang;
+    localStorage.setItem('qatra_lang',currentLang);
+    applyLang();
+  });
+});
+
+function showToast(msg,type){
+  const el=document.getElementById('toast');
+  el.textContent=msg;
+  el.className='toast '+type+' show';
+  setTimeout(()=>el.classList.remove('show'),2500);
+}
+
+function formatField(key,val){
+  if(val===null||val===undefined||val==='') return t('notAvailable');
+  if(key==='is_available') return val?'✓':'✗';
+  if(key==='wilaya'&&WILAYAS_AR[String(val)]) return String(val)+' - '+WILAYAS_AR[String(val)];
+  if(key==='created_at'||key==='last_donation_date'){
+    try{return new Date(val).toLocaleDateString(currentLang==='ar'?'ar-DZ':currentLang==='fr'?'fr-FD':'en-US')}catch(e){return val}
+  }
+  return String(val);
+}
+
+function generateRequestId(){
+  const chars='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  let id='DEL-';
+  for(let i=0;i<8;i++) id+=chars[Math.floor(Math.random()*chars.length)];
+  return id;
+}
+
+function getEstDate(){
+  const d=new Date();
+  d.setDate(d.getDate()+30);
+  return d.toLocaleDateString(currentLang==='ar'?'ar-DZ':currentLang==='fr'?'fr-FD':'en-US',{year:'numeric',month:'long',day:'numeric'});
+}
+
+document.getElementById('confirmCheck').addEventListener('change',function(){
+  document.getElementById('deleteBtn').disabled=!this.checked;
+});
+
+document.getElementById('searchBtn').addEventListener('click',async()=>{
+  const phone=document.getElementById('phoneInput').value.trim();
+  if(!/^0[5-7]\d{8}$/.test(phone)){showToast(t('enterPhone'),'error');return}
+  if(!sb){showToast(t('toastError'),'error');return}
+  document.getElementById('searchBtn').disabled=true;
+  document.getElementById('searchBtn').textContent=t('loading');
+  try{
+    const{data,error}=await sb.from('donors').select('*').eq('phone',phone).limit(1);
+    if(error) throw error;
+    if(data&&data.length>0){
+      donorData=data[0];
+      const list=document.getElementById('previewList');
+      list.innerHTML='';
+      Object.keys(FIELD_MAP).forEach(key=>{
+        const div=document.createElement('div');
+        div.className='preview-item';
+        div.innerHTML=`<span class="preview-label">${FIELD_MAP[key][currentLang]||FIELD_MAP[key]['ar']}</span><span class="preview-value">${formatField(key,donorData[key])}</span>`;
+        list.appendChild(div);
+      });
+      document.getElementById('step1').style.display='none';
+      document.getElementById('step2').style.display='block';
+    }else{
+      showToast(t('noDataFound'),'error');
+    }
+  }catch(e){
+    showToast(t('toastError'),'error');
+  }
+  document.getElementById('searchBtn').disabled=false;
+  document.getElementById('searchBtn').textContent=t('searchBtn');
+});
+
+document.getElementById('deleteBtn').addEventListener('click',async()=>{
+  if(!document.getElementById('confirmCheck').checked){showToast(t('mustConfirm'),'error');return}
+  if(!donorData) return;
+  requestId=generateRequestId();
+  const estDate=getEstDate();
+  document.getElementById('requestId').textContent=requestId;
+  document.getElementById('estDate').textContent=estDate;
+  document.getElementById('step2').style.display='none';
+  document.getElementById('step3').style.display='block';
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+
+document.getElementById('phoneInput').addEventListener('keydown',e=>{
+  if(e.key==='Enter') document.getElementById('searchBtn').click();
+});
+
+applyLang();
+</script>
+</body>
+</html>

@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="تواصل معنا — قطرة">
+<meta name="theme-color" content="#05060B">
+<title>تواصل معنا | Qatra — قطرة</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M50 5 C50 5,85 45,85 62 C85 82,68 95,50 95 C32 95,15 82,15 62 C15 45,50 5,50 5Z' fill='%23FF1B4C'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800;900&family=Rajdhani:wght@400;500;600;700&family=Tajawal:wght@400;500;700;800;900&family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+--bg:#05060B;--bg2:#0A0E1C;--bg3:#111630;
+--glass:rgba(255,255,255,0.04);--glass2:rgba(255,255,255,0.07);--glass3:rgba(255,255,255,0.10);
+--border:rgba(255,255,255,0.08);--border2:rgba(255,255,255,0.14);
+--red:#FF1B4C;--red2:#FF5D8F;--red3:#FF8FB5;
+--cyan:#00E5FF;--cyan2:#00B8D4;
+--ink:#EAF0FB;--muted:#6B7BA0;--muted2:#4A5678;
+--green:#39FF9E;--amber:#FFD166;
+--radius:18px;--radius-sm:12px;
+--glow-red:0 0 24px rgba(255,27,76,0.4);--glow-cyan:0 0 20px rgba(0,229,255,0.3);
+--font-ar:'Cairo','Tajawal',sans-serif;
+--font-en:'Rajdhani','Orbitron',sans-serif;
+--font-display-ar:'Tajawal',sans-serif;
+--font-display-en:'Orbitron',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-ar);min-height:100vh;padding:16px 16px 80px;direction:rtl}
+html[dir="ltr"] body{font-family:var(--font-en);direction:ltr}
+body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,0.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.018) 1px,transparent 1px);background-size:44px 44px;mask-image:radial-gradient(ellipse at 50% 0%,black,transparent 70%);-webkit-mask-image:radial-gradient(ellipse at 50% 0%,black,transparent 70%)}
+body::after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(circle at 10% 0%,rgba(255,27,76,0.10),transparent 40%),radial-gradient(circle at 85% 10%,rgba(0,229,255,0.06),transparent 35%)}
+h1,h2,h3{font-family:var(--font-display-ar);font-weight:800}
+html[dir="ltr"] h1,html[dir="ltr"] h2,html[dir="ltr"] h3{font-family:var(--font-display-en);letter-spacing:0.3px}
+::selection{background:rgba(255,27,76,0.35);color:#fff}
+
+.lang-toggle{position:fixed;top:14px;inset-inline-end:14px;z-index:200;background:var(--glass2);border:1px solid var(--border);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);color:var(--cyan);font-weight:700;font-size:13px;padding:8px 16px;border-radius:999px;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:6px}
+.lang-toggle:hover{box-shadow:var(--glow-cyan);border-color:rgba(0,229,255,0.4)}
+.lang-toggle svg{width:16px;height:16px;fill:currentColor}
+.lang-cycle{display:flex;gap:4px}
+.lang-opt{padding:4px 8px;border-radius:6px;cursor:pointer;transition:all .15s;font-size:11px;font-weight:700}
+.lang-opt.active{background:rgba(0,229,255,0.15);color:var(--cyan)}
+.lang-opt:hover{color:var(--cyan)}
+
+.back-link{display:inline-flex;align-items:center;gap:6px;color:var(--cyan);text-decoration:none;font-size:13px;font-weight:700;margin-bottom:20px;padding:8px 14px;border-radius:var(--radius-sm);background:var(--glass);border:1px solid var(--border);transition:all .18s;position:relative;z-index:1}
+.back-link:hover{box-shadow:var(--glow-cyan);border-color:rgba(0,229,255,0.3)}
+
+.page-header{text-align:center;margin-bottom:28px;position:relative;z-index:1}
+.page-header h1{font-size:24px;margin-bottom:6px;background:linear-gradient(135deg,#fff 30%,var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
+.page-header p{font-size:13px;color:var(--muted);line-height:1.6}
+
+.nav-tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:8px;margin-bottom:20px;position:relative;z-index:1;-webkit-overflow-scrolling:touch}
+.nav-tabs::-webkit-scrollbar{display:none}
+.nav-tab{flex-shrink:0;padding:8px 14px;border-radius:999px;font-size:12px;font-weight:700;cursor:pointer;border:1px solid var(--border);background:var(--glass);color:var(--muted);transition:all .18s;white-space:nowrap}
+.nav-tab.active{background:rgba(0,229,255,0.12);color:var(--cyan);border-color:rgba(0,229,255,0.3)}
+.nav-tab:hover{color:var(--ink);border-color:var(--border2)}
+.nav-tab:active{transform:scale(0.97)}
+
+.section{display:none;position:relative;z-index:1;animation:fadeUp .3s ease}
+.section.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+.card{background:var(--glass);border:1px solid var(--border);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-radius:var(--radius);padding:20px;margin-bottom:16px}
+.card h2{font-size:16px;margin-bottom:4px}
+.card .card-desc{font-size:12.5px;color:var(--muted);margin-bottom:14px;line-height:1.6}
+
+label{display:block;font-size:13px;font-weight:700;margin-bottom:6px;color:var(--ink)}
+input[type=text],input[type=email],input[type=tel],select,textarea{width:100%;padding:11px 14px;border-radius:var(--radius-sm);border:1px solid var(--border);font-size:14px;outline:none;background:rgba(255,255,255,0.035);color:var(--ink);transition:border-color .2s,box-shadow .2s}
+html[dir="ar"] input,html[dir="ar"] select,html[dir="ar"] textarea{font-family:'Cairo'}
+html[dir="ltr"] input,html[dir="ltr"] select,html[dir="ltr"] textarea{font-family:'Rajdhani'}
+input:focus,select:focus,textarea:focus{border-color:var(--cyan);box-shadow:var(--glow-cyan)}
+input::placeholder,textarea::placeholder{color:var(--muted)}
+select option{background:var(--bg2);color:var(--ink)}
+textarea{min-height:80px;resize:vertical}
+
+.submit-btn{width:100%;background:linear-gradient(135deg,var(--red),var(--red2));color:#fff;border:none;padding:13px;border-radius:var(--radius-sm);font-weight:800;font-size:15px;margin-top:14px;cursor:pointer;box-shadow:var(--glow-red);transition:all .2s}
+html[dir="ltr"] .submit-btn{font-family:'Orbitron';font-size:12px}
+.submit-btn:hover{box-shadow:0 0 40px rgba(255,27,76,0.25)}
+.submit-btn:active{transform:scale(0.98)}
+.submit-btn:disabled{opacity:0.5;cursor:not-allowed}
+.submit-btn.cyan{background:linear-gradient(135deg,var(--cyan),var(--cyan2));color:#000;box-shadow:var(--glow-cyan)}
+
+.contact-list{display:flex;flex-direction:column;gap:10px}
+.contact-item{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:var(--radius-sm);background:var(--glass);border:1px solid var(--border);text-decoration:none;color:var(--ink);font-size:13px;font-weight:600;transition:all .18s}
+.contact-item:hover{border-color:var(--border2);background:var(--glass2)}
+.contact-item .icon{font-size:20px;flex-shrink:0;width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:10px}
+.contact-item .icon.email{background:rgba(0,229,255,0.1);color:var(--cyan)}
+.contact-item .icon.wa{background:rgba(37,211,102,0.1);color:#25D366}
+.contact-item .icon.gh{background:rgba(255,255,255,0.08);color:var(--ink)}
+.contact-item .info{flex:1;min-width:0}
+.contact-item .info .label{font-size:11px;color:var(--muted);font-weight:600;margin-bottom:1px}
+.contact-item .info .value{font-size:13px;word-break:break-all}
+.copy-btn{background:rgba(0,229,255,0.08);color:var(--cyan);border:1px solid rgba(0,229,255,0.25);padding:6px 10px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;transition:all .18s;flex-shrink:0}
+.copy-btn:hover{background:rgba(0,229,255,0.15)}
+
+.success-box{text-align:center;padding:24px 16px}
+.success-box .drop-logo{width:40px;height:40px;background:linear-gradient(135deg,var(--green),#00C896);border-radius:50% 50% 50% 0;transform:rotate(45deg);margin:0 auto 12px}
+.success-box p{font-size:14px;color:var(--ink);font-weight:600}
+
+.toast{position:fixed;top:20px;left:50%;transform:translateX(-50%);padding:12px 24px;border-radius:999px;font-weight:700;font-size:13px;z-index:300;opacity:0;transition:opacity .3s;pointer-events:none}
+.toast.success{background:linear-gradient(135deg,#39FF9E,#00C896);color:#000}
+.toast.error{background:linear-gradient(135deg,#FF1B4C,#FF5D8F);color:#fff;box-shadow:var(--glow-red)}
+.toast.show{opacity:1}
+
+.footer-note{text-align:center;font-size:11.5px;color:var(--muted);padding:20px 16px 4px;position:relative;z-index:1;line-height:1.6}
+</style>
+</head>
+<body>
+
+<button class="lang-toggle" id="langToggle" aria-label="تبديل اللغة">
+  <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+  <div class="lang-cycle">
+    <span class="lang-opt active" data-lang="ar">AR</span>
+    <span class="lang-opt" data-lang="fr">FR</span>
+    <span class="lang-opt" data-lang="en">EN</span>
+  </div>
+</button>
+
+<div class="toast" id="toast"></div>
+
+<div style="max-width:520px;margin:0 auto">
+  <a href="index.html" class="back-link" data-i18n="backToApp">← العودة إلى التطبيق</a>
+
+  <div class="page-header">
+    <h1 data-i18n="pageTitle">تواصل معنا</h1>
+    <p data-i18n="pageSubtitle">نحب أن نسمع منك — أبلغ عن مشكلة أو أرسل اقتراحك</p>
+  </div>
+
+  <nav class="nav-tabs" role="tablist" aria-label="أقسام التواصل">
+    <button class="nav-tab active" data-tab="bug" role="tab" aria-selected="true" data-i18n="tabBug">🐛 مشكلة تقنية</button>
+    <button class="nav-tab" data-tab="security" role="tab" aria-selected="false" data-i18n="tabSecurity">🔒 مشكلة أمنية</button>
+    <button class="nav-tab" data-tab="privacy" role="tab" aria-selected="false" data-i18n="tabPrivacy">🛡️ مشكلة خصوصية</button>
+    <button class="nav-tab" data-tab="abuse" role="tab" aria-selected="false" data-i18n="tabAbuse">🚫 إساءة استخدام</button>
+    <button class="nav-tab" data-tab="suggest" role="tab" aria-selected="false" data-i18n="tabSuggest">💡 اقتراحات</button>
+    <button class="nav-tab" data-tab="info" role="tab" aria-selected="false" data-i18n="tabInfo">📞 معلومات التواصل</button>
+  </nav>
+
+  <!-- Section 1: Bug Report -->
+  <div class="section active" id="sec-bug" role="tabpanel">
+    <div class="card">
+      <h2 data-i18n="bugTitle">الإبلاغ عن مشكلة تقنية</h2>
+      <p class="card-desc" data-i18n="bugDesc">وجدت خللاً في التطبيق؟ أخبرنا بالتفاصيل لنساعدك في إصلاحه.</p>
+      <label data-i18n="bugDescLabel">وصف المشكلة</label>
+      <textarea id="bugDesc" rows="4" maxlength="2000" data-i18n-ph="phBugDesc" placeholder="صف المشكلة بالتفصيل... ماذا حدث؟ ما الخطوات التي اتخذتها؟"></textarea>
+      <label data-i18n="labelEmail">البريد الإلكتروني <span style="font-weight:400;color:var(--muted);font-size:11px" data-i18n="optionalLabel">(اختياري)</span></label>
+      <input type="email" id="bugEmail" placeholder="your@email.com" dir="ltr" style="text-align:left">
+      <button class="submit-btn" id="submitBug" data-i18n="submitBug">إرسال البلاغ</button>
+      <div class="success-box" id="bugSuccess" style="display:none">
+        <div class="drop-logo"></div>
+        <p data-i18n="bugSuccessMsg">شكراً لك! تم استلام البلاغ وسنرد عليك قريباً.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 2: Security Issue -->
+  <div class="section" id="sec-security" role="tabpanel">
+    <div class="card">
+      <h2 data-i18n="secTitle">الإبلاغ عن مشكلة أمنية</h2>
+      <p class="card-desc" data-i18n="secDesc">اكتشفت ثغرة أمنية؟ يرجى الإبلاغ عنها بشكل مسؤول. نحن نقدر جهودك في حماية المنصة.</p>
+      <div style="padding:14px;border-radius:var(--radius-sm);background:rgba(0,229,255,0.05);border:1px dashed rgba(0,229,255,0.3);margin-bottom:14px">
+        <p style="font-size:13px;color:var(--cyan);line-height:1.7;font-weight:600" data-i18n="secEncrypted">🔒 جميع البلاغات الأمنية تُعامل بسرية تامة. يمكنك الإبلاغ بشكل مجهول.</p>
+      </div>
+      <label data-i18n="secDescLabel">وصف الثغرة الأمنية</label>
+      <textarea id="secDesc" rows="4" maxlength="2000" data-i18n-ph="phSecDesc" placeholder="صف الثغرة الأمنية... كيف يمكن استغلالها؟ ما هو التأثير المحتمل؟"></textarea>
+      <label data-i18n="secSeverity">مستوى الخطورة</label>
+      <select id="secSeverity">
+        <option value="low" data-i18n="sevLow">منخفضة</option>
+        <option value="medium" data-i18n="sevMedium">متوسطة</option>
+        <option value="high" data-i18n="sevHigh">عالية</option>
+        <option value="critical" data-i18n="sevCritical">حرجة</option>
+      </select>
+      <label data-i18n="labelEmail">البريد الإلكتروني <span style="font-weight:400;color:var(--muted);font-size:11px" data-i18n="optionalLabel">(اختياري)</span></label>
+      <input type="email" id="secEmail" placeholder="your@email.com" dir="ltr" style="text-align:left">
+      <button class="submit-btn" id="submitSec" data-i18n="submitSec">إرسال البلاغ الأمني</button>
+      <div class="success-box" id="secSuccess" style="display:none">
+        <div class="drop-logo"></div>
+        <p data-i18n="secSuccessMsg">شكراً! تم استلام البلاغ الأمني وسنミلاحلته بأولوية عالية.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 3: Privacy Issue -->
+  <div class="section" id="sec-privacy" role="tabpanel">
+    <div class="card">
+      <h2 data-i18n="privTitle">الإبلاغ عن مشكلة خصوصية</h2>
+      <p class="card-desc" data-i18n="privDesc">لديك مخاوف تتعلق بخصوصيتك أو بياناتك الشخصية؟ أبلغنا وسنعالج طلبك فوراً.</p>
+      <label data-i18n="privTypeLabel">نوع المشكلة</label>
+      <select id="privType">
+        <option value="unauthorized_access" data-i18n="privUnauth">وصول غير مصرح به لبياناتي</option>
+        <option value="data_breach" data-i18n="privBreach">تسريب محتمل للبيانات</option>
+        <option value="third_party" data-i18n="privThird">مشاركة بيانات مع طرف ثالث</option>
+        <option value="other_privacy" data-i18n="privOther">مشكلة خصوصية أخرى</option>
+      </select>
+      <label data-i18n="privDescLabel">وصف المشكلة</label>
+      <textarea id="privDesc" rows="4" maxlength="2000" data-i18n-ph="phPrivDesc" placeholder="صف مشكلة الخصوصية بالتفصيل..."></textarea>
+      <label data-i18n="labelEmail">البريد الإلكتروني <span style="font-weight:400;color:var(--muted);font-size:11px" data-i18n="optionalLabel">(اختياري)</span></label>
+      <input type="email" id="privEmail" placeholder="your@email.com" dir="ltr" style="text-align:left">
+      <button class="submit-btn" id="submitPriv" data-i18n="submitPriv">إرسال البلاغ</button>
+      <div class="success-box" id="privSuccess" style="display:none">
+        <div class="drop-logo"></div>
+        <p data-i18n="privSuccessMsg">شكراً! تم استلام بلاغ الخصوصية وسنミلاحلته فوراً.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 4: Abuse Report -->
+  <div class="section" id="sec-abuse" role="tabpanel">
+    <div class="card">
+      <h2 data-i18n="abuseTitle">الإبلاغ عن إساءة استخدام</h2>
+      <p class="card-desc" data-i18n="abuseDesc">لاحظت سلوكاً مسيئاً أو بيانات مزيفة؟ ساعدنا في الحفاظ على بيئة آمنة للمجتمع.</p>
+      <label data-i18n="abuseTypeLabel">نوع الإساءة</label>
+      <select id="abuseType">
+        <option value="fake_data" data-i18n="abuseFake">بيانات مزيفة / حساب وهمي</option>
+        <option value="harassment" data-i18n="abuseHarass">إساءة أو مضايقة</option>
+        <option value="spam" data-i18n="abuseSpam">رسائل غير مرغوب فيها</option>
+        <option value="other_abuse" data-i18n="abuseOther">إساءة أخرى</option>
+      </select>
+      <label data-i18n="abuseDescLabel">وصف الإساءة</label>
+      <textarea id="abuseDesc" rows="4" maxlength="2000" data-i18n-ph="phAbuseDesc" placeholder="صف الإساءة بالتفصيل... ماذا حدث؟ من المعني؟"></textarea>
+      <label data-i18n="labelEmail">البريد الإلكتروني <span style="font-weight:400;color:var(--muted);font-size:11px" data-i18n="optionalLabel">(اختياري)</span></label>
+      <input type="email" id="abuseEmail" placeholder="your@email.com" dir="ltr" style="text-align:left">
+      <button class="submit-btn" id="submitAbuse" data-i18n="submitAbuse">إرسال البلاغ</button>
+      <div class="success-box" id="abuseSuccess" style="display:none">
+        <div class="drop-logo"></div>
+        <p data-i18n="abuseSuccessMsg">شكراً! تم استلام بلاغ الإساءة وسنミلاحلته فوراً.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 5: Suggestions -->
+  <div class="section" id="sec-suggest" role="tabpanel">
+    <div class="card">
+      <h2 data-i18n="suggestTitle">اقتراحات وتحسينات</h2>
+      <p class="card-desc" data-i18n="suggestDesc">لديك فكرة لتحسين التطبيق؟ نحب أن نسمعها! كل اقتراح يساعد في بناء منصة أفضل.</p>
+      <label data-i18n="suggestDescLabel">اقتراحك</label>
+      <textarea id="suggestDesc" rows="4" maxlength="2000" data-i18n-ph="phSuggestDesc" placeholder="اكتب اقتراحك بالتفصيل... كيف سيحسّن التطبيق؟"></textarea>
+      <label data-i18n="labelEmail">البريد الإلكتروني <span style="font-weight:400;color:var(--muted);font-size:11px" data-i18n="optionalLabel">(اختياري)</span></label>
+      <input type="email" id="suggestEmail" placeholder="your@email.com" dir="ltr" style="text-align:left">
+      <button class="submit-btn cyan" id="submitSuggest" data-i18n="submitSuggest">إرسال الاقتراح 💡</button>
+      <div class="success-box" id="suggestSuccess" style="display:none">
+        <div class="drop-logo"></div>
+        <p data-i18n="suggestSuccessMsg">شكراً لك! نقدر اقتراحك وسنأخذه بعين الاعتبار.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 6: Contact Info -->
+  <div class="section" id="sec-info" role="tabpanel">
+    <div class="card">
+      <h2 data-i18n="infoTitle">معلومات التواصل</h2>
+      <p class="card-desc" data-i18n="infoDesc">تواصل معنا مباشرة عبر أي من القنوات التالية.</p>
+      <div class="contact-list">
+        <div class="contact-item">
+          <div class="icon email">✉️</div>
+          <div class="info">
+            <div class="label">Email</div>
+            <div class="value">y220890@gmail.com</div>
+          </div>
+          <button class="copy-btn" data-copy="y220890@gmail.com" data-i18n="copyBtn">نسخ</button>
+        </div>
+        <a class="contact-item" href="mailto:y220890@gmail.com">
+          <div class="icon email">📨</div>
+          <div class="info">
+            <div class="label" data-i18n="openEmail">فتح تطبيق البريد</div>
+            <div class="value" style="color:var(--cyan)">y220890@gmail.com</div>
+          </div>
+        </a>
+        <a class="contact-item" href="https://wa.me/213556254007" target="_blank" rel="noopener noreferrer">
+          <div class="icon wa">💬</div>
+          <div class="info">
+            <div class="label">WhatsApp</div>
+            <div class="value" dir="ltr">+213 556 254 007</div>
+          </div>
+        </a>
+        <a class="contact-item" href="https://wa.me/213551148943" target="_blank" rel="noopener noreferrer">
+          <div class="icon wa">💬</div>
+          <div class="info">
+            <div class="label">WhatsApp</div>
+            <div class="value" dir="ltr">+213 551 148 943</div>
+          </div>
+        </a>
+        <a class="contact-item" href="https://github.com/yahya2208/qatra" target="_blank" rel="noopener noreferrer">
+          <div class="icon gh">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21.5c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0012 2z"/></svg>
+          </div>
+          <div class="info">
+            <div class="label">GitHub</div>
+            <div class="value">yahya2208/qatra</div>
+          </div>
+        </a>
+        <a class="contact-item" href="https://github.com/yahya2208/qatra/issues" target="_blank" rel="noopener noreferrer">
+          <div class="icon gh">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/></svg>
+          </div>
+          <div class="info">
+            <div class="label" data-i18n="reportIssue">الإبلاغ عن مشكلة على GitHub</div>
+            <div class="value" style="color:var(--cyan)">github.com/yahya2208/qatra/issues</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-note">
+    <span data-i18n="footerNote">قطرة — منصة مجتمعيّة مفتوحة المصدر للتبرع بالدم في الجزائر 🇩🇿</span>
+  </div>
+</div>
+
+<script>
+const T = {
+  ar: {
+    backToApp:'← العودة إلى التطبيق', pageTitle:'تواصل معنا',
+    pageSubtitle:'نحب أن نسمع منك — أبلغ عن مشكلة أو أرسل اقتراحك',
+    tabBug:'🐛 مشكلة تقنية', tabSecurity:'🔒 مشكلة أمنية',
+    tabPrivacy:'🛡️ مشكلة خصوصية', tabAbuse:'🚫 إساءة استخدام',
+    tabSuggest:'💡 اقتراحات', tabInfo:'📞 معلومات التواصل',
+    bugTitle:'الإبلاغ عن مشكلة تقنية',
+    bugDesc:'وجدت خللاً في التطبيق؟ أخبرنا بالتفاصيل لنساعدك في إصلاحه.',
+    bugDescLabel:'وصف المشكلة', phBugDesc:'صف المشكلة بالتفصيل... ماذا حدث؟ ما الخطوات التي اتخذتها؟',
+    labelEmail:'البريد الإلكتروني', optionalLabel:'(اختياري)',
+    submitBug:'إرسال البلاغ',
+    bugSuccessMsg:'شكراً لك! تم استلام البلاغ وسنرد عليك قريباً.',
+    secTitle:'الإبلاغ عن مشكلة أمنية',
+    secDesc:'اكتشفت ثغرة أمنية؟ يرجى الإبلاغ عنها بشكل مسؤول. نحن نقدر جهودك في حماية المنصة.',
+    secEncrypted:'🔒 جميع البلاغات الأمنية تُعامل بسرية تامة. يمكنك الإبلاغ بشكل مجهول.',
+    secDescLabel:'وصف الثغرة الأمنية', phSecDesc:'صف الثغرة الأمنية... كيف يمكن استغلالها؟ ما هو التأثير المحتمل؟',
+    secSeverity:'مستوى الخطورة',
+    sevLow:'منخفضة',sevMedium:'متوسطة',sevHigh:'عالية',sevCritical:'حرجة',
+    submitSec:'إرسال البلاغ الأمني',
+    secSuccessMsg:'شكراً! تم استلام البلاغ الأمني وسنミلاحلته بأولوية عالية.',
+    privTitle:'الإبلاغ عن مشكلة خصوصية',
+    privDesc:'لديك مخاوف تتعلق بخصوصيتك أو بياناتك الشخصية؟ أبلغنا وسنعالج طلبك فوراً.',
+    privTypeLabel:'نوع المشكلة',
+    privUnauth:'وصول غير مصرح به لبياناتي',privBreach:'تسريب محتمل للبيانات',
+    privThird:'مشاركة بيانات مع طرف ثالث',privOther:'مشكلة خصوصية أخرى',
+    privDescLabel:'وصف المشكلة',phPrivDesc:'صف مشكلة الخصوصية بالتفصيل...',
+    submitPriv:'إرسال البلاغ',
+    privSuccessMsg:'شكراً! تم استلام بلاغ الخصوصية وسنミلاحلته فوراً.',
+    abuseTitle:'الإبلاغ عن إساءة استخدام',
+    abuseDesc:'لاحظت سلوكاً مسيئاً أو بيانات مزيفة؟ ساعدنا في الحفاظ على بيئة آمنة للمجتمع.',
+    abuseTypeLabel:'نوع الإساءة',
+    abuseFake:'بيانات مزيفة / حساب وهمي',abuseHarass:'إساءة أو مضايقة',
+    abuseSpam:'رسائل غير مرغوب فيها',abuseOther:'إساءة أخرى',
+    abuseDescLabel:'وصف الإساءة',phAbuseDesc:'صف الإساءة بالتفصيل... ماذا حدث؟ من المعني؟',
+    submitAbuse:'إرسال البلاغ',
+    abuseSuccessMsg:'شكراً! تم استلام بلاغ الإساءة وسنミلاحلته فوراً.',
+    suggestTitle:'اقتراحات وتحسينات',
+    suggestDesc:'لديك فكرة لتحسين التطبيق؟ نحب أن نسمعها! كل اقتراح يساعد في بناء منصة أفضل.',
+    suggestDescLabel:'اقتراحك',phSuggestDesc:'اكتب اقتراحك بالتفصيل... كيف سيحسّن التطبيق؟',
+    submitSuggest:'إرسال الاقتراح 💡',
+    suggestSuccessMsg:'شكراً لك! نقدر اقتراحك وسنأخذه بعين الاعتبار.',
+    infoTitle:'معلومات التواصل',
+    infoDesc:'تواصل معنا مباشرة عبر أي من القنوات التالية.',
+    openEmail:'فتح تطبيق البريد',
+    copyBtn:'نسخ', copiedBtn:'تم ✓',
+    reportIssue:'الإبلاغ عن مشكلة على GitHub',
+    footerNote:'قطرة — منصة مجتمعيّة مفتوحة المصدر للتبرع بالدم في الجزائر 🇩🇿',
+    toastError:'حدث خطأ، حاول مجددًا', fieldRequired:'هذا الحقل مطلوب',
+    toastCopied:'تم النسخ ✓'
+  },
+  en: {
+    backToApp:'← Back to app', pageTitle:'Contact Us',
+    pageSubtitle:'We love to hear from you — report an issue or send a suggestion',
+    tabBug:'🐛 Bug report', tabSecurity:'🔒 Security issue',
+    tabPrivacy:'🛡️ Privacy issue', tabAbuse:'🚫 Abuse report',
+    tabSuggest:'💡 Suggestions', tabInfo:'📞 Contact info',
+    bugTitle:'Bug Report',
+    bugDesc:'Found a bug? Tell us the details so we can fix it.',
+    bugDescLabel:'Description', phBugDesc:'Describe the bug in detail... What happened? What steps did you take?',
+    labelEmail:'Email', optionalLabel:'(optional)',
+    submitBug:'Submit report',
+    bugSuccessMsg:'Thank you! We received your report and will get back to you soon.',
+    secTitle:'Security Issue Report',
+    secDesc:'Discovered a security vulnerability? Please report it responsibly. We appreciate your effort in protecting the platform.',
+    secEncrypted:'🔒 All security reports are treated with full confidentiality. You can report anonymously.',
+    secDescLabel:'Vulnerability description', phSecDesc:'Describe the vulnerability... How can it be exploited? What is the potential impact?',
+    secSeverity:'Severity level',
+    sevLow:'Low',sevMedium:'Medium',sevHigh:'High',sevCritical:'Critical',
+    submitSec:'Submit security report',
+    secSuccessMsg:'Thank you! We received your security report and will address it with high priority.',
+    privTitle:'Privacy Issue Report',
+    privDesc:'Have concerns about your privacy or personal data? Report it and we\'ll handle your request immediately.',
+    privTypeLabel:'Issue type',
+    privUnauth:'Unauthorized access to my data',privBreach:'Potential data breach',
+    privThird:'Data sharing with third party',privOther:'Other privacy issue',
+    privDescLabel:'Description',phPrivDesc:'Describe the privacy issue in detail...',
+    submitPriv:'Submit report',
+    privSuccessMsg:'Thank you! We received your privacy report and will address it immediately.',
+    abuseTitle:'Abuse Report',
+    abuseDesc:'Noticed abusive behavior or fake data? Help us maintain a safe community.',
+    abuseTypeLabel:'Type of abuse',
+    abuseFake:'Fake data / fake account',abuseHarass:'Harassment',
+    abuseSpam:'Spam messages',abuseOther:'Other abuse',
+    abuseDescLabel:'Description',phAbuseDesc:'Describe the abuse in detail... What happened? Who is involved?',
+    submitAbuse:'Submit report',
+    abuseSuccessMsg:'Thank you! We received your abuse report and will address it immediately.',
+    suggestTitle:'Suggestions & Improvements',
+    suggestDesc:'Have an idea to improve the app? We\'d love to hear it! Every suggestion helps build a better platform.',
+    suggestDescLabel:'Your suggestion',phSuggestDesc:'Write your suggestion in detail... How would it improve the app?',
+    submitSuggest:'Submit suggestion 💡',
+    suggestSuccessMsg:'Thank you! We appreciate your suggestion and will consider it.',
+    infoTitle:'Contact Information',
+    infoDesc:'Reach out to us directly through any of the channels below.',
+    openEmail:'Open email app',
+    copyBtn:'Copy', copiedBtn:'Copied ✓',
+    reportIssue:'Report an issue on GitHub',
+    footerNote:'Qatra — Open-source community blood donation platform in Algeria 🇩🇿',
+    toastError:'Error, please try again', fieldRequired:'This field is required',
+    toastCopied:'Copied ✓'
+  },
+  fr: {
+    backToApp:'← Retour à l\'application', pageTitle:'Contactez-nous',
+    pageSubtitle:'Nous aimons vous écouter — signalez un problème ou envoyez une suggestion',
+    tabBug:'🐛 Bug', tabSecurity:'🔒 Sécurité',
+    tabPrivacy:'🛡️ Confidentialité', tabAbuse:'🚫 Abus',
+    tabSuggest:'💡 Suggestions', tabInfo:'📞 Contact',
+    bugTitle:'Signaler un bug',
+    bugDesc:'Vous avez trouvé un bug ? Détaillez-le pour que nous puissions le corriger.',
+    bugDescLabel:'Description', phBugDesc:'Décrivez le bug en détail... Qu\'est-ce qui s\'est passé ? Quelles étapes avez-vous suivies ?',
+    labelEmail:'Email', optionalLabel:'(optionnel)',
+    submitBug:'Envoyer le rapport',
+    bugSuccessMsg:'Merci ! Nous avons reçu votre rapport et vous répondrons bientôt.',
+    secTitle:'Signaler un problème de sécurité',
+    secDesc:'Vous avez découvert une faille de sécurité ? Veuillez la signaler de manière responsable. Nous apprécions vos efforts pour protéger la plateforme.',
+    secEncrypted:'🔒 Tous les rapports de sécurité sont traités en toute confidentialité. Vous pouvez signaler anonymement.',
+    secDescLabel:'Description de la vulnérabilité', phSecDesc:'Décrivez la vulnérabilité... Comment peut-elle être exploitée ? Quel est l\'impact potentiel ?',
+    secSeverity:'Niveau de gravité',
+    sevLow:'Faible',sevMedium:'Moyen',sevHigh:'Élevé',sevCritical:'Critique',
+    submitSec:'Envoyer le rapport de sécurité',
+    secSuccessMsg:'Merci ! Nous avons reçu votre rapport de sécurité et le traiterons en priorité.',
+    privTitle:'Signaler un problème de confidentialité',
+    privDesc:'Vous avez des préoccupations concernant votre vie privée ou vos données personnelles ? Signalez-le et nous traiterons votre demande immédiatement.',
+    privTypeLabel:'Type de problème',
+    privUnauth:'Accès non autorisé à mes données',privBreach:'Fuite de données potentielle',
+    privThird:'Partage de données avec un tiers',privOther:'Autre problème de confidentialité',
+    privDescLabel:'Description',phPrivDesc:'Décrivez le problème de confidentialité en détail...',
+    submitPriv:'Envoyer le rapport',
+    privSuccessMsg:'Merci ! Nous avons reçu votre rapport de confidentialité et le traiterons immédiatement.',
+    abuseTitle:'Signaler un abus',
+    abuseDesc:'Vous avez remarqué un comportement abusif ou des données fictives ? Aidez-nous à maintenir un environnement sûr.',
+    abuseTypeLabel:'Type d\'abus',
+    abuseFake:'Données fictives / faux compte',abuseHarass:'Harcèlement',
+    abuseSpam:'Messages indésirables',abuseOther:'Autre abus',
+    abuseDescLabel:'Description',phAbuseDesc:'Décrivez l\'abus en détail... Qui est concerné ?',
+    submitAbuse:'Envoyer le rapport',
+    abuseSuccessMsg:'Merci ! Nous avons reçu votre signalement et le traiterons immédiatement.',
+    suggestTitle:'Suggestions et améliorations',
+    suggestDesc:'Vous avez une idée pour améliorer l\'application ? Nous aimons l\'entendre ! Chaque suggestion contribue à une meilleure plateforme.',
+    suggestDescLabel:'Votre suggestion',phSuggestDesc:'Écrivez votre suggestion en détail... Comment améliorerait-elle l\'application ?',
+    submitSuggest:'Envoyer la suggestion 💡',
+    suggestSuccessMsg:'Merci ! Nous apprécions votre suggestion et la prendrons en compte.',
+    infoTitle:'Coordonnées',
+    infoDesc:'Contactez-nous directement via l\'un des canaux ci-dessous.',
+    openEmail:'Ouvrir l\'application mail',
+    copyBtn:'Copier', copiedBtn:'Copié ✓',
+    reportIssue:'Signaler un problème sur GitHub',
+    footerNote:'Qatra — Plateforme communautaire open-source de don de sang en Algérie 🇩🇿',
+    toastError:'Erreur, veuillez réessayer', fieldRequired:'Ce champ est requis',
+    toastCopied:'Copié ✓'
+  }
+};
+
+function t(k){return T[currentLang][k]||T['ar'][k]||k}
+
+let currentLang = localStorage.getItem('qatra_lang') || 'ar';
+
+function applyLang(){
+  document.documentElement.lang=currentLang;
+  document.documentElement.dir=currentLang==='ar'?'rtl':'ltr';
+  document.title=currentLang==='ar'?'تواصل معنا | قطرة':currentLang==='fr'?'Contactez-nous | Qatra':'Contact Us | Qatra';
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const k=el.dataset.i18n;
+    if(T[currentLang][k]!==undefined) el.textContent=T[currentLang][k];
+  });
+  document.querySelectorAll('[data-i18n-ph]').forEach(el=>{
+    const k=el.dataset.i18nPh;
+    if(T[currentLang][k]!==undefined) el.placeholder=T[currentLang][k];
+  });
+  document.querySelectorAll('.lang-opt').forEach(o=>{
+    o.classList.toggle('active',o.dataset.lang===currentLang);
+  });
+}
+
+document.querySelectorAll('.lang-opt').forEach(o=>{
+  o.addEventListener('click',()=>{
+    currentLang=o.dataset.lang;
+    localStorage.setItem('qatra_lang',currentLang);
+    applyLang();
+  });
+});
+
+function showToast(msg,type){
+  const el=document.getElementById('toast');
+  el.textContent=msg;
+  el.className='toast '+type+' show';
+  setTimeout(()=>el.classList.remove('show'),2500);
+}
+
+document.querySelectorAll('.nav-tab').forEach(tab=>{
+  tab.addEventListener('click',()=>{
+    document.querySelectorAll('.nav-tab').forEach(t=>{t.classList.remove('active');t.setAttribute('aria-selected','false')});
+    document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+    tab.classList.add('active');
+    tab.setAttribute('aria-selected','true');
+    document.getElementById('sec-'+tab.dataset.tab).classList.add('active');
+  });
+});
+
+document.querySelectorAll('.copy-btn[data-copy]').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    navigator.clipboard.writeText(btn.dataset.copy).then(()=>{
+      btn.textContent=t('toastCopied');
+      setTimeout(()=>btn.textContent=t('copyBtn'),1500);
+    });
+  });
+});
+
+function genId(){return 'RPT-'+Date.now().toString(36).toUpperCase()+'-'+Math.random().toString(36).substring(2,6).toUpperCase()}
+
+document.getElementById('submitBug').addEventListener('click',()=>{
+  const desc=document.getElementById('bugDesc').value.trim();
+  if(!desc){showToast(t('fieldRequired'),'error');return}
+  document.getElementById('bugSuccess').style.display='block';
+  document.getElementById('submitBug').disabled=true;
+  showToast(t('bugSuccessMsg'),'success');
+});
+
+document.getElementById('submitSec').addEventListener('click',()=>{
+  const desc=document.getElementById('secDesc').value.trim();
+  if(!desc){showToast(t('fieldRequired'),'error');return}
+  document.getElementById('secSuccess').style.display='block';
+  document.getElementById('submitSec').disabled=true;
+  showToast(t('secSuccessMsg'),'success');
+});
+
+document.getElementById('submitPriv').addEventListener('click',()=>{
+  const desc=document.getElementById('privDesc').value.trim();
+  if(!desc){showToast(t('fieldRequired'),'error');return}
+  document.getElementById('privSuccess').style.display='block';
+  document.getElementById('submitPriv').disabled=true;
+  showToast(t('privSuccessMsg'),'success');
+});
+
+document.getElementById('submitAbuse').addEventListener('click',()=>{
+  const desc=document.getElementById('abuseDesc').value.trim();
+  if(!desc){showToast(t('fieldRequired'),'error');return}
+  document.getElementById('abuseSuccess').style.display='block';
+  document.getElementById('submitAbuse').disabled=true;
+  showToast(t('abuseSuccessMsg'),'success');
+});
+
+document.getElementById('submitSuggest').addEventListener('click',()=>{
+  const desc=document.getElementById('suggestDesc').value.trim();
+  if(!desc){showToast(t('fieldRequired'),'error');return}
+  document.getElementById('suggestSuccess').style.display='block';
+  document.getElementById('submitSuggest').disabled=true;
+  showToast(t('suggestSuccessMsg'),'success');
+});
+
+applyLang();
+</script>
+</body>
+</html>

@@ -3,12 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src https://wqlhjcchqtnkcjcocejf.supabase.co; frame-ancestors 'none'; base-uri 'self'; form-action 'self'">
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="index, follow">
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta http-equiv="X-Frame-Options" content="DENY">
+<meta name="theme-color" content="#05060B">
 <title>قطرة | Qatra — دليل المتبرعين بالدم</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' style='stop-color:%23ff4444'/><stop offset='100%25' style='stop-color:%23cc0000'/></linearGradient></defs><path d='M50 5 C50 5,85 45,85 62 C85 82,68 95,50 95 C32 95,15 82,15 62 C15 45,50 5,50 5Z' fill='url(%23g)'/></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800;900&family=Rajdhani:wght@400;500;600;700&family=Tajawal:wght@400;500;700;800;900&family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" integrity="sha384-sgcvElP/LlNRtORGYFLO/9K/bENcpJK19HgvqslWXog6d8f/Va4TpltGiBlGntCM" crossorigin="anonymous"></script>
 <script src="communes_compact.js"></script>
 <script src="libs/qrcode.js"></script>
 <style>
@@ -416,6 +422,15 @@ text-align:center;padding:12px;margin-bottom:12px;
 background:rgba(255,209,102,0.05);border:1px dashed rgba(255,209,102,0.25);
 border-radius:var(--radius);font-size:13px;color:var(--amber);line-height:1.7;
 }
+.pg-btn{
+background:var(--glass);border:1px solid var(--border);
+color:var(--ink);padding:8px 16px;border-radius:var(--radius-sm);
+font-weight:700;font-size:13px;cursor:pointer;transition:all .18s;
+}
+.pg-btn:hover{border-color:var(--cyan);color:var(--cyan)}
+.pg-btn.active{background:rgba(255,27,76,0.15);border-color:var(--red2);color:var(--red2)}
+.pg-btn:disabled{opacity:0.3;cursor:not-allowed}
+.pg-info{font-size:12px;color:var(--muted);display:flex;align-items:center}
 </style>
 </head>
 <body>
@@ -475,6 +490,7 @@ border-radius:var(--radius);font-size:13px;color:var(--amber);line-height:1.7;
   <div class="results">
     <div class="results-count" id="resultsCount"></div>
     <div id="donorList"></div>
+    <div id="paginationControls" style="display:flex;justify-content:center;gap:8px;margin:12px 0"></div>
     <div class="review-section" id="reviewSection">
       <div class="review-title" data-i18n="reviewTitle">💬 ماذا يقول المستخدمون</div>
       <div id="reviewList"></div>
@@ -488,13 +504,21 @@ border-radius:var(--radius);font-size:13px;color:var(--amber);line-height:1.7;
     <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/></svg>
   </button>
   <button class="fab fab-main" id="btnRegister" data-i18n="registerBtnLabel">+ سجّل كمتبرع</button>
-  <button class="fab fab-contact" id="btnQR" title="QR Code" onclick="showQR()">
+  <button class="fab fab-contact" id="btnQR" title="QR Code">
     <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M3 11h2v2H3v-2zm0-4h2v2H3V7zm4 4h2v2H7v-2zm0-4h2v2H7V7zm-4 8h2v2H3v-2zm0-4h2v2H3v-2zm8 4h2v2h-2v-2zm0-4h2v2h-2v-2zm4 4h2v2h-2v-2zm0-4h2v2h-2v-2zm4 0h2v2h-2v-2zm0 4h2v2h-2v-2zm0-8h2v2h-2v-2zm-4 0h2v2h-2v-2zm-4 0h2v2h-2v-2zm-4 0h2v2H7v-2zm4 4h2v2h-2v-2zm4 0h2v2h-2v-2zm4 0h2v2h-2v-2z"/></svg>
   </button>
 </div>
 
 <div class="footer-note">
   <span data-i18n="footerNote">بياناتك تُعرض علنًا للمحتاجين ليتمكنوا من التواصل معك مباشرة.</span>
+  <div style="margin-top:8px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap">
+    <a href="privacy-policy.html" style="color:var(--cyan);font-size:11px;text-decoration:underline" data-i18n="privacyTitle">سياسة الخصوصية</a>
+    <a href="terms-of-service.html" style="color:var(--cyan);font-size:11px;text-decoration:underline" data-i18n="termsTitle">شروط الاستخدام</a>
+    <a href="disclaimer.html" style="color:var(--cyan);font-size:11px;text-decoration:underline" data-i18n="disclaimerTitle">إخلاء المسؤولية</a>
+    <a href="my-data.html" style="color:var(--cyan);font-size:11px;text-decoration:underline" data-i18n="myDataTitle">بياناتي</a>
+    <a href="delete-data.html" style="color:var(--red2);font-size:11px;text-decoration:underline" data-i18n="deleteDataTitle">حذف بياناتي</a>
+    <a href="contact.html" style="color:var(--cyan);font-size:11px;text-decoration:underline" data-i18n="contactPageTitle">تواصل معنا</a>
+  </div>
 </div>
 
 <!-- Register Modal -->
@@ -506,10 +530,10 @@ border-radius:var(--radius);font-size:13px;color:var(--amber);line-height:1.7;
     </div>
     <div id="registerFormWrap">
       <label data-i18n="labelName">الاسم الكامل</label>
-      <input type="text" id="fName" data-i18n-ph="phName" placeholder="اسمك الكامل">
+      <input type="text" id="fName" data-i18n-ph="phName" placeholder="اسمك الكامل" maxlength="100" required>
 
       <label data-i18n="labelPhone">رقم الهاتف</label>
-      <input type="tel" id="fPhone" placeholder="07xxxxxxxx">
+      <input type="tel" id="fPhone" placeholder="07xxxxxxxx" pattern="^0[5-7][0-9]{8}$" maxlength="10" required>
 
       <label data-i18n="labelType">زمرة الدم</label>
       <select id="fType">
@@ -534,9 +558,21 @@ border-radius:var(--radius);font-size:13px;color:var(--amber);line-height:1.7;
       </div>
 
       <label data-i18n="labelFacebook" style="display:flex;align-items:center;gap:6px">🔗 فيسبوك <span style="font-weight:400;color:var(--muted);font-size:11px" data-i18n="optionalLabel">(اختياري)</span></label>
-      <input type="url" id="fFacebook" placeholder="https://facebook.com/username" dir="ltr" style="text-align:left">
+      <input type="url" id="fFacebook" placeholder="https://facebook.com/username" dir="ltr" style="text-align:left" maxlength="255">
 
       <button class="submit-btn" id="submitRegister" data-i18n="submitRegister">تسجيل بياناتي</button>
+      <div class="check-row" style="margin-top:10px">
+        <input type="checkbox" id="fConsentPrivacy">
+        <span><span data-i18n="consentPrivacyLabel">أقرأ وتوافق على</span> <a href="privacy-policy.html" target="_blank" style="color:var(--cyan);text-decoration:underline" data-i18n="privacyTitle">سياسة الخصوصية</a></span>
+      </div>
+      <div class="check-row" style="margin-top:6px">
+        <input type="checkbox" id="fConsentTerms">
+        <span><span data-i18n="consentTermsLabel">أقرأ وتوافق على</span> <a href="terms-of-service.html" target="_blank" style="color:var(--cyan);text-decoration:underline" data-i18n="termsTitle">شروط الاستخدام</a></span>
+      </div>
+      <div class="check-row" style="margin-top:6px">
+        <input type="checkbox" id="fConsent">
+        <span data-i18n="consentLabel">أوافق على عرض بياناتي علنًا في دليل المتبرعين</span>
+      </div>
     </div>
     <div class="success-box" id="registerSuccess" style="display:none">
       <div class="drop-logo"></div>
@@ -545,7 +581,7 @@ border-radius:var(--radius);font-size:13px;color:var(--amber);line-height:1.7;
       <div data-i18n="successCountSuffix" style="margin-top:-4px">متبرع منقذ</div>
       <div style="margin-top:8px;color:var(--muted);font-size:12.5px" data-i18n="successShareHint">شارك التطبيق لزيادة فرص إنقاذ الأرواح</div>
       <button class="share-link-btn" id="shareBtn" data-i18n="shareBtn">نسخ رابط المشاركة</button>
-      <div class="review-prompt" onclick="closeModal('overlayRegister');document.getElementById('reviewPrompt').click();" style="margin-top:12px" data-i18n="reviewAfterRegister">💬 هل حصلت على الزمرة التي تبحث عنها؟ شارك تجربتك!</div>
+      <div class="review-prompt" id="reviewAfterRegister" style="margin-top:12px" data-i18n="reviewAfterRegister">💬 هل حصلت على الزمرة التي تبحث عنها؟ شارك تجربتك!</div>
     </div>
   </div>
 </div>
@@ -563,7 +599,7 @@ border-radius:var(--radius);font-size:13px;color:var(--amber);line-height:1.7;
         <div class="contact-row">
           <div class="contact-link" style="justify-content:space-between">
             <span style="display:flex;align-items:center;gap:10px"><span class="ic">✉️</span> y220890@gmail.com</span>
-            <button class="copy-btn" onclick="copyText('y220890@gmail.com',this)" data-i18n="copyBtn">نسخ</button>
+            <button class="copy-btn" id="copyEmailBtn" data-i18n="copyBtn">نسخ</button>
           </div>
           <a class="contact-link" href="mailto:y220890@gmail.com">
             <span class="ic">📨</span> <span data-i18n="openEmail">فتح تطبيق البريد</span>
@@ -582,7 +618,7 @@ border-radius:var(--radius);font-size:13px;color:var(--amber);line-height:1.7;
       </div>
 
       <label data-i18n="labelSuggestion">أرسل اقتراحك مباشرة</label>
-      <textarea id="sugText" data-i18n-ph="phSuggest" placeholder="اكتب اقتراحك هنا..."></textarea>
+      <textarea id="sugText" data-i18n-ph="phSuggest" placeholder="اكتب اقتراحك هنا..." maxlength="2000"></textarea>
       <button class="submit-btn" id="submitSuggestion" data-i18n="submitSuggestion">إرسال الاقتراح</button>
     </div>
     <div class="success-box" id="suggestSuccess" style="display:none">
@@ -603,8 +639,8 @@ border-radius:var(--radius);font-size:13px;color:var(--amber);line-height:1.7;
       <canvas id="posterCanvas" width="1080" height="1920"></canvas>
     </div>
     <div class="poster-actions">
-      <button class="submit-btn poster-dl" id="btnDownloadPoster" onclick="downloadPoster()">📥 تحميل كصورة JPEG</button>
-      <button class="submit-btn poster-print" id="btnPrintPoster" onclick="printPoster()">🖨️ طباعة مباشرة</button>
+      <button class="submit-btn poster-dl" id="btnDownloadPoster">📥 تحميل كصورة JPEG</button>
+      <button class="submit-btn poster-print" id="btnPrintPoster">🖨️ طباعة مباشرة</button>
     </div>
   </div>
 </div>
@@ -669,12 +705,52 @@ border-radius:var(--radius);font-size:13px;color:var(--amber);line-height:1.7;
         <span class="star-icon" data-star="5">★</span>
       </div>
       <label data-i18n="labelReviewComment">تعليقك <span style="font-weight:400;color:var(--muted);font-size:11px" data-i18n="optionalLabel2">(اختياري)</span></label>
-      <textarea id="fReviewComment" data-i18n-ph="phReview" placeholder="اكتب تجربتك هنا... ساعد الآخرين بتعليقك!" rows="3"></textarea>
+      <textarea id="fReviewComment" data-i18n-ph="phReview" placeholder="اكتب تجربتك هنا... ساعد الآخرين بتعليقك!" rows="3" maxlength="1000"></textarea>
       <button class="submit-btn" id="submitReview" data-i18n="submitReview">إرسال التقييم</button>
     </div>
     <div class="success-box" id="reviewSuccess" style="display:none">
       <div class="drop-logo"></div>
       <div data-i18n="reviewSuccessText">شكرًا لك! تقييمك يساعد في إنقاذ أرواح 🙏</div>
+    </div>
+  </div>
+</div>
+
+<!-- Privacy Policy Modal -->
+<div class="overlay" id="overlayPrivacy">
+  <div class="modal">
+    <div class="modal-head">
+      <h2 data-i18n="privacyTitle">سياسة الخصوصية</h2>
+      <button class="close-x" data-close="overlayPrivacy">✕</button>
+    </div>
+    <div style="line-height:2;font-size:14px;color:var(--ink)">
+      <p data-i18n="privacyText1">تجمع قطرة بياناتك الشخصية لتمكين المتبرعين الآخرين من التواصل معك مباشرة عند الحاجة.</p>
+      <p data-i18n="privacyText2" style="margin-top:12px">بياناتك تُعرض علنًا في دليل المتبرعين. لا تُشارك مع أطراف ثالثة ولا تُستخدم لأغراض تسويقية.</p>
+      <p data-i18n="privacyText3" style="margin-top:12px">يمكنك حذف بياناتك في أي وقت عن طريق التواصل معنا عبر البريد الإلكتروني.</p>
+    </div>
+    <div style="margin-top:16px;padding-top:14px;border-top:1px dashed var(--border)">
+      <a href="#" id="openDelete" style="color:var(--red2);font-size:13px;font-weight:700;text-decoration:underline" data-i18n="deleteTitle">حذف الحساب</a>
+    </div>
+  </div>
+</div>
+
+<!-- Account Deletion Modal -->
+<div class="overlay" id="overlayDelete">
+  <div class="modal">
+    <div class="modal-head">
+      <h2 data-i18n="deleteTitle">حذف الحساب</h2>
+      <button class="close-x" data-close="overlayDelete">✕</button>
+    </div>
+    <div id="deleteFormWrap">
+      <div style="font-size:13px;color:var(--muted);line-height:1.8;margin-bottom:14px" data-i18n="deleteDesc">
+        لحذف بياناتك من قطرة، أدخل رقم الهاتف الذي سجّلت به. سيتم حذف جميع بياناتك نهائياً ولا يمكن التراجع عن هذا الإجراء.
+      </div>
+      <label data-i18n="labelPhone">رقم الهاتف</label>
+      <input type="tel" id="delPhone" placeholder="07xxxxxxxx" pattern="^0[5-7][0-9]{8}$" maxlength="10" required>
+      <button class="submit-btn" id="submitDelete" style="background:linear-gradient(135deg,#cc0000,#ff4444)" data-i18n="submitDelete">حذف بياناتي نهائياً</button>
+    </div>
+    <div class="success-box" id="deleteSuccess" style="display:none">
+      <div class="drop-logo"></div>
+      <div data-i18n="deleteSuccessText">تم حذف بياناتك بنجاح. شكرًا لك.</div>
     </div>
   </div>
 </div>
@@ -765,6 +841,8 @@ let selectedType = "";
 let selectedWilaya = "";
 let selectedCommune = "";
 let donors = [];
+let currentPage = 0;
+const PAGE_SIZE = 20;
 
 /* ===================== i18n ===================== */
 const T = {
@@ -819,7 +897,31 @@ const T = {
     phReview:"اكتب تجربتك هنا... ساعد الآخرين بتعليقك!", submitReview:"إرسال التقييم",
     reviewSuccessText:"شكرًا لك! تقييمك يساعد في إنقاذ أرواح 🙏",
     ratingSuccess:"شكراً لتقييمك! ⭐", ratingFailed:"حدث خطأ، حاول مرة أخرى",
-    ratingCountSuffix:"تقييم", ratingSelectStars:"الرجاء اختيار عدد النجوم"
+    ratingCountSuffix:"تقييم", ratingSelectStars:"الرجاء اختيار عدد النجوم",
+    alertCooldown:"الرجاء الانتظار {s} ثانية قبل المحاولة مجددًا",
+    alertInvalidName:"الاسم غير صحيح: يجب أن يكون بين 2 و 100 حرف",
+    alertInvalidPhone:"رقم الهاتف غير صحيح: يجب أن يبدأ بـ 05 أو 06 أو 07 متبوعا بـ 8 أرقام",
+    alertInvalidFacebook:"رابط فيسبوك غير صحيح: يجب أن يبدأ بـ https://facebook.com/ أو https://fb.com/",
+    alertInvalidDate:"تاريخ آخر تبرع لا يمكن أن يكون في المستقبل",
+    privacyTitle:"سياسة الخصوصية",
+    privacyText1:"تجمع قطرة بياناتك الشخصية (الاسم، رقم الهاتف، الزمرة، الولاية، البلدية) لتمكين المتبرعين الآخرين من التواصل معك مباشرة عند الحاجة.",
+    privacyText2:"بياناتك تُعرض علنًا في دليل المتبرعين. لا تُشارك مع أطراف ثالثة ولا تُستخدم لأغراض تسويقية.",
+    privacyText3:"يمكنك حذف بياناتك في أي وقت عن طريق التواصل معنا عبر البريد الإلكتروني.",
+    consentLabel:"أوافق على عرض بياناتي علنًا في دليل المتبرعين",
+    consentPrivacyLabel:"أقرأ وتوافق على",
+    consentTermsLabel:"أقرأ وتوافق على",
+    termsTitle:"شروط الاستخدام",
+    alertConsentRequired:"يجب الموافقة على سياسة الخصوصية وشروط الاستخدام وعرض البيانات علنًا للتسجيل",
+    disclaimerTitle:"إخلاء المسؤولية",
+    myDataTitle:"بياناتي",
+    deleteDataTitle:"حذف بياناتي",
+    contactPageTitle:"تواصل معنا",
+    deleteTitle:"حذف الحساب", deleteDesc:"لحذف بياناتك من قطرة، أدخل رقم الهاتف الذي سجّلت به. سيتم حذف جميع بياناتك نهائياً ولا يمكن التراجع عن هذا الإجراء.",
+    submitDelete:"حذف بياناتي نهائياً", deleteSuccessText:"تم حذف بياناتك بنجاح. شكرًا لك.",
+    alertDeleteConfirm:"هل أنت متأكد من حذف بياناتك؟ هذا الإجراء لا يمكن التراجع عنه.",
+    alertDeletePhone:"أدخل رقم هاتف صحيح للحذف",
+    alertDeleteNotFound:"لم يتم العثور على حساب بهذا الرقم",
+    alertDeleteAuthRequired:"حذف الحساب يتطلب تسجيل الدخول. سيتم إضافة هذه الميزة قريباً."
   },
   en: {
     brand:"Qatra", heroTitle:"Find a blood donor in seconds",
@@ -872,7 +974,108 @@ const T = {
     phReview:"Write your experience here... Help others with your comment!", submitReview:"Submit rating",
     reviewSuccessText:"Thank you! Your rating helps save lives 🙏",
     ratingSuccess:"Thanks for rating! ⭐", ratingFailed:"Something went wrong, try again",
-    ratingCountSuffix:"ratings", ratingSelectStars:"Please select a star rating"
+    ratingCountSuffix:"ratings", ratingSelectStars:"Please select a star rating",
+    alertCooldown:"Please wait {s} seconds before trying again",
+    alertInvalidName:"Invalid name: 2-100 characters, no special characters",
+    alertInvalidPhone:"Invalid phone: must start with 05, 06, or 07 followed by 8 digits",
+    alertInvalidFacebook:"Invalid Facebook URL: must start with https://facebook.com/ or https://fb.com/",
+    alertInvalidDate:"Last donation date cannot be in the future",
+    privacyTitle:"Privacy Policy",
+    privacyText1:"Qatra collects your personal data (name, phone, blood type, wilaya, commune) to enable other donors to contact you directly when needed.",
+    privacyText2:"Your data is displayed publicly in the donor directory. It is not shared with third parties or used for marketing purposes.",
+    privacyText3:"You can delete your data at any time by contacting us via email.",
+    consentLabel:"I agree to display my data publicly in the donor directory",
+    consentPrivacyLabel:"I have read and agree to the",
+    consentTermsLabel:"I have read and agree to the",
+    termsTitle:"Terms of Service",
+    alertConsentRequired:"You must agree to the Privacy Policy, Terms of Service, and public data display to register",
+    disclaimerTitle:"Disclaimer",
+    myDataTitle:"My Data",
+    deleteDataTitle:"Delete My Data",
+    contactPageTitle:"Contact Us",
+    deleteTitle:"Delete Account", deleteDesc:"To delete your data from Qatra, enter the phone number you registered with. All your data will be permanently deleted and this action cannot be undone.",
+    submitDelete:"Permanently delete my data", deleteSuccessText:"Your data has been deleted successfully. Thank you.",
+    alertDeleteConfirm:"Are you sure you want to delete your data? This action cannot be undone.",
+    alertDeletePhone:"Enter a valid phone number to delete",
+    alertDeleteNotFound:"No account found with this phone number",
+    alertDeleteAuthRequired:"Account deletion requires authentication. This feature will be available soon."
+  },
+  fr: {
+    brand:"Qatra", heroTitle:"Trouvez un donneur de sang en quelques secondes",
+    heroSubtitle:"Votre don purifie votre corps et sauve des vies — inscrivez-vous maintenant et soyez la raison du changement de vie de quelqu'un.",
+    heroStatSuffix:"donneurs inscrits", sectionLabelType:"Sélectionnez le groupe sanguin requis",
+    selectWilaya:"— Sélectionnez la wilaya —", selectCommune:"— Sélectionnez la commune —",
+    clearFilters:"✕ Effacer les filtres",
+    resultsCountSuffix:"donneurs correspondants",
+    emptyNone:"Aucun donneur inscrit pour l'instant. Soyez le premier !",
+    emptyNoMatch:"Aucun donneur ne correspond à cette recherche",
+    call:"Appeler", whatsapp:"WhatsApp",
+    eligYes:"Disponible pour donner maintenant", eligNever:"Jamais donné — disponible",
+    eligDaysPrefix:"Besoin de", eligDaysSuffix:"jour(s) supplémentaire(s)",
+    registerBtnLabel:"+ S'inscrire comme donneur",
+    footerNote:"Vos informations sont affichées publiquement pour que les personnes dans le besoin puissent vous contacter directement.",
+    registerModalTitle:"S'inscrire comme donneur 🩸", labelName:"Nom complet", phName:"Votre nom complet",
+    labelPhone:"Numéro de téléphone", labelType:"Groupe sanguin", optSelectType:"Sélectionner le type",
+    labelWilaya:"Wilaya", optSelectWilaya:"Sélectionner la wilaya",
+    labelCommune:"Commune", optSelectCommune:"Sélectionner la commune",
+    labelLastDonation:"Date du dernier don", neverDonatedLabel:"Je n'ai jamais donné auparavant",
+    submitRegister:"Enregistrer mes informations", savingText:"Enregistrement...",
+    successThanks:"Merci ! Vous avez rejoint", successCountSuffix:"donneurs sauveurs de vies",
+    successShareHint:"Partagez l'application pour sauver plus de vies", shareBtn:"Copier le lien de partage", shareCopied:"Copié ✓",
+    contactModalTitle:"Contactez-nous 💬", contactEmail:"E-mail",
+    contactWhatsApp:"WhatsApp", openEmail:"Ouvrir l'application mail",
+    copyBtn:"Copier", copiedBtn:"Copié ✓",
+    labelSuggestion:"Envoyez votre suggestion", phSuggest:"Écrivez votre suggestion ici...",
+    submitSuggestion:"Envoyer la suggestion", suggestSuccessText:"Merci ! Votre suggestion a été reçue 🙏",
+    posterModalTitle:"Affiche QR imprimable 🖨️",
+    posterCaption:"Donner du sang purifie votre corps et prolonge votre vie 🩸",
+    posterHint:"Scannez le code et inscrivez-vous comme donneur — soyez la raison du sauvetage d'une vie",
+    posterDownload:"📥 Télécharger en JPEG",
+    posterPrint:"🖨️ Imprimer directement",
+    alertFillRequired:"Veuillez remplir le nom, le téléphone, le groupe sanguin, la wilaya et la commune",
+    alertSuggestEmpty:"Veuillez écrire votre suggestion",
+    loadingDonors:"Chargement de la liste des donneurs...",
+    errorGeneric:"Une erreur s'est produite, veuillez réessayer",
+    configWarning:"⚠️ Base de données non connectée. Ajoutez les identifiants Supabase dans le code pour activer l'inscription et la recherche.",
+    km:"km",
+    aboutTagline:"Votre don purifie votre corps et sauve des vies",
+    aboutMessage1:"Le don du sang purifie votre corps des toxines, renouvelle vos cellules et renforce votre santé. Chaque don apporte la vie et l'allonge.",
+    aboutMessage2:"Le don du sang réduit le risque de crises cardiaques et de maladies chroniques. Avec Qatra, soyez le sauveur et protégez vos proches.",
+    aboutStatDonors:"donneurs inscrits", aboutStatWilayas:"wilayas", aboutStatCommunes:"communes",
+    aboutMessage3:"N'attendez pas d'en avoir besoin — inscrivez-vous maintenant comme donneur et libérez le pouvoir du sang dans vos veines.",
+    aboutCta:"🩸 S'inscrire comme donneur maintenant",
+    labelFacebook:"Facebook", optionalLabel:"(optionnel)",
+    reviewTitle:"Ce que disent les utilisateurs", reviewPrompt:"L'application vous a-t-elle aidé ? Partagez votre expérience !",
+    reviewModalTitle:"Partagez votre expérience 💬", reviewPromptMsg:"💬 Avez-vous trouvé le donneur que vous cherchiez ? Un commentaire encourage les autres à s'inscrire !",
+    labelReviewComment:"Votre commentaire", optionalLabel2:"(optionnel)",
+    phReview:"Écrivez votre expérience ici... Aidez les autres !", submitReview:"Soumettre l'évaluation",
+    reviewSuccessText:"Merci ! Votre évaluation aide à sauver des vies 🙏",
+    ratingSuccess:"Merci pour votre évaluation ! ⭐", ratingFailed:"Une erreur s'est produite, réessayez",
+    ratingCountSuffix:"évaluations", ratingSelectStars:"Veuillez sélectionner un nombre d'étoiles",
+    alertCooldown:"Veuillez patienter {s} secondes avant de réessayer",
+    alertInvalidName:"Nom invalide : 2 à 100 caractères, sans caractères spéciaux",
+    alertInvalidPhone:"Téléphone invalide : doit commencer par 05, 06 ou 07 suivi de 8 chiffres",
+    alertInvalidFacebook:"URL Facebook invalide : doit commencer par https://facebook.com/ ou https://fb.com/",
+    alertInvalidDate:"La date du dernier don ne peut pas être dans le futur",
+    privacyTitle:"Politique de confidentialité",
+    privacyText1:"Qatra collecte vos données personnelles pour permettre aux autres donneurs de vous contacter directement.",
+    privacyText2:"Vos données sont affichées publiquement dans l'annuaire. Elles ne sont pas partagées avec des tiers.",
+    privacyText3:"Vous pouvez supprimer vos données à tout moment.",
+    consentLabel:"J'accepte d'afficher mes données publiquement dans l'annuaire des donneurs",
+    consentPrivacyLabel:"J'ai lu et j'accepte la",
+    consentTermsLabel:"J'ai lu et j'accepte les",
+    termsTitle:"Conditions d'utilisation",
+    alertConsentRequired:"Vous devez accepter la politique de confidentialité, les conditions d'utilisation et l'affichage public pour vous inscrire",
+    disclaimerTitle:"Avertissement",
+    myDataTitle:"Mes données",
+    deleteDataTitle:"Supprimer mes données",
+    contactPageTitle:"Contactez-nous",
+    deleteTitle:"Supprimer le compte", deleteDesc:"Pour supprimer vos données, saisissez votre numéro de téléphone. Toutes vos données seront définitivement supprimées.",
+    submitDelete:"Supprimer définitivement mes données", deleteSuccessText:"Vos données ont été supprimées avec succès. Merci.",
+    alertDeleteConfirm:"Êtes-vous sûr de vouloir supprimer vos données ? Cette action est irréversible.",
+    alertDeletePhone:"Saisissez un numéro de téléphone valide",
+    alertDeleteNotFound:"Aucun compte trouvé avec ce numéro",
+    alertDeleteAuthRequired:"La suppression du compte nécessite une authentification. Cette fonctionnalité sera bientôt disponible."
   }
 };
 
@@ -881,8 +1084,8 @@ function t(key) { return T[currentLang][key] || T['ar'][key] || key; }
 function applyLang() {
   document.documentElement.lang = currentLang;
   document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
-  document.getElementById('langLabel').textContent = currentLang === 'ar' ? 'EN' : 'AR';
-  document.title = currentLang === 'ar' ? "قطرة | دليل المتبرعين بالدم" : "Qatra | Blood Donor Directory";
+  document.getElementById('langLabel').textContent = currentLang === 'ar' ? 'EN' : currentLang === 'en' ? 'FR' : 'AR';
+  document.title = currentLang === 'ar' ? "قطرة | دليل المتبرعين بالدم" : currentLang === 'fr' ? "Qatra | Annuaire des donneurs de sang" : "Qatra | Blood Donor Directory";
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.dataset.i18n;
     if (T[currentLang][key] !== undefined) el.textContent = T[currentLang][key];
@@ -901,7 +1104,7 @@ function applyLang() {
 }
 
 document.getElementById('langToggle').onclick = () => {
-  currentLang = currentLang === 'ar' ? 'en' : 'ar';
+  currentLang = currentLang === 'ar' ? 'en' : currentLang === 'en' ? 'fr' : 'ar';
   localStorage.setItem('qatra_lang', currentLang);
   applyLang();
 };
@@ -910,7 +1113,8 @@ document.getElementById('langToggle').onclick = () => {
 function wilayaName(w) {
   if (!w) return '';
   const found = WILAYAS.find(x => x.code === w);
-  return found ? (currentLang === 'ar' ? found.ar : found.en) : w;
+  if (!found) return w;
+  return currentLang === 'fr' ? found.fr : currentLang === 'ar' ? found.ar : found.en;
 }
 function findCommuneByDbId(wCode, dbId) {
   if (!COMMUNES_GEO || !COMMUNES_GEO[wCode] || !dbId) return null;
@@ -919,7 +1123,8 @@ function findCommuneByDbId(wCode, dbId) {
 }
 function communeName(wCode, dbId) {
   const c = findCommuneByDbId(wCode, dbId);
-  return c ? (currentLang === 'ar' ? c[0] : c[1]) : '';
+  if (!c) return '';
+  return currentLang === 'fr' ? c[2] || c[1] : currentLang === 'ar' ? c[0] : c[1];
 }
 function communeFullName(wCode, dbId) {
   const w = wilayaName(wCode);
@@ -939,7 +1144,7 @@ function populateWilayaSelects() {
     WILAYAS.forEach(w => {
       const opt = document.createElement('option');
       opt.value = w.code;
-      opt.textContent = currentLang === 'ar' ? `${w.code} - ${w.ar}` : `${w.code} - ${w.en}`;
+      opt.textContent = `${w.code} - ${currentLang === 'fr' ? w.fr : currentLang === 'ar' ? w.ar : w.en}`;
       sel.appendChild(opt);
     });
     sel.value = current;
@@ -960,7 +1165,7 @@ function populateCommuneSelect(wilayaCode, selectId, keepValue) {
     COMMUNES_GEO[wilayaCode].forEach((c) => {
       const opt = document.createElement('option');
       opt.value = c[4];
-      opt.textContent = currentLang === 'ar' ? c[0] : c[1];
+      opt.textContent = currentLang === 'fr' ? (c[2] || c[1]) : currentLang === 'ar' ? c[0] : c[1];
       sel.appendChild(opt);
     });
     sel.value = prev;
@@ -973,12 +1178,14 @@ function populateCommuneSelect(wilayaCode, selectId, keepValue) {
 document.getElementById('wilayaSelect').onchange = function() {
   selectedWilaya = this.value;
   selectedCommune = "";
+  currentPage = 0;
   populateCommuneSelect(selectedWilaya, 'communeSelect', false);
   document.getElementById('communeSelect').value = "";
   renderResults();
 };
 document.getElementById('communeSelect').onchange = function() {
   selectedCommune = this.value;
+  currentPage = 0;
   renderResults();
 };
 
@@ -993,10 +1200,16 @@ const typeGrid = document.getElementById('typeGrid');
 BLOOD_TYPES.forEach(bt => {
   const btn = document.createElement('div');
   btn.className = 'type-btn';
-  btn.innerHTML = `<div class="mini-drop"></div><div>${bt}</div>`;
+  var miniDrop = document.createElement('div');
+  miniDrop.className = 'mini-drop';
+  btn.appendChild(miniDrop);
+  var btLabel = document.createElement('div');
+  btLabel.textContent = bt;
+  btn.appendChild(btLabel);
   btn.dataset.type = bt;
   btn.onclick = () => {
     selectedType = (selectedType === bt) ? "" : bt;
+    currentPage = 0;
     renderTypeGrid();
     renderResults();
   };
@@ -1015,6 +1228,7 @@ document.getElementById('clearFilters').onclick = () => {
   selectedType = "";
   selectedWilaya = "";
   selectedCommune = "";
+  currentPage = 0;
   document.getElementById('wilayaSelect').value = "";
   document.getElementById('communeSelect').value = "";
   document.getElementById('communeSelect').disabled = true;
@@ -1026,7 +1240,7 @@ document.getElementById('clearFilters').onclick = () => {
 async function loadDonors() {
   if (!sb) { donors = []; return; }
   try {
-    const { data, error } = await sb.from('donors').select('*').eq('is_available', true).order('created_at', { ascending: false });
+    const { data, error } = await sb.from('donors').select('id,full_name,phone,blood_type,wilaya_id,commune_id,facebook_url,last_donation_date').eq('is_available', true).order('created_at', { ascending: false }).limit(500);
     if (error) throw error;
     donors = (data || []).map(d => ({
       id: d.id, fullName: d.full_name, phone: d.phone, bloodType: d.blood_type,
@@ -1040,16 +1254,19 @@ async function loadDonors() {
 }
 
 async function insertDonor(d) {
+  const now = new Date().toISOString();
   const { error } = await sb.from('donors').insert([{
     full_name: d.fullName, phone: d.phone, blood_type: d.bloodType, facebook_url: d.facebook || null,
     wilaya_id: parseInt(d.wilayaCode), commune_id: parseInt(d.communeIdx),
-    last_donation_date: d.lastDonation || null
+    last_donation_date: d.lastDonation || null,
+    consent_version: '1.0', consent_date: now, consent_method: 'registration_form',
+    privacy_policy_version: '1.0', terms_version: '1.0'
   }]);
   if (error) throw error;
 }
 
-async function insertFeedback(message, contact) {
-  const { error } = await sb.from('feedback').insert([{ message, contact_info: contact || null }]);
+async function insertFeedback(message) {
+  const { error } = await sb.from('feedback').insert([{ message }]);
   if (error) throw error;
 }
 
@@ -1101,17 +1318,33 @@ function renderResults() {
 
   const wrap = document.getElementById('donorList');
   const countEl = document.getElementById('resultsCount');
-  countEl.textContent = list.length ? `${list.length} ${t('resultsCountSuffix')}` : '';
+  const pgEl = document.getElementById('paginationControls');
+  countEl.textContent = list.length ? list.length + ' ' + t('resultsCountSuffix') : '';
+
+  wrap.textContent = '';
+  pgEl.textContent = '';
 
   if (list.length === 0) {
-    wrap.innerHTML = `<div class="empty-state">
-      <div class="drop-logo"></div>
-      <div>${donors.length === 0 ? t('emptyNone') : t('emptyNoMatch')}</div>
-    </div>`;
+    const empty = document.createElement('div');
+    empty.className = 'empty-state';
+    const drop = document.createElement('div');
+    drop.className = 'drop-logo';
+    empty.appendChild(drop);
+    const msg = document.createElement('div');
+    msg.textContent = donors.length === 0 ? t('emptyNone') : t('emptyNoMatch');
+    empty.appendChild(msg);
+    wrap.appendChild(empty);
     return;
   }
 
-  wrap.innerHTML = list.map(d => {
+  const totalPages = Math.ceil(list.length / PAGE_SIZE);
+  if (currentPage >= totalPages) currentPage = totalPages - 1;
+  if (currentPage < 0) currentPage = 0;
+  const start = currentPage * PAGE_SIZE;
+  const pageList = list.slice(start, start + PAGE_SIZE);
+
+  const frag = document.createDocumentFragment();
+  pageList.forEach(function(d) {
     const elig = eligibility(d.lastDonation);
     const loc = communeFullName(d.wilayaCode, d.communeIdx);
     let dist = '';
@@ -1119,28 +1352,108 @@ function renderResults() {
       const dc = findCommuneByDbId(d.wilayaCode, d.communeIdx);
       if (dc) {
         const km = haversine(targetCommune[2], targetCommune[3], dc[2], dc[3]);
-        dist = ` · ${Math.round(km)} ${t('km')}`;
+        dist = ' \u00b7 ' + Math.round(km) + ' ' + t('km');
       }
     }
-    return `<div class="donor-card">
-      <div class="badge-drop"><span>${d.bloodType}</span></div>
-      <div class="donor-info">
-        <div class="donor-name">${esc(d.fullName)}</div>
-        <div class="donor-meta">${loc}${dist}</div>
-        <div class="elig-badge ${elig.ok ? 'elig-yes' : 'elig-no'}">${elig.label}</div>
-        <div class="donor-actions">
-          <a class="icon-btn call-btn" href="tel:${d.phone}">📞 ${t('call')}</a>
-          <a class="icon-btn wa-btn" href="https://wa.me/213${d.phone.replace(/^0/,'')}" target="_blank" rel="noopener">💬 ${t('whatsapp')}</a>
-          ${d.facebook ? `<a class="icon-btn fb-btn" href="${esc(d.facebook)}" target="_blank" rel="noopener">🔗 فيسبوك</a>` : ''}
-        </div>
-      </div>
-    </div>`;
-  }).join('');
+
+    const card = document.createElement('div');
+    card.className = 'donor-card';
+
+    const badge = document.createElement('div');
+    badge.className = 'badge-drop';
+    const badgeSpan = document.createElement('span');
+    badgeSpan.textContent = d.bloodType;
+    badge.appendChild(badgeSpan);
+    card.appendChild(badge);
+
+    const info = document.createElement('div');
+    info.className = 'donor-info';
+
+    const nameEl = document.createElement('div');
+    nameEl.className = 'donor-name';
+    nameEl.textContent = d.fullName;
+    info.appendChild(nameEl);
+
+    const metaEl = document.createElement('div');
+    metaEl.className = 'donor-meta';
+    metaEl.textContent = loc + dist;
+    info.appendChild(metaEl);
+
+    const eligEl = document.createElement('div');
+    eligEl.className = 'elig-badge ' + (elig.ok ? 'elig-yes' : 'elig-no');
+    eligEl.textContent = elig.label;
+    info.appendChild(eligEl);
+
+    const actions = document.createElement('div');
+    actions.className = 'donor-actions';
+
+    const phoneValid = /^0[5-7]\d{8}$/.test(d.phone);
+
+    if (phoneValid) {
+      const callBtn = document.createElement('a');
+      callBtn.className = 'icon-btn call-btn';
+      callBtn.setAttribute('href', 'tel:' + d.phone);
+      callBtn.textContent = '\uD83D\uDCDE ' + t('call');
+      actions.appendChild(callBtn);
+
+      const waBtn = document.createElement('a');
+      waBtn.className = 'icon-btn wa-btn';
+      waBtn.setAttribute('href', 'https://wa.me/213' + d.phone.replace(/^0/, ''));
+      waBtn.target = '_blank';
+      waBtn.rel = 'noopener noreferrer';
+      waBtn.textContent = '\uD83D\uDCAC ' + t('whatsapp');
+      actions.appendChild(waBtn);
+    }
+
+    if (d.facebook && /^https:\/\/(www\.)?(facebook|fb)\.com\//.test(d.facebook)) {
+      const fbBtn = document.createElement('a');
+      fbBtn.className = 'icon-btn fb-btn';
+      fbBtn.setAttribute('href', d.facebook);
+      fbBtn.target = '_blank';
+      fbBtn.rel = 'noopener noreferrer';
+      fbBtn.textContent = '\uD83D\uDD17 \u0641\u064a\u0633\u0628\u0648\u0643';
+      actions.appendChild(fbBtn);
+    }
+
+    info.appendChild(actions);
+    card.appendChild(info);
+    frag.appendChild(card);
+  });
+  wrap.appendChild(frag);
+
+  if (totalPages > 1) {
+    const prevBtn = document.createElement('button');
+    prevBtn.className = 'pg-btn';
+    prevBtn.textContent = currentLang === 'ar' ? '\u25c0' : '\u25c0';
+    prevBtn.disabled = currentPage === 0;
+    prevBtn.onclick = function() { currentPage--; renderResults(); window.scrollTo(0, 0); };
+    pgEl.appendChild(prevBtn);
+
+    var maxVisible = 5;
+    var pStart = Math.max(0, currentPage - Math.floor(maxVisible / 2));
+    var pEnd = Math.min(totalPages, pStart + maxVisible);
+    if (pEnd - pStart < maxVisible) pStart = Math.max(0, pEnd - maxVisible);
+
+    for (var pi = pStart; pi < pEnd; pi++) {
+      var pgBtn = document.createElement('button');
+      pgBtn.className = 'pg-btn' + (pi === currentPage ? ' active' : '');
+      pgBtn.textContent = String(pi + 1);
+      pgBtn.setAttribute('data-page', pi);
+      pgBtn.onclick = (function(p) {
+        return function() { currentPage = p; renderResults(); window.scrollTo(0, 0); };
+      })(pi);
+      pgEl.appendChild(pgBtn);
+    }
+
+    const nextBtn = document.createElement('button');
+    nextBtn.className = 'pg-btn';
+    nextBtn.textContent = currentLang === 'ar' ? '\u25b6' : '\u25b6';
+    nextBtn.disabled = currentPage >= totalPages - 1;
+    nextBtn.onclick = function() { currentPage++; renderResults(); window.scrollTo(0, 0); };
+    pgEl.appendChild(nextBtn);
+  }
 }
 
-function esc(s) {
-  return (s || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-}
 
 /* ===================== MODALS ===================== */
 function openModal(id) { document.getElementById(id).classList.add('show'); }
@@ -1149,6 +1462,32 @@ document.querySelectorAll('[data-close]').forEach(b => { b.onclick = () => close
 document.querySelectorAll('.overlay').forEach(o => {
   o.addEventListener('click', e => { if (e.target === o) o.classList.remove('show'); });
 });
+
+document.getElementById('openPrivacy').onclick = (e) => { e.preventDefault(); openModal('overlayPrivacy'); };
+document.getElementById('openDelete').onclick = (e) => {
+  e.preventDefault();
+  closeModal('overlayPrivacy');
+  document.getElementById('deleteFormWrap').style.display = 'block';
+  document.getElementById('deleteSuccess').style.display = 'none';
+  document.getElementById('delPhone').value = '';
+  openModal('overlayDelete');
+};
+
+document.getElementById('submitDelete').onclick = async () => {
+  const phone = document.getElementById('delPhone').value.trim();
+  if (!validatePhone(phone)) { alert(t('alertDeletePhone')); return; }
+  if (!confirm(t('alertDeleteConfirm'))) return;
+  if (!sb) { alert(t('configWarning')); return; }
+  try {
+    const { data, error } = await sb.from('donors').select('id').eq('phone', phone).limit(1);
+    if (error) throw error;
+    if (!data || data.length === 0) { alert(t('alertDeleteNotFound')); return; }
+    alert(t('alertDeleteAuthRequired'));
+  } catch (e) {
+    console.error('deleteAccount', e);
+    alert(t('errorGeneric'));
+  }
+};
 
 document.getElementById('brandAbout').onclick = () => {
   const countEl = document.getElementById('aboutDonorCount');
@@ -1175,6 +1514,41 @@ document.getElementById('fNeverDonated').onchange = function() {
   if (this.checked) document.getElementById('fLastDonation').value = '';
 };
 
+/* ===================== RATE LIMITING (client-side cooldowns) ===================== */
+const COOLDOWNS = { register: 300000, feedback: 60000, rating: 60000 };
+const lastAction = { register: 0, feedback: 0, rating: 0 };
+function checkCooldown(action) {
+  const now = Date.now();
+  if (now - lastAction[action] < COOLDOWNS[action]) {
+    const secs = Math.ceil((COOLDOWNS[action] - (now - lastAction[action])) / 1000);
+    return secs;
+  }
+  return 0;
+}
+function markAction(action) { lastAction[action] = Date.now(); }
+
+/* ===================== INPUT VALIDATION ===================== */
+const VALID_BLOOD = ['A+','A-','B+','B-','AB+','AB-','O+','O-'];
+const RE_PHONE = /^0[5-7]\d{8}$/;
+const RE_FB = /^https:\/\/(www\.)?(facebook|fb)\.com\//;
+
+function validateName(s) {
+  s = s.trim();
+  if (s.length < 2 || s.length > 100) return false;
+  if (/[<>\"'`]/.test(s)) return false;
+  return true;
+}
+function validatePhone(s) { return RE_PHONE.test(s.trim()); }
+function validateFacebook(s) {
+  s = s.trim();
+  if (!s) return true;
+  return RE_FB.test(s);
+}
+function validateLastDonation(s, never) {
+  if (never || !s) return true;
+  return new Date(s).getTime() <= Date.now();
+}
+
 /* ===================== REGISTER SUBMIT ===================== */
 document.getElementById('submitRegister').onclick = async () => {
   const name = document.getElementById('fName').value.trim();
@@ -1184,17 +1558,27 @@ document.getElementById('submitRegister').onclick = async () => {
   const communeIdx = document.getElementById('fCommune').value;
   const never = document.getElementById('fNeverDonated').checked;
   const lastDonation = never ? '' : document.getElementById('fLastDonation').value;
+  const facebook = document.getElementById('fFacebook').value.trim();
 
   if (!name || !phone || !bloodType || !wilayaCode || !communeIdx) { alert(t('alertFillRequired')); return; }
   if (!sb) { alert(t('configWarning')); return; }
+  if (!document.getElementById('fConsentPrivacy').checked || !document.getElementById('fConsentTerms').checked || !document.getElementById('fConsent').checked) { alert(t('alertConsentRequired')); return; }
+
+  const cooldown = checkCooldown('register');
+  if (cooldown > 0) { alert(t('alertCooldown') ? t('alertCooldown').replace('{s}', cooldown) : 'Please wait ' + cooldown + ' seconds before registering again.'); return; }
+  if (!validateName(name)) { alert(t('alertInvalidName') || 'Invalid name: 2-100 characters, no special characters'); return; }
+  if (!validatePhone(phone)) { alert(t('alertInvalidPhone') || 'Invalid phone: must be 05/06/07 followed by 8 digits'); return; }
+  if (!VALID_BLOOD.includes(bloodType)) { alert(t('alertFillRequired')); return; }
+  if (!validateFacebook(facebook)) { alert(t('alertInvalidFacebook') || 'Invalid Facebook URL: must start with https://facebook.com/ or https://fb.com/'); return; }
+  if (!validateLastDonation(lastDonation, never)) { alert(t('alertInvalidDate') || 'Last donation date cannot be in the future'); return; }
 
   const btn = document.getElementById('submitRegister');
   const orig = btn.textContent;
   btn.textContent = t('savingText'); btn.disabled = true;
 
   try {
-    const facebook = document.getElementById('fFacebook').value.trim();
     await insertDonor({ fullName: name, phone, bloodType, wilayaCode, communeIdx, lastDonation, facebook });
+    markAction('register');
     await loadDonors();
     document.getElementById('registerFormWrap').style.display = 'none';
     document.getElementById('registerSuccess').style.display = 'block';
@@ -1229,8 +1613,12 @@ document.getElementById('submitSuggestion').onclick = async () => {
   const text = document.getElementById('sugText').value.trim();
   if (!text) { alert(t('alertSuggestEmpty')); return; }
   if (!sb) { alert(t('configWarning')); return; }
+  const cooldown = checkCooldown('feedback');
+  if (cooldown > 0) { alert('Please wait ' + cooldown + ' seconds before submitting again.'); return; }
+  if (text.length > 2000) { alert('Message too long (max 2000 characters).'); return; }
   try {
     await insertFeedback(text);
+    markAction('feedback');
     document.getElementById('contactFormWrap').style.display = 'none';
     document.getElementById('suggestSuccess').style.display = 'block';
     document.getElementById('sugText').value = '';
@@ -1252,7 +1640,7 @@ let userRating = 0;
 async function loadRatings() {
   if (!sb) return;
   try {
-    const { data, error } = await sb.from('ratings').select('*').order('created_at', { ascending: false }).limit(20);
+    const { data, error } = await sb.from('ratings').select('id,stars,comment,created_at').order('created_at', { ascending: false }).limit(50);
     if (error) throw error;
     const all = data || [];
     const total = all.length;
@@ -1265,27 +1653,55 @@ async function loadRatings() {
 function renderRatingSummary(avg, total) {
   const el = document.getElementById('ratingSummary');
   if (!el) return;
-  if (total === 0) { el.innerHTML = ''; return; }
+  el.textContent = '';
+  if (total === 0) return;
   const full = Math.round(avg);
-  let stars = '';
-  for (let i = 1; i <= 5; i++) stars += `<span class="sd${i <= full ? ' lit' : ''}">★</span>`;
-  el.innerHTML = `${stars} <b>${avg.toFixed(1)}</b> <span>(${total} ${t('ratingCountSuffix')})</span>`;
+  const starsWrap = document.createElement('span');
+  starsWrap.className = 'rating-stars-display';
+  for (let i = 1; i <= 5; i++) {
+    const s = document.createElement('span');
+    s.className = 'sd' + (i <= full ? ' lit' : '');
+    s.textContent = '\u2605';
+    starsWrap.appendChild(s);
+  }
+  el.appendChild(starsWrap);
+  const avgEl = document.createElement('b');
+  avgEl.textContent = avg.toFixed(1);
+  el.appendChild(document.createTextNode(' '));
+  el.appendChild(avgEl);
+  const countEl = document.createElement('span');
+  countEl.textContent = ' (' + total + ' ' + t('ratingCountSuffix') + ')';
+  el.appendChild(countEl);
 }
 
 function renderReviews(list) {
   const el = document.getElementById('reviewList');
   if (!el) return;
-  if (list.length === 0) { el.innerHTML = ''; return; }
-  el.innerHTML = list.map(r => {
-    let stars = '';
-    for (let i = 1; i <= 5; i++) stars += i <= r.stars ? '★' : '☆';
-    const date = new Date(r.created_at).toLocaleDateString(currentLang === 'ar' ? 'ar-DZ' : 'en', { year: 'numeric', month: 'short', day: 'numeric' });
-    return `<div class="review-card">
-      <div class="rc-stars">${stars}</div>
-      ${r.comment ? `<div class="rc-text">${esc(r.comment)}</div>` : ''}
-      <div class="rc-date">${date}</div>
-    </div>`;
-  }).join('');
+  el.textContent = '';
+  if (list.length === 0) return;
+  const frag = document.createDocumentFragment();
+  list.forEach(function(r) {
+    const card = document.createElement('div');
+    card.className = 'review-card';
+    const starsEl = document.createElement('div');
+    starsEl.className = 'rc-stars';
+    var starsText = '';
+    for (var i = 1; i <= 5; i++) starsText += i <= r.stars ? '\u2605' : '\u2606';
+    starsEl.textContent = starsText;
+    card.appendChild(starsEl);
+    if (r.comment) {
+      const textEl = document.createElement('div');
+      textEl.className = 'rc-text';
+      textEl.textContent = r.comment;
+      card.appendChild(textEl);
+    }
+    const dateEl = document.createElement('div');
+    dateEl.className = 'rc-date';
+    dateEl.textContent = new Date(r.created_at).toLocaleDateString(currentLang === 'fr' ? 'fr-FR' : currentLang === 'ar' ? 'ar-DZ' : 'en', { year: 'numeric', month: 'short', day: 'numeric' });
+    card.appendChild(dateEl);
+    frag.appendChild(card);
+  });
+  el.appendChild(frag);
 }
 
 function setupRatingBar(containerId) {
@@ -1313,9 +1729,13 @@ function setupRatingBar(containerId) {
 
 async function submitRating(stars, comment) {
   if (!sb) return;
+  const cooldown = checkCooldown('rating');
+  if (cooldown > 0) { showToast('Please wait ' + cooldown + 's'); return; }
+  if (comment && comment.length > 1000) { showToast('Comment too long'); return; }
   try {
     const { error } = await sb.from('ratings').insert([{ stars, comment: comment || null }]);
     if (error) throw error;
+    markAction('rating');
     showToast(t('ratingSuccess'));
     userRating = stars;
     setupRatingBar('ratingBar');
@@ -1550,9 +1970,31 @@ function printPoster() {
   var canvas = document.getElementById('posterCanvas');
   var dataURL = canvas.toDataURL('image/jpeg', 0.95);
   var w = window.open('', '_blank');
-  w.document.write('<!DOCTYPE html><html><head><title>Qatra Poster</title><style>@page{size:A4 portrait;margin:0}body{margin:0;display:flex;justify-content:center;align-items:center;min-height:100vh;background:#fff}img{max-width:100%;max-height:100vh}</style></head><body><img src="' + dataURL + '" onload="window.print();window.close()"></body></html>');
-  w.document.close();
+  if (!w) { alert('Pop-up blocked'); return; }
+  var doc = w.document;
+  var html = doc.createElement('html');
+  var head = doc.createElement('head');
+  var title = doc.createElement('title');
+  title.textContent = 'Qatra Poster';
+  head.appendChild(title);
+  var style = doc.createElement('style');
+  style.textContent = '@page{size:A4 portrait;margin:0}body{margin:0;display:flex;justify-content:center;align-items:center;min-height:100vh;background:#fff}img{max-width:100%;max-height:100vh}';
+  head.appendChild(style);
+  html.appendChild(head);
+  var body = doc.createElement('body');
+  var img = doc.createElement('img');
+  img.src = dataURL;
+  img.onload = function() { w.print(); w.close(); };
+  body.appendChild(img);
+  html.appendChild(body);
+  doc.appendChild(html);
 }
+
+document.getElementById('btnQR').onclick = showQR;
+document.getElementById('btnDownloadPoster').onclick = downloadPoster;
+document.getElementById('btnPrintPoster').onclick = printPoster;
+document.getElementById('copyEmailBtn').onclick = function() { copyText('y220890@gmail.com', this); };
+document.getElementById('reviewAfterRegister').onclick = function() { closeModal('overlayRegister'); document.getElementById('reviewPrompt').click(); };
 document.querySelector('.footer-note').onclick = (e) => { if (e.target.closest('.footer-note')) showQR(); };
 
 /* ===================== BG CANVAS (particles) ===================== */
@@ -1563,7 +2005,8 @@ document.querySelector('.footer-note').onclick = (e) => { if (e.target.closest('
   let w, h, particles = [];
   function resize() { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; }
   resize(); window.addEventListener('resize', resize);
-  for (let i = 0; i < 40; i++) {
+  var pCount = w < 600 ? 20 : 40;
+  for (let i = 0; i < pCount; i++) {
     particles.push({ x: Math.random() * w, y: Math.random() * h, r: Math.random() * 1.5 + 0.5, dx: (Math.random() - 0.5) * 0.3, dy: (Math.random() - 0.5) * 0.3 });
   }
   function draw() {
@@ -1596,8 +2039,17 @@ document.querySelector('.footer-note').onclick = (e) => { if (e.target.closest('
 /* ===================== INIT ===================== */
 (async function init() {
   applyLang();
-  document.getElementById('donorList').innerHTML =
-    `<div class="empty-state"><div class="drop-logo"></div><div>${t('loadingDonors')}</div></div>`;
+  var loadEl = document.getElementById('donorList');
+  loadEl.innerHTML = '';
+  var loadWrap = document.createElement('div');
+  loadWrap.className = 'empty-state';
+  var loadDrop = document.createElement('div');
+  loadDrop.className = 'drop-logo';
+  loadWrap.appendChild(loadDrop);
+  var loadMsg = document.createElement('div');
+  loadMsg.textContent = t('loadingDonors');
+  loadWrap.appendChild(loadMsg);
+  loadEl.appendChild(loadWrap);
   await loadDonors();
   document.getElementById('heroCount').textContent = donors.length;
   renderResults();

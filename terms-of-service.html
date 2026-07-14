@@ -1,0 +1,1300 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>شروط الاستخدام | Qatra</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #05060B;
+            --bg-secondary: #0B0D14;
+            --bg-card: #10131C;
+            --bg-card-hover: #161A26;
+            --bg-accent: rgba(255, 27, 76, 0.08);
+            --text-primary: #EAF0FB;
+            --text-secondary: #8A93A8;
+            --text-muted: #5A6378;
+            --accent: #FF1B4C;
+            --accent-hover: #FF3366;
+            --accent-glow: rgba(255, 27, 76, 0.25);
+            --cyan: #00E5FF;
+            --cyan-glow: rgba(0, 229, 255, 0.15);
+            --border: rgba(234, 240, 251, 0.06);
+            --border-accent: rgba(255, 27, 76, 0.2);
+            --radius: 12px;
+            --radius-lg: 16px;
+            --shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+            --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Cairo', 'Tajawal', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.8;
+            font-size: 16px;
+            min-height: 100vh;
+        }
+
+        a {
+            color: var(--cyan);
+            text-decoration: none;
+            transition: color var(--transition);
+        }
+
+        a:hover, a:focus {
+            color: var(--accent);
+        }
+
+        a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        .skip-link {
+            position: absolute;
+            top: -100%;
+            right: 0;
+            background: var(--accent);
+            color: #fff;
+            padding: 8px 16px;
+            z-index: 10000;
+            font-weight: 700;
+            border-radius: 0 0 0 var(--radius);
+        }
+
+        .skip-link:focus {
+            top: 0;
+        }
+
+        /* ===== HEADER / NAVBAR ===== */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(5, 6, 11, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            padding: 0 24px;
+        }
+
+        .navbar-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 64px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Tajawal', sans-serif;
+            font-weight: 900;
+            font-size: 1.5rem;
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: var(--accent);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color var(--transition);
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--text-primary);
+        }
+
+        .lang-switcher {
+            position: relative;
+        }
+
+        .lang-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition);
+        }
+
+        .lang-btn:hover, .lang-btn:focus {
+            border-color: var(--accent);
+            background: var(--bg-card-hover);
+        }
+
+        .lang-dropdown {
+            display: none;
+            position: absolute;
+            top: calc(100% + 6px);
+            left: 0;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            min-width: 140px;
+            z-index: 100;
+        }
+
+        .lang-dropdown.open {
+            display: block;
+        }
+
+        .lang-dropdown button {
+            display: block;
+            width: 100%;
+            padding: 10px 16px;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-family: inherit;
+            font-size: 0.85rem;
+            text-align: right;
+            cursor: pointer;
+            transition: all var(--transition);
+        }
+
+        .lang-dropdown button:hover, .lang-dropdown button:focus {
+            background: var(--bg-accent);
+            color: var(--text-primary);
+        }
+
+        .lang-dropdown button.active {
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        .hamburger {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            padding: 80px 24px 48px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-accent);
+            padding: 6px 18px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 24px;
+        }
+
+        .hero h1 {
+            font-family: 'Tajawal', sans-serif;
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            font-weight: 900;
+            margin-bottom: 16px;
+            line-height: 1.3;
+        }
+
+        .hero h1 .highlight {
+            color: var(--accent);
+        }
+
+        .hero p {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* ===== LAYOUT ===== */
+        .content-wrapper {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px 80px;
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            gap: 40px;
+            align-items: start;
+        }
+
+        /* ===== SIDEBAR / TOC ===== */
+        .toc {
+            position: sticky;
+            top: 88px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 20px 0;
+            max-height: calc(100vh - 104px);
+            overflow-y: auto;
+        }
+
+        .toc-title {
+            padding: 0 20px 12px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .toc-list {
+            list-style: none;
+        }
+
+        .toc-list a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 20px;
+            color: var(--text-secondary);
+            font-size: 0.82rem;
+            font-weight: 500;
+            transition: all var(--transition);
+            border-right: 3px solid transparent;
+        }
+
+        .toc-list a:hover, .toc-list a.active {
+            color: var(--text-primary);
+            background: var(--bg-accent);
+            border-right-color: var(--accent);
+        }
+
+        .toc-list .num {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
+            border-radius: 6px;
+            background: var(--bg-secondary);
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            flex-shrink: 0;
+        }
+
+        .toc-list a:hover .num, .toc-list a.active .num {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        /* ===== ARTICLE ===== */
+        .article {
+            min-width: 0;
+        }
+
+        .section {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            margin-bottom: 20px;
+            transition: border-color var(--transition);
+        }
+
+        .section:hover {
+            border-color: rgba(234, 240, 251, 0.1);
+        }
+
+        .section-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: var(--accent);
+            color: #fff;
+            font-size: 0.8rem;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+
+        .section h2 {
+            font-family: 'Tajawal', sans-serif;
+            font-size: 1.35rem;
+            font-weight: 800;
+            margin-bottom: 16px;
+            line-height: 1.4;
+        }
+
+        .section h2 .dot {
+            color: var(--accent);
+        }
+
+        .section p, .section li {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.9;
+            margin-bottom: 12px;
+        }
+
+        .section ul, .section ol {
+            padding-right: 20px;
+            margin-bottom: 12px;
+        }
+
+        .section li {
+            margin-bottom: 8px;
+        }
+
+        .section li::marker {
+            color: var(--accent);
+        }
+
+        .highlight-box {
+            background: var(--bg-accent);
+            border: 1px solid var(--border-accent);
+            border-radius: var(--radius);
+            padding: 16px 20px;
+            margin: 16px 0;
+        }
+
+        .highlight-box p {
+            color: var(--text-primary);
+            margin-bottom: 0;
+        }
+
+        .highlight-box.cyan {
+            background: rgba(0, 229, 255, 0.05);
+            border-color: rgba(0, 229, 255, 0.15);
+        }
+
+        .highlight-box.cyan p {
+            color: var(--cyan);
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .contact-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 20px;
+            text-align: center;
+            transition: all var(--transition);
+        }
+
+        .contact-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .contact-card .icon {
+            font-size: 1.6rem;
+            margin-bottom: 8px;
+        }
+
+        .contact-card .label {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+        }
+
+        .contact-card .value {
+            font-weight: 700;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            border-top: 1px solid var(--border);
+            padding: 32px 24px;
+            text-align: center;
+        }
+
+        .footer-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            font-family: 'Tajawal', sans-serif;
+            font-weight: 900;
+            font-size: 1.2rem;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .footer-meta {
+            color: var(--text-muted);
+            font-size: 0.82rem;
+        }
+
+        .footer-meta span {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .footer-divider {
+            width: 60px;
+            height: 3px;
+            background: var(--accent);
+            border-radius: 3px;
+            margin: 16px auto;
+        }
+
+        .footer-copy {
+            color: var(--text-muted);
+            font-size: 0.78rem;
+            margin-top: 8px;
+        }
+
+        /* ===== BACK TO TOP ===== */
+        .back-to-top {
+            position: fixed;
+            bottom: 24px;
+            left: 24px;
+            width: 44px;
+            height: 44px;
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px var(--accent-glow);
+            opacity: 0;
+            visibility: hidden;
+            transition: all var(--transition);
+            z-index: 900;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px var(--accent-glow);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 900px) {
+            .content-wrapper {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            .toc {
+                position: static;
+                max-height: none;
+                margin-bottom: 24px;
+                display: none;
+            }
+
+            .toc.mobile-open {
+                display: block;
+            }
+
+            .toc-toggle {
+                display: flex;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 64px;
+                right: 0;
+                left: 0;
+                background: var(--bg-secondary);
+                border-bottom: 1px solid var(--border);
+                flex-direction: column;
+                padding: 16px 24px;
+                gap: 12px;
+            }
+
+            .nav-links.mobile-open {
+                display: flex;
+            }
+
+            .section {
+                padding: 24px 20px;
+            }
+
+            .hero {
+                padding: 60px 20px 32px;
+            }
+        }
+
+        @media (min-width: 901px) {
+            .toc-toggle {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                font-size: 15px;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ===== RTL / LTR ===== */
+        [dir="ltr"] .toc-list a {
+            border-right: none;
+            border-left: 3px solid transparent;
+        }
+
+        [dir="ltr"] .toc-list a:hover, [dir="ltr"] .toc-list a.active {
+            border-left-color: var(--accent);
+        }
+
+        [dir="ltr"] .section ul, [dir="ltr"] .section ol {
+            padding-right: 0;
+            padding-left: 20px;
+        }
+
+        [dir="ltr"] .back-to-top {
+            left: auto;
+            right: 24px;
+        }
+    </style>
+</head>
+<body>
+    <a href="#main-content" class="skip-link" aria-label="تخطي إلى المحتوى الرئيسي">تخطي إلى المحتوى</a>
+
+    <!-- ===== NAVBAR ===== -->
+    <nav class="navbar" role="navigation" aria-label="التنقل الرئيسي">
+        <div class="navbar-inner">
+            <a href="/" class="logo" aria-label="الصفحة الرئيسية — قترة">
+                <span class="logo-icon" aria-hidden="true">🩸</span>
+                <span>قُطرة</span>
+            </a>
+
+            <ul class="nav-links" id="navLinks" role="menubar">
+                <li role="none"><a href="/" role="menuitem">الرئيسية</a></li>
+                <li role="none"><a href="/privacy" role="menuitem">سياسة الخصوصية</a></li>
+                <li role="none"><a href="/terms" role="menuitem" class="active" aria-current="page">شروط الاستخدام</a></li>
+            </ul>
+
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <div class="lang-switcher">
+                    <button class="lang-btn" id="langToggle" aria-haspopup="listbox" aria-expanded="false" aria-label="تغيير اللغة">
+                        🌐 <span id="currentLang">العربية</span> ▾
+                    </button>
+                    <div class="lang-dropdown" id="langDropdown" role="listbox" aria-label="اختر اللغة">
+                        <button role="option" class="active" data-lang="ar" data-dir="rtl" data-label="العربية">العربية</button>
+                        <button role="option" data-lang="fr" data-dir="ltr" data-label="Français">Français</button>
+                        <button role="option" data-lang="en" data-dir="ltr" data-label="English">English</button>
+                    </div>
+                </div>
+                <button class="hamburger" id="hamburgerBtn" aria-label="فتح القائمة" aria-controls="navLinks">☰</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===== HERO ===== -->
+    <header class="hero">
+        <div class="hero-badge">
+            <span aria-hidden="true">📄</span>
+            <span>الإصدار 1.0</span>
+        </div>
+        <h1>شروط <span class="highlight">الاستخدام</span></h1>
+        <p>يرجى قراءة هذه الشروط بعناية قبل استخدام منصة قطرة لالتقاء المتبرعين بالدم في الجزائر.</p>
+    </header>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main id="main-content" class="content-wrapper">
+
+        <!-- TABLE OF CONTENTS -->
+        <aside>
+            <nav class="toc" id="tocNav" aria-label="جدول المحتويات">
+                <div class="toc-title">جدول المحتويات</div>
+                <ol class="toc-list">
+                    <li><a href="#s1"><span class="num">1</span> مقدمة — قبول الشروط</a></li>
+                    <li><a href="#s2"><span class="num">2</span> تعريفات</a></li>
+                    <li><a href="#s3"><span class="num">3</span> وصف الخدمة</a></li>
+                    <li><a href="#s4"><span class="num">4</span> شروط الاستخدام</a></li>
+                    <li><a href="#s5"><span class="num">5</span> الاستخدام المحظور</a></li>
+                    <li><a href="#s6"><span class="num">6</span> مسؤولية المستخدم</a></li>
+                    <li><a href="#s7"><span class="num">7</span> مسؤولية التطبيق</a></li>
+                    <li><a href="#s8"><span class="num">8</span> الملكية الفكرية</a></li>
+                    <li><a href="#s9"><span class="num">9</span> إخلاء المسؤولية الطبية</a></li>
+                    <li><a href="#s10"><span class="num">10</span> التخلي عن الضمانات</a></li>
+                    <li><a href="#s11"><span class="num">11</span> تعويض</a></li>
+                    <li><a href="#s12"><span class="num">12</span> تعليق أو إيقاف الخدمة</a></li>
+                    <li><a href="#s13"><span class="num">13</span> تعديل الشروط</a></li>
+                    <li><a href="#s14"><span class="num">14</span> القانون الحاكم</a></li>
+                    <li><a href="#s15"><span class="num">15</span> تسوية النزاعات</a></li>
+                    <li><a href="#s16"><span class="num">16</span> الإبلاغ عن إساءة الاستخدام</a></li>
+                    <li><a href="#s17"><span class="num">17</span> الاتصال بنا</a></li>
+                </ol>
+            </nav>
+            <button class="toc-toggle" id="tocToggle" aria-expanded="false" aria-controls="tocNav" style="width:100%;margin-bottom:16px;padding:10px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);color:var(--text-primary);font-family:inherit;font-size:0.85rem;font-weight:600;cursor:pointer;">
+                ▾ عرض جدول المحتويات
+            </button>
+        </aside>
+
+        <!-- ARTICLE -->
+        <article class="article">
+
+            <!-- Section 1 -->
+            <section class="section" id="s1">
+                <div class="section-number" aria-hidden="true">1</div>
+                <h2>مقدمة — قبول الشروط <span class="dot">.</span></h2>
+                <p>مرحباً بك في منصة <strong>قُطرة</strong> (Qatra). باستخدامك لهذه المنصة أو أيٍّ من خدماتها، فإنك تقرّ بأنك قرأت هذه الشروط والشروط الخاصة بسياسة الخصوصية، وفهمتها، وتوافق على الالتزام بها بالكامل.</p>
+                <p>إذا لم توافق على أيٍّ من هذه الشروط، يُرجى عدم استخدام المنصة. نحتفظ بحق تعديل هذه الشروط في أي وقت، وستكون التغييرات سارية المفعول من تاريخ نشرها على هذه الصفحة.</p>
+                <div class="highlight-box">
+                    <p>⚠️ استخدامك للمنصة يُعدّ قبولاً صريحاً ودكتاتورياً لجميع هذه الشروط.</p>
+                </div>
+            </section>
+
+            <!-- Section 2 -->
+            <section class="section" id="s2">
+                <div class="section-number" aria-hidden="true">2</div>
+                <h2>تعريفات <span class="dot">.</span></h2>
+                <p>في سياق هذه الشروط، تعني المصطلحات التالية:</p>
+                <ul>
+                    <li><strong>«المنصة»</strong> أو <strong>«قُطرة»</strong>: تطبيق الويب والمنصة الرقمية التي تُمكّن المتبرعين بالدم من التسجيل وإدارة ملفاتهم الشخصية.</li>
+                    <li><strong>«المستخدم»</strong>: أي شخص طبيعي يسجل في المنصة أو يستخدم خدماتها.</li>
+                    <li><strong>«المحتوى»</strong>: أي نصوص، صور، بيانات، أو معلومات ينشرها أو يُدخلها المستخدمون في المنصة.</li>
+                    <li><strong>«الخدمة»</strong>: الميزات والقدرات التي توفرها المنصة، بما في ذلك دليل المتبرعين وإدارة المواعيد.</li>
+                    <li><strong>«بنك الدم»</strong>: المؤسسة الصحية أو المركز الجهوي لتحاقن الدم الذي يستلم طلبات التبرع.</li>
+                </ul>
+            </section>
+
+            <!-- Section 3 -->
+            <section class="section" id="s3">
+                <div class="section-number" aria-hidden="true">3</div>
+                <h2>وصف الخدمة <span class="dot">.</span></h2>
+                <p>قُطرة هي منصة رقمية توفر <strong>دليل متبرعين بالدم</strong> في الجزائر. تهدف إلى ربط المتبرعين المتطوعين بالجهات المحتاجة إلى الدم في مختلف الولايات.</p>
+                <div class="highlight-box cyan">
+                    <p>📌 قطرة ليست خدمة طبية، ليست بنك دم، ليست مستشفى، ولا توفر أي استشارة طبية.</p>
+                </div>
+                <p>تشمل الخدمات الرئيسية:</p>
+                <ul>
+                    <li>إنشاء وإدارة ملف شخصي للمتبرع.</li>
+                    <li>عرض دليل المتبرعين المتوافرين مع فصيلة الدم المطلوبة.</li>
+                    <li>إرسال إشعارات عند الحاجة إلى تبرعات في مناطق محددة.</li>
+                    <li>تتبع سجل التبرعات السابقة.</li>
+                </ul>
+            </section>
+
+            <!-- Section 4 -->
+            <section class="section" id="s4">
+                <div class="section-number" aria-hidden="true">4</div>
+                <h2>شروط الاستخدام <span class="dot">.</span></h2>
+                <p>للاستخدام المسموح به للمنصة، يجب عليك:</p>
+                <ul>
+                    <li>أن تكون شخصاً طبيعياً بعمر قانوني (18 سنة فما فوق) أو بموافقة ولي الأمر.</li>
+                    <li>أن تقدم معلومات صحيحة ودقيقة وحالية عند التسجيل.</li>
+                    <li>الحفاظ على سرية حسابك وكلمة المرور.</li>
+                    <li>استخدام المنصة لأغراض شخصية وغير تجارية فقط.</li>
+                    <li>الاحترام الكامل للمستخدمين الآخرين والجهات الصحية الشريكة.</li>
+                    <li>الامتثال للقوانين واللوائح المعمول بها في الجمهورية الجزائرية الديمقراطية الشعبية.</li>
+                </ul>
+            </section>
+
+            <!-- Section 5 -->
+            <section class="section" id="s5">
+                <div class="section-number" aria-hidden="true">5</div>
+                <h2>الاستخدام المحظور <span class="dot">.</span></h2>
+                <p>يُحظر صراحةً استخدام المنصة في أيٍّ من الحالات التالية:</p>
+                <ul>
+                    <li><strong>البيانات المزيفة:</strong> إدخال أو نشر معلومات غير صحيحة أو مضللة عن الهوية أو فصيلة الدم أو الحالة الصحية.</li>
+                    <li><strong>الرسائل غير المرغوب فيها (Spam):</strong> إرسال رسائل جماعية أو إعلانات تجارية أو محتوى ترويجي غير مصرح به.</li>
+                    <li><strong>التحرش والتنمر:</strong> أي شكل من أشكال المضايقة أو التمييز أو语言 البغضة تجاه المستخدمين الآخرين.</li>
+                    <li><strong>الاستخدام التجاري:</strong> استخدام بيانات المستخدمين أو المنصة لأغراض تجارية أو تسويقية.</li>
+                    <li><strong>الاختراق:</strong> محاولة الوصول غير المصرح به إلى أنظمة المنصة أو حسابات المستخدمين الآخرين.</li>
+                    <li><strong>النصب والاحتيال:</strong> انتحال شخصية مستخدم آخر أو التظاهر بالتمثيل نيابةً عن جهة صحية.</li>
+                </ul>
+                <div class="highlight-box">
+                    <p>🚫 يحتفظ الفريق بحق تعليق أو حذف حساب أي مستخدم يخالف هذه الشروط دون إشعار مسبق.</p>
+                </div>
+            </section>
+
+            <!-- Section 6 -->
+            <section class="section" id="s6">
+                <div class="section-number" aria-hidden="true">6</div>
+                <h2>مسؤولية المستخدم <span class="dot">.</span></h2>
+                <p>يتحمل المستخدم المسؤولية الكاملة عن:</p>
+                <ul>
+                    <li><strong>دقة البيانات:</strong> صحة جميع المعلومات المُدخلة في المنصة، بما في ذلك فصيلة الدم والمعلومات الشخصية.</li>
+                    <li><strong>الأهلية القانونية:</strong> التأكد من بلوغه العمر القانوني المطلوب أو الحصول على موافقة الولي القانوني.</li>
+                    <li><strong>الأفعال:</strong> جميع الأفعال والأنشطة التي تتم عبر حسابه الشخصي.</li>
+                    <li><strong>الأضرار:</strong> أي أضرار ناتجة عن استخدام غير مسؤول أو غير مصرح به للمنصة.</li>
+                </ul>
+                <p>يتعهد المستخدم بإخطار المنصة فوراً في حالة اكتشاف أي استخدام غير مصرح به لحسابه.</p>
+            </section>
+
+            <!-- Section 7 -->
+            <section class="section" id="s7">
+                <div class="section-number" aria-hidden="true">7</div>
+                <h2>مسؤولية التطبيق <span class="dot">.</span></h2>
+                <p>تلتزم المنصة بتقديم خدمة قدر الإمكان موثوقة، مع ذلك:</p>
+                <ul>
+                    <li>المنصة "<strong>كما هي</strong>" و"<strong>كما تتوفر</strong>"، دون ضمانات صريحة أو ضمنية.</li>
+                    <li>لا تضمن المنصة أن الخدمة ستكون دون انقطاع أو خالية من الأخطاء.</li>
+                    <li>لا تتحمل المنصة المسؤولية عن أي أضرار مباشرة أو غير مباشرة ناتجة عن استخدام الخدمة.</li>
+                    <li>لا تقدم المنصة أي استشارات طبية أو قانونية أو مهنية.</li>
+                    <li>لا تتحمل المنصة مسؤولية القرارات التي يتخذها المستخدم بناءً على المعلومات الموجودة في المنصة.</li>
+                    <li>يُنصح دائماً بمراجعة الطبيب المختص أو جهة الصحة المختصة.</li>
+                </ul>
+                <div class="highlight-box">
+                    <p>🏥 قطرة ليست مستشفى ولا بنك دم ولا جهة صحية. المنصة هي أداة ربط رقمية فقط.</p>
+                </div>
+            </section>
+
+            <!-- Section 8 -->
+            <section class="section" id="s8">
+                <div class="section-number" aria-hidden="true">8</div>
+                <h2>الملكية الفكرية <span class="dot">.</span></h2>
+                <p>جميع المحتويات والتصميم والشعارات والرموز المستخدمة في المنصة محمية بموجب قوانين الملكية الفكرية في الجزائر والاتفاقيات الدولية المعتمدة.</p>
+                <p>يشمل ذلك على وجه الخصوص:</p>
+                <ul>
+                    <li>اسم «قُطرة» والشعارات المرتبطة به.</li>
+                    <li>التصميم البصري والواجهة الرسومية.</li>
+                    <li>الكود المصدري للمنصة.</li>
+                    <li>النصوص والمحتوى التوضيحي.</li>
+                </ul>
+                <div class="highlight-box cyan">
+                    <p>💡 ملاحظة: بعض مكونات المنصة قد تكون متاحة تحت ترخيص مفتوح المصدر. يُرجى مراجعة المستودع الرسمي لمعرفة التراخيص المحددة المطبقة.</p>
+                </div>
+                <p>يُمنع نسخ أو تعديل أو توزيع أي محتوى من المنصة دون الحصول على إذن كتابي مسبق من فريق قطرة.</p>
+            </section>
+
+            <!-- Section 9 -->
+            <section class="section" id="s9">
+                <div class="section-number" aria-hidden="true">9</div>
+                <h2>إخلاء المسؤولية الطبية <span class="dot">.</span></h2>
+                <div class="highlight-box">
+                    <p>🚨 تنبيه طبي مهم: منصة قطرة ليست خدمة طبية ولا تُغني عن استشارة الطبيب المختص أو مراجعة الجهات الصحية المختصة.</p>
+                </div>
+                <p>يوافق المستخدم صراحةً على ما يلي:</p>
+                <ul>
+                    <li>جميع المعلومات المتوفرة في المنصة هي لأغراض إعلامية فقط ولا تُشكّل نصيحة طبية.</li>
+                    <li>القرار بشأن التبرع بالدم يُبنى دائماً بتوصية من جهة صحية مختصة.</li>
+                    <li>المنصة ليست بديلاً عن التقييم الطبي الذي أجراه متخصص في تحاقن الدم.</li>
+                    <li>في حالة الطوارئ، يُرجى الاتصال فوراً بالرقم الوطني للطوارئ أو التوجه إلى أقرب مستشفى.</li>
+                    <li>يتحمل المستخدم وحده المسؤولية عن أي قرار يتخذه بشأن صحته بناءً على معلومات من المنصة.</li>
+                </ul>
+            </section>
+
+            <!-- Section 10 -->
+            <section class="section" id="s10">
+                <div class="section-number" aria-hidden="true">10</div>
+                <h2>التخلي عن الضمانات <span class="dot">.</span></h2>
+                <p>تُقدم منصة قطرة دون أي ضمانات صريحة أو ضمنية، بما في ذلك على سبيل المثال لا الحصر:</p>
+                <ul>
+                    <li>ضمان الملاءمة لغرض محدد.</li>
+                    <li>ضمان عدم انتهاك الحقوق.</li>
+                    <li>ضمان الدقة أو اكتمال المعلومات.</li>
+                    <li>ضمان عدم وجود أخطاء أو فيروسات.</li>
+                    <li>ضمان توفر الخدمة بشكل مستمر.</li>
+                </ul>
+                <p>ي理解和 يوافق المستخدم على أن استخدام المنصة يكون على مسؤوليته الخاصة والCLUSIVE.</p>
+            </section>
+
+            <!-- Section 11 -->
+            <section class="section" id="s11">
+                <div class="section-number" aria-hidden="true">11</div>
+                <h2>تعويض <span class="dot">.</span></h2>
+                <p>يوافق المستخدم على تعويض ومكافأة فريق قطرة ومنتجيه و associates الخاصين ضدهم عن أي مطالبات أو دعاوى أو أضرار أو خسائر أو تكاليف (بما في ذلك أتعاب المحاماة) الناتجة عن:</p>
+                <ul>
+                    <li>انتهاك هذه الشروط من قبل المستخدم.</li>
+                    <li>انتهاك أي قانون أو لائحة معمول بها.</li>
+                    <li>انتهاك أي حق لطرف ثالث.</li>
+                    <li>إدخال معلومات غير صحيحة أو مضللة في المنصة.</li>
+                    <li>إساءة استخدام المنصة أو محاولة إلحاق الأذى بها.</li>
+                </ul>
+            </section>
+
+            <!-- Section 12 -->
+            <section class="section" id="s12">
+                <div class="section-number" aria-hidden="true">12</div>
+                <h2>تعليق أو إيقاف الخدمة <span class="dot">.</span></h2>
+                <p>يحتفظ فريق قطرة بحق تعليق أو إيقاف الخدمة كلياً أو جزئياً في أي وقت دون إشعار مسبق أو مسؤولية، وذلك في الحالات التالية:</p>
+                <ul>
+                    <li>صيانة مخططة أو طارئة للنظام.</li>
+                    <li>تحديثات للمنصة أو تغييرات في الميزات.</li>
+                    <li>الكشف عن أي استخدام غير قانوني أو احتيالي.</li>
+                    <li>الأسباب التقنية أو الأمنية.</li>
+                    <li>الأسباب القانونية أو التنظيمية.</li>
+                </ul>
+                <p>لن نكون مسؤولين عن أي أضرار ناتجة عن تعليق أو إيقاف الخدمة مؤقتاً.</p>
+            </section>
+
+            <!-- Section 13 -->
+            <section class="section" id="s13">
+                <div class="section-number" aria-hidden="true">13</div>
+                <h2>تعديل الشروط <span class="dot">.</span></h2>
+                <p>نحتفظ بحق تعديل هذه الشروط في أي وقت. عند إجراء تغييرات جوهرية، نلتزم بما يلي:</p>
+                <ul>
+                    <li>نشر الشروط المحدثة على هذه الصفحة مع تاريخ الدخول حيز التنفيذ.</li>
+                    <li>تحديث تاريخ «آخر تحديث» في أسفل الصفحة.</li>
+                    <li>إرسال إشعار للمستخدمين المسجلين عبر البريد الإلكتروني أو داخل التطبيق (إن أمكن).</li>
+                </ul>
+                <p>يُعتبر استمرارك في استخدام المنصة بعد نشر التغييرات بمثابة قبولاً للشروط المحدثة. إذا لم توافق على التغييرات، يُرجى التوقف عن استخدام المنصة.</p>
+            </section>
+
+            <!-- Section 14 -->
+            <section class="section" id="s14">
+                <div class="section-number" aria-hidden="true">14</div>
+                <h2>القانون الحاكم <span class="dot">.</span></h2>
+                <p>تخضع هذه الشروط وتُفسَّر وفقاً لقوانين <strong>الجمهورية الجزائرية الديمقراطية الشعبية</strong>، وتحديداً:</p>
+                <ul>
+                    <li>الأمر 75-58 المؤرخ في 26 سبتمبر 1975 المتضمن القانون المدني الجزائري.</li>
+                    <li>القانون 18-05 المؤرخ في 10 مايو 2018 المتعلق بالأمن السيبراني ومنع الت digitale.</li>
+                    <li>القانون 09-03 المؤرخ في 25 فبراير 2009 المتعلق بالبريد الإلكتروني والرسائل الإلكترونية والصفحات المعلوماتية.</li>
+                </ul>
+                <p>أي تعارض بين هذه الشروط والأحكام القانونية المعمول بها، تُقدم الأحكام القانونية المعمول بها.</p>
+            </section>
+
+            <!-- Section 15 -->
+            <section class="section" id="s15">
+                <div class="section-number" aria-hidden="true">15</div>
+                <h2>تسوية النزاعات <span class="dot">.</span></h2>
+                <p>في حالة نشوء أي نزاع أو خلاف ينشأ من هذه الشروط أو من استخدام المنصة، نلتزم بالخطوات التالية:</p>
+                <ol>
+                    <li><strong>التسوية الودية:</strong> سنحاول أولاً حل النزاع بشكل ودي وسريع من خلال التواصل المباشر مع المستخدم.</li>
+                    <li><strong>الوساطة:</strong> إذا لم تُحل المشكلة ودياً، يمكن اللجوء إلى وسيط مستقل.</li>
+                    <li><strong>الجهات القضائية:</strong> في حالة فشل الحلول الودية والوساطة، يخضع النزاع لاختصاص <strong>المحاكم المختصة في الجزائر العاصمة</strong>.</li>
+                </ol>
+                <div class="highlight-box">
+                    <p>⚖️ ندعم الحلول الودية أولوية، لكن نحتفظ بحق اللجوء إلى القضاء عند الضرورة.</p>
+                </div>
+            </section>
+
+            <!-- Section 16 -->
+            <section class="section" id="s16">
+                <div class="section-number" aria-hidden="true">16</div>
+                <h2>الإبلاغ عن إساءة الاستخدام <span class="dot">.</span></h2>
+                <p>إذا كنت ترى أي سلوك مخالف أو إساءة استخدام للمنصة، يُرجى الإبلاغ عنها فوراً. يمكنك ذلك عن طريق:</p>
+                <ul>
+                    <li>البريد الإلكتروني: <a href="mailto:abuse@qatra.dz">abuse@qatra.dz</a></li>
+                    <li>نموذج الاتصال الرسمي في المنصة.</li>
+                    <li>التواصل المباشر عبر قنوات التواصل الاجتماعي الرسمية.</li>
+                </ul>
+                <p>نلتزم بمراجعة جميع البلاغات في أقرب وقت ممكن واتخاذ الإجراءات اللازمة، بما في ذلك:</p>
+                <ul>
+                    <li>تحقيق داخلي في الحادثة.</li>
+                    <li>تعليق الحساب المخالف مؤقتاً أثناء التحقيق.</li>
+                    <li>اتخاذ الإجراءات المناسبة (تحذير أو تعليق أو حذف).</li>
+                    <li>إخطار المُبلِّغ بنتيجة المراجعة (في حدود الخصوصية).</li>
+                </ul>
+            </section>
+
+            <!-- Section 17 -->
+            <section class="section" id="s17">
+                <div class="section-number" aria-hidden="true">17</div>
+                <h2>الاتصال بنا <span class="dot">.</span></h2>
+                <p>لأي استفسار أو ملاحظة بخصوص هذه الشروط أو المنصة عموماً، لا تتردد في التواصل معنا:</p>
+                <div class="contact-grid">
+                    <div class="contact-card">
+                        <div class="icon" aria-hidden="true">📧</div>
+                        <div class="label">البريد الإلكتروني</div>
+                        <div class="value"><a href="mailto:contact@qatra.dz">contact@qatra.dz</a></div>
+                    </div>
+                    <div class="contact-card">
+                        <div class="icon" aria-hidden="true">🌐</div>
+                        <div class="label">الموقع الإلكتروني</div>
+                        <div class="value"><a href="https://qatra.dz" target="_blank" rel="noopener noreferrer">qatra.dz</a></div>
+                    </div>
+                    <div class="contact-card">
+                        <div class="icon" aria-hidden="true">📍</div>
+                        <div class="label">الموقع</div>
+                        <div class="value">الجزائر العاصمة، الجزائر</div>
+                    </div>
+                </div>
+            </section>
+
+        </article>
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer" role="contentinfo">
+        <div class="footer-inner">
+            <div class="footer-logo">قُطرة Qatra</div>
+            <div class="footer-divider" aria-hidden="true"></div>
+            <div class="footer-meta">
+                آخر تحديث: <span>13 جويلية 2026</span> | الإصدار <span>1.0</span>
+            </div>
+            <div class="footer-copy">
+                &copy; 2026 قطرة — جميع الحقوق محفوظة لجمهورية الجزائر الديمقراطية الشعبية.
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===== BACK TO TOP ===== -->
+    <button class="back-to-top" id="backToTop" aria-label="العودة للأعلى" title="العودة للأعلى">↑</button>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+    (function() {
+        'use strict';
+
+        // --- Language Switcher ---
+        const langToggle = document.getElementById('langToggle');
+        const langDropdown = document.getElementById('langDropdown');
+        const currentLangEl = document.getElementById('currentLang');
+        const langButtons = langDropdown.querySelectorAll('button');
+
+        const translations = {
+            ar: {
+                title: 'شروط الاستخدام | Qatra',
+                badge: 'الإصدار 1.0',
+                heroTitle: 'شروط <span class="highlight">الاستخدام</span>',
+                heroDesc: 'يرجى قراءة هذه الشروط بعناية قبل استخدام منصة قطرة لالتقاء المتبرعين بالدم في الجزائر.',
+                tocTitle: 'جدول المحتويات',
+                sections: [
+                    { id: 's1', title: 'مقدمة — قبول الشروط', heading: 'مقدمة — قبول الشروط', content: `<p>مرحباً بك في منصة <strong>قُطرة</strong> (Qatra). باستخدامك لهذه المنصة أو أيٍّ من خدماتها، فإنك تقرّ بأنك قرأت هذه الشروط والشروط الخاصة بسياسة الخصوصية، وفهمتها، وتوافق على الالتزام بها بالكامل.</p><p>إذا لم توافق على أيٍّ من هذه الشروط، يُرجى عدم استخدام المنصة. نحتفظ بحق تعديل هذه الشروط في أي وقت، وستكون التغييرات سارية المفعول من تاريخ نشرها على هذه الصفحة.</p><div class="highlight-box"><p>⚠️ استخدامك للمنصة يُعدّ قبولاً صريحاً ودكتاتورياً لجميع هذه الشروط.</p></div>` },
+                    { id: 's2', title: 'تعريفات', heading: 'تعريفات', content: `<p>في سياق هذه الشروط، تعني المصطلحات التالية:</p><ul><li><strong>«المنصة»</strong> أو <strong>«قُطرة»</strong>: تطبيق الويب والمنصة الرقمية التي تُمكّن المتبرعين بالدم من التسجيل وإدارة ملفاتهم الشخصية.</li><li><strong>«المستخدم»</strong>: أي شخص طبيعي يسجل في المنصة أو يستخدم خدماتها.</li><li><strong>«المحتوى»</strong>: أي نصوص، صور، بيانات، أو معلومات ينشرها أو يُدخلها المستخدمون في المنصة.</li><li><strong>«الخدمة»</strong>: الميزات والقدرات التي توفرها المنصة، بما في ذلك دليل المتبرعين وإدارة المواعيد.</li><li><strong>«بنك الدم»</strong>: المؤسسة الصحية أو المركز الجهوي لتحاقن الدم الذي يستلم طلبات التبرع.</li></ul>` },
+                    { id: 's3', title: 'وصف الخدمة', heading: 'وصف الخدمة', content: `<p>قُطرة هي منصة رقمية توفر <strong>دليل متبرعين بالدم</strong> في الجزائر. تهدف إلى ربط المتبرعين المتطوعين بالجهات المحتاجة إلى الدم في مختلف الولايات.</p><div class="highlight-box cyan"><p>📌 قطرة ليست خدمة طبية، ليست بنك دم، ليست مستشفى، ولا توفر أي استشارة طبية.</p></div><p>تشمل الخدمات الرئيسية:</p><ul><li>إنشاء وإدارة ملف شخصي للمتبرع.</li><li>عرض دليل المتبرعين المتوافرين مع فصيلة الدم المطلوبة.</li><li>إرسال إشعارات عند الحاجة إلى تبرعات في مناطق محددة.</li><li>تتبع سجل التبرعات السابقة.</li></ul>` },
+                    { id: 's4', title: 'شروط الاستخدام', heading: 'شروط الاستخدام', content: `<p>للاستخدام المسموح به للمنصة، يجب عليك:</p><ul><li>أن تكون شخصاً طبيعياً بعمر قانوني (18 سنة فما فوق) أو بموافقة ولي الأمر.</li><li>أن تقدم معلومات صحيحة ودقيقة وحالية عند التسجيل.</li><li>الحفاظ على سرية حسابك وكلمة المرور.</li><li>استخدام المنصة لأغراض شخصية وغير تجارية فقط.</li><li>الاحترام الكامل للمستخدمين الآخرين والجهات الصحية الشريكة.</li><li>الامتثال للقوانين واللوائح المعمول بها في الجمهورية الجزائرية الديمقراطية الشعبية.</li></ul>` },
+                    { id: 's5', title: 'الاستخدام المحظور', heading: 'الاستخدام المحظور', content: `<p>يُحظر صراحةً استخدام المنصة في أيٍّ من الحالات التالية:</p><ul><li><strong>البيانات المزيفة:</strong> إدخال أو نشر معلومات غير صحيحة أو مضللة عن الهوية أو فصيلة الدم أو الحالة الصحية.</li><li><strong>الرسائل غير المرغوب فيها (Spam):</strong> إرسال رسائل جماعية أو إعلانات تجارية أو محتوى ترويجي غير مصرح به.</li><li><strong>التحرش والتنمر:</strong> أي شكل من أشكال المضايقة أو التمييز أو لغة البغضة تجاه المستخدمين الآخرين.</li><li><strong>الاستخدام التجاري:</strong> استخدام بيانات المستخدمين أو المنصة لأغراض تجارية أو تسويقية.</li><li><strong>الاختراق:</strong> محاولة الوصول غير المصرح به إلى أنظمة المنصة أو حسابات المستخدمين الآخرين.</li><li><strong>النصب والاحتيال:</strong> انتحال شخصية مستخدم آخر أو التظاهر بالتمثيل نيابةً عن جهة صحية.</li></ul><div class="highlight-box"><p>🚫 يحتفظ الفريق بحق تعليق أو حذف حساب أي مستخدم يخالف هذه الشروط دون إشعار مسبق.</p></div>` },
+                    { id: 's6', title: 'مسؤولية المستخدم', heading: 'مسؤولية المستخدم', content: `<p>يتحمل المستخدم المسؤولية الكاملة عن:</p><ul><li><strong>دقة البيانات:</strong> صحة جميع المعلومات المُدخلة في المنصة، بما في ذلك فصيلة الدم والمعلومات الشخصية.</li><li><strong>الأهلية القانونية:</strong> التأكد من بلوغه العمر القانوني المطلوب أو الحصول على موافقة الولي القانوني.</li><li><strong>الأفعال:</strong> جميع الأفعال والأنشطة التي تتم عبر حسابه الشخصي.</li><li><strong>الأضرار:</strong> أي أضرار ناتجة عن استخدام غير مسؤول أو غير مصرح به للمنصة.</li></ul><p>يتعهد المستخدم بإخطار المنصة فوراً في حالة اكتشاف أي استخدام غير مصرح به لحسابه.</p>` },
+                    { id: 's7', title: 'مسؤولية التطبيق', heading: 'مسؤولية التطبيق', content: `<p>تلتزم المنصة بتقديم خدمة قدر الإمكان موثوقة، مع ذلك:</p><ul><li>المنصة "<strong>كما هي</strong>" و"<strong>كما تتوفر</strong>"، دون ضمانات صريحة أو ضمنية.</li><li>لا تضمن المنصة أن الخدمة ستكون دون انقطاع أو خالية من الأخطاء.</li><li>لا تتحمل المنصة المسؤولية عن أي أضرار مباشرة أو غير مباشرة ناتجة عن استخدام الخدمة.</li><li>لا تقدم المنصة أي استشارات طبية أو قانونية أو مهنية.</li><li>لا تتحمل المنصة مسؤولية القرارات التي يتخذها المستخدم بناءً على المعلومات الموجودة في المنصة.</li><li>يُنصح دائماً بمراجعة الطبيب المختص أو جهة الصحة المختصة.</li></ul><div class="highlight-box"><p>🏥 قطرة ليست مستشفى ولا بنك دم ولا جهة صحية. المنصة هي أداة ربط رقمية فقط.</p></div>` },
+                    { id: 's8', title: 'الملكية الفكرية', heading: 'الملكية الفكرية', content: `<p>جميع المحتويات والتصميم والشعارات والرموز المستخدمة في المنصة محمية بموجب قوانين الملكية الفكرية في الجزائر والاتفاقيات الدولية المعتمدة.</p><p>يشمل ذلك على وجه الخصوص:</p><ul><li>اسم «قُطرة» والشعارات المرتبطة به.</li><li>التصميم البصري والواجهة الرسومية.</li><li>الكود المصدري للمنصة.</li><li>النصوص والمحتوى التوضيحي.</li></ul><div class="highlight-box cyan"><p>💡 ملاحظة: بعض مكونات المنصة قد تكون متاحة تحت ترخيص مفتوح المصدر. يُرجى مراجعة المستودع الرسمي لمعرفة التراخيص المحددة المطبقة.</p></div><p>يُمنع نسخ أو تعديل أو توزيع أي محتوى من المنصة دون الحصول على إذن كتابي مسبق من فريق قطرة.</p>` },
+                    { id: 's9', title: 'إخلاء المسؤولية الطبية', heading: 'إخلاء المسؤولية الطبية', content: `<div class="highlight-box"><p>🚨 تنبيه طبي مهم: منصة قطرة ليست خدمة طبية ولا تُغني عن استشارة الطبيب المختص أو مراجعة الجهات الصحية المختصة.</p></div><p>يوافق المستخدم صراحةً على ما يلي:</p><ul><li>جميع المعلومات المتوفرة في المنصة هي لأغراض إعلامية فقط ولا تُشكّل نصيحة طبية.</li><li>القرار بشأن التبرع بالدم يُبنى دائماً بتوصية من جهة صحية مختصة.</li><li>المنصة ليست بديلاً عن التقييم الطبي الذي أجراه متخصص في تحاقن الدم.</li><li>في حالة الطوارئ، يُرجى الاتصال فوراً بالرقم الوطني للطوارئ أو التوجه إلى أقرب مستشفى.</li><li>يتحمل المستخدم وحده المسؤولية عن أي قرار يتخذه بشأن صحته بناءً على معلومات من المنصة.</li></ul>` },
+                    { id: 's10', title: 'التخلي عن الضمانات', heading: 'التخلي عن الضمانات', content: `<p>تُقدم منصة قطرة دون أي ضمانات صريحة أو ضمنية، بما في ذلك على سبيل المثال لا الحصر:</p><ul><li>ضمان الملاءمة لغرض محدد.</li><li>ضمان عدم انتهاك الحقوق.</li><li>ضمان الدقة أو اكتمال المعلومات.</li><li>ضمان عدم وجود أخطاء أو فيروسات.</li><li>ضمان توفر الخدمة بشكل مستمر.</li></ul><p>ي理解和 يوافق المستخدم على أن استخدام المنصة يكون على مسؤوليته الخاصة والCLUSIVE.</p>` },
+                    { id: 's11', title: 'تعويض', heading: 'تعويض', content: `<p>يوافق المستخدم على تعويض ومكافأة فريق قطرة ومنتجيه و associates الخاصين ضدهم عن أي مطالبات أو دعاوى أو أضرار أو خسائر أو تكاليف (بما في ذلك أتعاب المحاماة) الناتجة عن:</p><ul><li>انتهاك هذه الشروط من قبل المستخدم.</li><li>انتهاك أي قانون أو لائحة معمول بها.</li><li>انتهاك أي حق لطرف ثالث.</li><li>إدخال معلومات غير صحيحة أو مضللة في المنصة.</li><li>إساءة استخدام المنصة أو محاولة إلحاق الأذى بها.</li></ul>` },
+                    { id: 's12', title: 'تعليق أو إيقاف الخدمة', heading: 'تعليق أو إيقاف الخدمة', content: `<p>يحتفظ فريق قطرة بحق تعليق أو إيقاف الخدمة كلياً أو جزئياً في أي وقت دون إشعار مسبق أو مسؤولية، وذلك في الحالات التالية:</p><ul><li>صيانة مخططة أو طارئة للنظام.</li><li>تحديثات للمنصة أو تغييرات في الميزات.</li><li>الكشف عن أي استخدام غير قانوني أو احتيالي.</li><li>الأسباب التقنية أو الأمنية.</li><li>الأسباب القانونية أو التنظيمية.</li></ul><p>لن نكون مسؤولين عن أي أضرار ناتجة عن تعليق أو إيقاف الخدمة مؤقتاً.</p>` },
+                    { id: 's13', title: 'تعديل الشروط', heading: 'تعديل الشروط', content: `<p>نحتفظ بحق تعديل هذه الشروط في أي وقت. عند إجراء تغييرات جوهرية، نلتزم بما يلي:</p><ul><li>نشر الشروط المحدثة على هذه الصفحة مع تاريخ الدخول حيز التنفيذ.</li><li>تحديث تاريخ «آخر تحديث» في أسفل الصفحة.</li><li>إرسال إشعار للمستخدمين المسجلين عبر البريد الإلكتروني أو داخل التطبيق (إن أمكن).</li></ul><p>يُعتبر استمرارك في استخدام المنصة بعد نشر التغييرات بمثابة قبولاً للشروط المحدثة. إذا لم توافق على التغييرات، يُرجى التوقف عن استخدام المنصة.</p>` },
+                    { id: 's14', title: 'القانون الحاكم', heading: 'القانون الحاكم', content: `<p>تخضع هذه الشروط وتُفسَّر وفقاً لقوانين <strong>الجمهورية الجزائرية الديمقراطية الشعبية</strong>، وتحديداً:</p><ul><li>الأمر 75-58 المؤرخ في 26 سبتمبر 1975 المتضمن القانون المدني الجزائري.</li><li>القانون 18-05 المؤرخ في 10 مايو 2018 المتعلق بالأمن السيبراني.</li><li>القانون 09-03 المؤرخ في 25 فبراير 2009 المتعلق بالبريد الإلكتروني والرسائل الإلكترونية والصفحات المعلوماتية.</li></ul><p>أي تعارض بين هذه الشروط والأحكام القانونية المعمول بها، تُقدم الأحكام القانونية المعمول بها.</p>` },
+                    { id: 's15', title: 'تسوية النزاعات', heading: 'تسوية النزاعات', content: `<p>في حالة نشوء أي نزاع أو خلاف ينشأ من هذه الشروط أو من استخدام المنصة، نلتزم بالخطوات التالية:</p><ol><li><strong>التسوية الودية:</strong> سنحاول أولاً حل النزاع بشكل ودي وسريع من خلال التواصل المباشر مع المستخدم.</li><li><strong>الوساطة:</strong> إذا لم تُحل المشكلة ودياً، يمكن اللجوء إلى وسيط مستقل.</li><li><strong>الجهات القضائية:</strong> في حالة فشل الحلول الودية والوساطة، يخضع النزاع لاختصاص <strong>المحاكم المختصة في الجزائر العاصمة</strong>.</li></ol><div class="highlight-box"><p>⚖️ ندعم الحلول الودية أولوية، لكن نحتفظ بحق اللجوء إلى القضاء عند الضرورة.</p></div>` },
+                    { id: 's16', title: 'الإبلاغ عن إساءة الاستخدام', heading: 'الإبلاغ عن إساءة الاستخدام', content: `<p>إذا كنت ترى أي سلوك مخالف أو إساءة استخدام للمنصة، يُرجى الإبلاغ عنها فوراً. يمكنك ذلك عن طريق:</p><ul><li>البريد الإلكتروني: <a href="mailto:abuse@qatra.dz">abuse@qatra.dz</a></li><li>نموذج الاتصال الرسمي في المنصة.</li><li>التواصل المباشر عبر قنوات التواصل الاجتماعي الرسمية.</li></ul><p>نلتزم بمراجعة جميع البلاغات في أقرب وقت ممكن واتخاذ الإجراءات اللازمة، بما في ذلك:</p><ul><li>تحقيق داخلي في الحادثة.</li><li>تعليق الحساب المخالف مؤقتاً أثناء التحقيق.</li><li>اتخاذ الإجراءات المناسبة (تحذير أو تعليق أو حذف).</li><li>إخطار المُبلِّغ بنتيجة المراجعة (في حدود الخصوصية).</li></ul>` },
+                    { id: 's17', title: 'الاتصال بنا', heading: 'الاتصال بنا', content: `<p>لأي استفسار أو ملاحظة بخصوص هذه الشروط أو المنصة عموماً، لا تتردد في التواصل معنا:</p><div class="contact-grid"><div class="contact-card"><div class="icon" aria-hidden="true">📧</div><div class="label">البريد الإلكتروني</div><div class="value"><a href="mailto:contact@qatra.dz">contact@qatra.dz</a></div></div><div class="contact-card"><div class="icon" aria-hidden="true">🌐</div><div class="label">الموقع الإلكتروني</div><div class="value"><a href="https://qatra.dz" target="_blank" rel="noopener noreferrer">qatra.dz</a></div></div><div class="contact-card"><div class="icon" aria-hidden="true">📍</div><div class="label">الموقع</div><div class="value">الجزائر العاصمة، الجزائر</div></div></div>` }
+                ],
+                footerUpdate: 'آخر تحديث:',
+                footerVersion: 'الإصدار',
+                footerDate: '13 جويلية 2026',
+                footerCopy: '&copy; 2026 قطرة — جميع الحقوق محفوظة لجمهورية الجزائر الديمقراطية الشعبية.',
+                tocToggleText: '▾ عرض جدول المحتويات'
+            },
+            fr: {
+                title: 'Conditions d\'Utilisation | Qatra',
+                badge: 'Version 1.0',
+                heroTitle: '<span class="highlight">Conditions</span> d\'Utilisation',
+                heroDesc: 'Veuillez lire attentivement ces conditions avant d\'utiliser la plateforme Qatra pour connecter les donneurs de sang en Algérie.',
+                tocTitle: 'Table des matières',
+                sections: [
+                    { id: 's1', title: 'Introduction — Acceptation', heading: 'Introduction — Acceptation des Conditions', content: `<p>Bienvenue sur la plateforme <strong>Qatra</strong>. En utilisant cette plateforme ou l\'un de ses services, vous reconnaissez avoir lu, compris et accepté ces conditions ainsi que la politique de confidentialité.</p><p>Si vous n\'acceptez pas ces conditions, veuillez ne pas utiliser la plateforme. Nous nous réservons le droit de modifier ces conditions à tout moment.</p><div class="highlight-box"><p>⚠️ L\'utilisation de la plateforme constitue une acceptation explicite de toutes ces conditions.</p></div>` },
+                    { id: 's2', title: 'Définitions', heading: 'Définitions', content: `<p>Dans le cadre de ces conditions, les termes suivants désignent :</p><ul><li><strong>«La Plateforme»</strong> ou <strong>«Qatra»</strong> : l\'application web et la plateforme numérique permettant l\'enregistrement des donneurs de sang.</li><li><strong>«L\'Utilisateur»</strong> : toute personne physique inscrite sur la plateforme.</li><li><strong>«Le Contenu»</strong> : tout texte, image, donnée ou information publié par les utilisateurs.</li><li><strong>«Le Service»</strong> : les fonctionnalités offertes par la plateforme, y compris l\'annuaire des donneurs.</li><li><strong>«La Banque de Sang»</strong> : l\'établissement de santé ou le centre régional de transfusion sanguine.</li></ul>` },
+                    { id: 's3', title: 'Description du Service', heading: 'Description du Service', content: `<p>Qatra est une plateforme numérique fournissant un <strong>annuaire de donneurs de sang</strong> en Algérie. Elle vise à connecter les donneurs bénévoles avec les institutions ayant besoin de sang dans toutes les wilayas.</p><div class="highlight-box cyan"><p>📌 Qatra n\'est pas un service médical, pas une banque de sang, pas un hôpital et ne fournit aucune consultation médicale.</p></div><p>Les services principaux incluent :</p><ul><li>Création et gestion d\'un profil personnel de donneur.</li><li>Affichage de l\'annuaire des donneurs compatibles avec le groupe sanguin demandé.</li><li>Envoi de notifications lorsqu\'un besoin de dons est signalé.</li><li>Suivi de l\'historique des dons précédents.</li></ul>` },
+                    { id: 's4', title: 'Conditions d\'Utilisation', heading: 'Conditions d\'Utilisation Autorisées', content: `<p>Pour l\'utilisation autorisée de la plateforme, vous devez :</p><ul><li>Être majeur (18 ans et plus) ou avoir l\'autorisation du tuteur légal.</li><li>Fournir des informations exactes, à jour et complètes lors de l\'inscription.</li><li>Maintenir la confidentialité de votre compte et de votre mot de passe.</li><li>Utiliser la plateforme à des fins personnelles et non commerciales uniquement.</li><li>Respecter les autres utilisateurs et les partenaires sanitaires.</li><li>Respecter les lois et réglementations en vigueur en République algérienne démocratique et populaire.</li></ul>` },
+                    { id: 's5', title: 'Utilisations Interdites', heading: 'Utilisations Interdites', content: `<p>L\'utilisation de la plateforme est strictement interdite dans les cas suivants :</p><ul><li><strong>Données fictives :</strong> Saisie ou publication d\'informations inexactes ou trompeuses.</li><li><strong>Spam :</strong> Envoi de messages groupés ou de contenu promotionnel non autorisé.</li><li><strong>Harcèlement :</strong> Toute forme de harcèlement, discrimination ou langage haineux.</li><li><strong>Usage commercial :</strong> Utilisation des données des utilisateurs à des fins commerciales.</li><li><strong>Intrusion :</strong> Tentative d\'accès non autorisé aux systèmes ou comptes d\'autres utilisateurs.</li><li><strong>Fraude :</strong> Usurpation d\'identité ou imitation d\'une institution de santé.</li></ul><div class="highlight-box"><p>🚫 L\'équipe se réserve le droit de suspendre ou supprimer tout compte enfreignant ces conditions.</p></div>` },
+                    { id: 's6', title: 'Responsabilité de l\'Utilisateur', heading: 'Responsabilité de l\'Utilisateur', content: `<p>L\'utilisateur assume l\'entière responsabilité de :</p><ul><li><strong>Exactitude des données :</strong> L\'exactitude de toutes les informations saisies.</li><li><strong>Capacité légale :</strong> La vérification de l\'atteinte de l\'âge légal ou de l\'autorisation du tuteur.</li><li><strong>Actions :</strong> Toutes les activités effectuées via son compte personnel.</li><li><strong>Domages :</strong> Tout préjudice résultant d\'une utilisation irresponsable.</li></ul><p>L\'utilisateur s\'engage à informer la plateforme immédiatement en cas d\'utilisation non autorisée de son compte.</p>` },
+                    { id: 's7', title: 'Responsabilité de l\'Application', heading: 'Responsabilité de l\'Application', content: `<p>La plateforme s\'engage à fournir un service aussi fiable que possible, cependant :</p><ul><li>La plateforme est fournie « <strong>en l\'état</strong> » et « <strong>selon disponibilité</strong> », sans garantie explicite ou implicite.</li><li>Nous ne garantissons pas un service continu ou exempt d\'erreurs.</li><li>Nous ne sommes pas responsables des dommages directs ou indirects.</li><li>La plateforme ne fournit aucune consultation médicale, juridique ou professionnelle.</li><li>Nous ne sommes pas responsables des décisions prises sur la base des informations de la plateforme.</li><li>Il est toujours recommandé de consulter un médecin spécialisé.</li></ul><div class="highlight-box"><p>🏥 Qatra n\'est pas un hôpital, ni une banque de sang, ni une institution sanitaire. C\'est uniquement un outil de connexion numérique.</p></div>` },
+                    { id: 's8', title: 'Propriété Intellectuelle', heading: 'Propriété Intellectuelle', content: `<p>Tous les contenus, designs, logos et symboles utilisés sur la plateforme sont protégés par les lois sur la propriété intellectuelle en Algérie et les conventions internationales.</p><p>Cela inclut notamment :</p><ul><li>Le nom « Qatra » et les logos associés.</li><li>Le design visuel et l\'interface graphique.</li><li>Le code source de la plateforme.</li><li>Les textes et contenus explicatifs.</li></ul><div class="highlight-box cyan"><p>💡 Note : Certains composants peuvent être disponibles sous licence open source. Veuillez consulter le dépôt officiel pour les licences spécifiques.</p></div><p>La copie, modification ou distribution de tout contenu est interdite sans autorisation écrite préalable.</p>` },
+                    { id: 's9', title: 'Exonération de Responsabilité Médicale', heading: 'Exonération de Responsabilité Médicale', content: `<div class="highlight-box"><p>🚨 Avertissement médical important : Qatra n\'est pas un service médical et ne remplace pas la consultation d\'un médecin.</p></div><p>L\'utilisateur accepte expressément ce qui suit :</p><ul><li>Toutes les informations sont uniquement à des fins informatives et ne constituent pas un avis médical.</li><li>La décision de donner son sang est toujours basée sur la recommandation d\'un professionnel de santé qualifié.</li><li>La plateforme ne remplace pas l\'évaluation médicale réalisée par un spécialiste.</li><li>En cas d\'urgence, appelez le numéro national d\'urgence ou rendez-vous à l\'hôpital le plus proche.</li><li>L\'utilisateur assume seul la responsabilité de ses décisions de santé.</li></ul>` },
+                    { id: 's10', title: 'Exclusion de Garanties', heading: 'Exclusion de Garanties', content: `<p>La plateforme Qatra est fournie sans aucune garantie explicite ou implicite, y compris mais sans s\'y limiter :</p><ul><li>Garantie d\'adéquation à un usage particulier.</li><li>Garantie de non-violation des droits.</li><li>Garantie d\'exactitude ou d\'exhaustivité des informations.</li><li>Garantie d\'absence d\'erreurs ou de virus.</li><li>Garantie de disponibilité continue du service.</li></ul><p>Vous comprenez et acceptez que l\'utilisation de la plateforme est à vos propres risques et périls.</p>` },
+                    { id: 's11', title: 'Indemnisation', heading: 'Indemnisation', content: `<p>L\'utilisateur accepte d\'indemniser et de dégager de toute responsabilité l\'équipe Qatra et ses associés contre toute réclamation, action, dommage, perte ou coût (y compris les honoraires d\'avocat) résultant de :</p><ul><li>La violation de ces conditions par l\'utilisateur.</li><li>Toute violation de loi ou réglementation applicable.</li><li>Toute atteinte aux droits d\'un tiers.</li><li>La saisie d\'informations inexactes sur la plateforme.</li><li>L\'utilisation abusive de la plateforme.</li></ul>` },
+                    { id: 's12', title: 'Suspension ou Arrêt du Service', heading: 'Suspension ou Arrêt du Service', content: `<p>L\'équipe Qatra se réserve le droit de suspendre ou d\'arrêter le service en tout temps, sans préavis ni responsabilité, notamment dans les cas suivants :</p><ul><li>Maintenance planifiée ou urgente du système.</li><li>Mises à jour de la plateforme.</li><li>Détection d\'une utilisation illégale ou frauduleuse.</li><li>Raisons techniques ou de sécurité.</li><li>Raisons légales ou réglementaires.</li></ul><p>Nous ne serons pas responsables des dommages résultant d\'une suspension temporaire du service.</p>` },
+                    { id: 's13', title: 'Modification des Conditions', heading: 'Modification des Conditions', content: `<p>Nous nous réservons le droit de modifier ces conditions à tout moment. En cas de modifications substantielles, nous nous engageons à :</p><ul><li>Publier les conditions mises à jour sur cette page avec la date d\'entrée en vigueur.</li><li>Mettre à jour la date de « Dernière mise à jour » en bas de page.</li><li>Envoyer une notification aux utilisateurs inscrits par email ou dans l\'application.</li></ul><p>La poursuite de votre utilisation de la plateforme après la publication des changements constitue l\'acceptation des conditions mises à jour.</p>` },
+                    { id: 's14', title: 'Loi Applicable', heading: 'Loi Applicable', content: `<p>Ces conditions sont régies et interprétées conformément aux lois de la <strong>République algérienne démocratique et populaire</strong>, notamment :</p><ul><li>L\'ordonnance 75-58 du 26 septembre 1975 portant Code civil algérien.</li><li>La loi 18-05 du 10 mai 2018 relative à la cybersécurité.</li><li>La loi 09-03 du 25 février 2009 relative aux courriers électroniques et messages.</li></ul><p>En cas de conflit entre ces conditions et la législation applicable, la législation applicable prévaut.</p>` },
+                    { id: 's15', title: 'Règlement des Litiges', heading: 'Règlement des Litiges', content: `<p>En cas de litige découlant de ces conditions ou de l\'utilisation de la plateforme, nous nous engageons aux étapes suivantes :</p><ol><li><strong>Règlement amiable :</strong> Nous tenterons de résoudre le litige de manière amiable et rapide.</li><li><strong>Médiation :</strong> Si la résolution amiable échoue, un médiateur indépendant peut être saisi.</li><li><strong>Tribunaux compétents :</strong> En cas d\'échec, le litige sera soumis aux <strong>tribunaux compétents d\'Alger</strong>.</li></ol><div class="highlight-box"><p>⚖️ Nous privilégions les solutions amiables, mais nous nous réservons le droit de recourir à la justice si nécessaire.</p></div>` },
+                    { id: 's16', title: 'Signaler un Abus', heading: 'Signaler un Abus', content: `<p>Si vous constatez un comportement abusif ou une utilisation non autorisée de la plateforme, veuillez le signaler immédiatement :</p><ul><li>Email : <a href="mailto:abuse@qatra.dz">abuse@qatra.dz</a></li><li>Formulaire de contact officiel de la plateforme.</li><li>Contact direct via les canaux officiels de réseaux sociaux.</li></ul><p>Nous nous engageons à examiner tous les signalements et à prendre les mesures nécessaires :</p><ul><li>Enquête interne sur l\'incident.</li><li>Suspension temporaire du compte litigieux.</li><li>Mesures appropriées (avertissement, suspension ou suppression).</li><li>Notification du résultat au signaleur.</li></ul>` },
+                    { id: 's17', title: 'Nous Contacter', heading: 'Nous Contacter', content: `<p>Pour toute question concernant ces conditions ou la plateforme, n\'hésitez pas à nous contacter :</p><div class="contact-grid"><div class="contact-card"><div class="icon" aria-hidden="true">📧</div><div class="label">Email</div><div class="value"><a href="mailto:contact@qatra.dz">contact@qatra.dz</a></div></div><div class="contact-card"><div class="icon" aria-hidden="true">🌐</div><div class="label">Site Web</div><div class="value"><a href="https://qatra.dz" target="_blank" rel="noopener noreferrer">qatra.dz</a></div></div><div class="contact-card"><div class="icon" aria-hidden="true">📍</div><div class="label">Localisation</div><div class="value">Alger, Algérie</div></div></div>` }
+                ],
+                footerUpdate: 'Dernière mise à jour :',
+                footerVersion: 'Version',
+                footerDate: '13 juillet 2026',
+                footerCopy: '&copy; 2026 Qatra — Tous droits réservés.',
+                tocToggleText: '▾ Table des matières'
+            },
+            en: {
+                title: 'Terms of Service | Qatra',
+                badge: 'Version 1.0',
+                heroTitle: 'Terms of <span class="highlight">Service</span>',
+                heroDesc: 'Please read these terms carefully before using the Qatra platform to connect blood donors in Algeria.',
+                tocTitle: 'Table of Contents',
+                sections: [
+                    { id: 's1', title: 'Introduction — Acceptance', heading: 'Introduction — Acceptance of Terms', content: `<p>Welcome to the <strong>Qatra</strong> platform. By using this platform or any of its services, you acknowledge that you have read, understood, and accepted these terms and the privacy policy in full.</p><p>If you do not agree to any of these terms, please do not use the platform. We reserve the right to modify these terms at any time.</p><div class="highlight-box"><p>⚠️ Your use of the platform constitutes explicit and unconditional acceptance of all these terms.</p></div>` },
+                    { id: 's2', title: 'Definitions', heading: 'Definitions', content: `<p>In the context of these terms, the following definitions apply:</p><ul><li><strong>"Platform"</strong> or <strong>"Qatra"</strong> : The web application and digital platform enabling blood donor registration and profile management.</li><li><strong>"User"</strong> : Any natural person registered on the platform or using its services.</li><li><strong>"Content"</strong> : Any text, image, data, or information published or entered by users on the platform.</li><li><strong>"Service"</strong> : The features and capabilities provided by the platform, including the donor directory and appointment management.</li><li><strong>"Blood Bank"</strong> : The health institution or regional transfusion center that receives donation requests.</li></ul>` },
+                    { id: 's3', title: 'Service Description', heading: 'Service Description', content: `<p>Qatra is a digital platform that provides a <strong>blood donor directory</strong> in Algeria. It aims to connect volunteer blood donors with institutions in need of blood across all wilayas.</p><div class="highlight-box cyan"><p>📌 Qatra is not a medical service, not a blood bank, not a hospital, and does not provide any medical consultation.</p></div><p>Main services include:</p><ul><li>Creating and managing a personal donor profile.</li><li>Displaying donors compatible with the requested blood type.</li><li>Sending notifications when donation needs arise in specific areas.</li><li>Tracking previous donation history.</li></ul>` },
+                    { id: 's4', title: 'Permitted Use', heading: 'Terms of Permitted Use', content: `<p>For permitted use of the platform, you must:</p><ul><li>Be of legal age (18 years or older) or have parental consent.</li><li>Provide accurate, current, and complete information upon registration.</li><li>Maintain the confidentiality of your account and password.</li><li>Use the platform for personal, non-commercial purposes only.</li><li>Respect other users and healthcare partner institutions fully.</li><li>Comply with the laws and regulations in force in the People\'s Democratic Republic of Algeria.</li></ul>` },
+                    { id: 's5', title: 'Prohibited Use', heading: 'Prohibited Use', content: `<p>The following uses of the platform are strictly prohibited:</p><ul><li><strong>Fake Data:</strong> Entering or publishing false or misleading information about identity, blood type, or health status.</li><li><strong>Spam:</strong> Sending bulk messages, commercial advertisements, or unauthorized promotional content.</li><li><strong>Harassment:</strong> Any form of bullying, discrimination, or hateful language toward other users.</li><li><strong>Commercial Use:</strong> Using user data or the platform for commercial or marketing purposes.</li><li><strong>Intrusion:</strong> Attempting unauthorized access to platform systems or other users\' accounts.</li><li><strong>Fraud:</strong> Impersonating another user or pretending to represent a healthcare institution.</li></ul><div class="highlight-box"><p>🚫 The team reserves the right to suspend or delete any account violating these terms without prior notice.</p></div>` },
+                    { id: 's6', title: 'User Responsibility', heading: 'User Responsibility', content: `<p>The user bears full responsibility for:</p><ul><li><strong>Data Accuracy:</strong> The correctness of all information entered into the platform, including blood type and personal information.</li><li><strong>Legal Capacity:</strong> Verifying they have reached the required legal age or obtained parental consent.</li><li><strong>Actions:</strong> All activities conducted through their personal account.</li><li><strong>Damages:</strong> Any harm resulting from irresponsible or unauthorized use of the platform.</li></ul><p>The user commits to notifying the platform immediately upon discovering any unauthorized use of their account.</p>` },
+                    { id: 's7', title: 'Application Responsibility', heading: 'Application Responsibility', content: `<p>The platform is committed to providing a service that is as reliable as possible; however:</p><ul><li>The platform is provided "<strong>as is</strong>" and "<strong>as available</strong>", without express or implied warranties.</li><li>We do not guarantee uninterrupted service or freedom from errors.</li><li>We are not responsible for any direct or indirect damages resulting from use of the service.</li><li>The platform does not provide any medical, legal, or professional consultation.</li><li>We are not responsible for decisions made based on information from the platform.</li><li>It is always recommended to consult a qualified medical professional.</li></ul><div class="highlight-box"><p>🏥 Qatra is not a hospital, not a blood bank, not a healthcare institution. The platform is solely a digital connection tool.</p></div>` },
+                    { id: 's8', title: 'Intellectual Property', heading: 'Intellectual Property', content: `<p>All content, designs, logos, and symbols used on the platform are protected under intellectual property laws in Algeria and adopted international conventions.</p><p>This includes in particular:</p><ul><li>The name "Qatra" and associated logos.</li><li>Visual design and graphical interface.</li><li>The platform\'s source code.</li><li>Explanatory texts and content.</li></ul><div class="highlight-box cyan"><p>💡 Note: Some platform components may be available under open-source licenses. Please consult the official repository for specific licenses applied.</p></div><p>Copying, modifying, or distributing any content from the platform without prior written consent is prohibited.</p>` },
+                    { id: 's9', title: 'Medical Disclaimer', heading: 'Medical Disclaimer', content: `<div class="highlight-box"><p>🚨 Important medical notice: Qatra is not a medical service and does not replace consultation with a qualified physician or healthcare institution.</p></div><p>The user expressly agrees to the following:</p><ul><li>All information available on the platform is for informational purposes only and does not constitute medical advice.</li><li>The decision to donate blood is always based on the recommendation of a qualified healthcare professional.</li><li>The platform is not a substitute for medical evaluation performed by a transfusion specialist.</li><li>In case of emergency, please call the national emergency number or go to the nearest hospital.</li><li>The user alone is responsible for any health decisions made based on information from the platform.</li></ul>` },
+                    { id: 's10', title: 'Disclaimer of Warranties', heading: 'Disclaimer of Warranties', content: `<p>The Qatra platform is provided without any express or implied warranties, including but not limited to:</p><ul><li>Warranty of fitness for a particular purpose.</li><li>Warranty of non-infringement of rights.</li><li>Warranty of accuracy or completeness of information.</li><li>Warranty of absence of errors or viruses.</li><li>Warranty of continuous service availability.</li></ul><p>You understand and agree that use of the platform is at your own sole risk.</p>` },
+                    { id: 's11', title: 'Indemnification', heading: 'Indemnification', content: `<p>The user agrees to indemnify and hold harmless the Qatra team and its associates from any claims, actions, damages, losses, or costs (including legal fees) arising from:</p><ul><li>The user\'s violation of these terms.</li><li>Any violation of applicable law or regulation.</li><li>Infringement of any third-party rights.</li><li>Entering inaccurate or misleading information on the platform.</li><li>Abuse of the platform or attempting to cause harm to it.</li></ul>` },
+                    { id: 's12', title: 'Service Suspension or Termination', heading: 'Service Suspension or Termination', content: `<p>The Qatra team reserves the right to suspend or terminate the service, in whole or in part, at any time without notice or liability, in the following cases:</p><ul><li>Planned or emergency system maintenance.</li><li>Platform updates or feature changes.</li><li>Detection of any illegal or fraudulent use.</li><li>Technical or security reasons.</li><li>Legal or regulatory reasons.</li></ul><p>We will not be liable for any damages resulting from temporary service suspension.</p>` },
+                    { id: 's13', title: 'Modification of Terms', heading: 'Modification of Terms', content: `<p>We reserve the right to modify these terms at any time. When substantive changes are made, we commit to:</p><ul><li>Publishing the updated terms on this page with the effective date.</li><li>Updating the "Last Updated" date at the bottom of the page.</li><li>Sending a notification to registered users via email or within the application.</li></ul><p>Your continued use of the platform after publication of changes constitutes acceptance of the updated terms. If you do not agree with the changes, please stop using the platform.</p>` },
+                    { id: 's14', title: 'Governing Law', heading: 'Governing Law', content: `<p>These terms are governed by and construed in accordance with the laws of the <strong>People\'s Democratic Republic of Algeria</strong>, specifically:</p><ul><li>Ordinance 75-58 dated September 26, 1975, containing the Algerian Civil Code.</li><li>Law 18-05 dated May 10, 2018, relating to cybersecurity.</li><li>Law 09-03 dated February 25, 2009, relating to electronic mail and information pages.</li></ul><p>In case of conflict between these terms and applicable legislation, applicable legislation prevails.</p>` },
+                    { id: 's15', title: 'Dispute Resolution', heading: 'Dispute Resolution', content: `<p>In the event of any dispute arising from these terms or platform use, we are committed to the following steps:</p><ol><li><strong>Amicable Resolution:</strong> We will first attempt to resolve the dispute amicably through direct communication with the user.</li><li><strong>Mediation:</strong> If amicable resolution fails, an independent mediator may be engaged.</li><li><strong>Competent Courts:</strong> If amicable solutions and mediation fail, the dispute shall be subject to the jurisdiction of the <strong>competent courts in Algiers</strong>.</li></ol><div class="highlight-box"><p>⚖️ We prioritize amicable solutions, but reserve the right to resort to legal proceedings when necessary.</p></div>` },
+                    { id: 's16', title: 'Report Abuse', heading: 'Report Abuse', content: `<p>If you observe any abusive behavior or misuse of the platform, please report it immediately:</p><ul><li>Email: <a href="mailto:abuse@qatra.dz">abuse@qatra.dz</a></li><li>Official contact form on the platform.</li><li>Direct contact via official social media channels.</li></ul><p>We are committed to reviewing all reports as soon as possible and taking necessary action:</p><ul><li>Internal investigation of the incident.</li><li>Temporary suspension of the offending account.</li><li>Appropriate measures (warning, suspension, or deletion).</li><li>Notification of review outcome to the reporter.</li></ul>` },
+                    { id: 's17', title: 'Contact Us', heading: 'Contact Us', content: `<p>For any questions or comments regarding these terms or the platform in general, please do not hesitate to contact us:</p><div class="contact-grid"><div class="contact-card"><div class="icon" aria-hidden="true">📧</div><div class="label">Email</div><div class="value"><a href="mailto:contact@qatra.dz">contact@qatra.dz</a></div></div><div class="contact-card"><div class="icon" aria-hidden="true">🌐</div><div class="label">Website</div><div class="value"><a href="https://qatra.dz" target="_blank" rel="noopener noreferrer">qatra.dz</a></div></div><div class="contact-card"><div class="icon" aria-hidden="true">📍</div><div class="label">Location</div><div class="value">Algiers, Algeria</div></div></div>` }
+                ],
+                footerUpdate: 'Last Updated:',
+                footerVersion: 'Version',
+                footerDate: '13 July 2026',
+                footerCopy: '&copy; 2026 Qatra — All rights reserved.',
+                tocToggleText: '▾ Table of Contents'
+            }
+        };
+
+        let currentLang = 'ar';
+
+        function applyLang(lang) {
+            const t = translations[lang];
+            if (!t) return;
+            currentLang = lang;
+
+            document.documentElement.lang = lang;
+            document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+
+            document.title = t.title;
+
+            currentLangEl.textContent = translations[lang].label || translations[lang].footerUpdate;
+            const currentBtn = langDropdown.querySelector(`button[data-lang="${lang}"]`);
+            if (currentBtn) currentLangEl.textContent = currentBtn.getAttribute('data-label');
+
+            const heroBadge = document.querySelector('.hero-badge span:last-child');
+            if (heroBadge) heroBadge.textContent = t.badge;
+
+            const heroH1 = document.querySelector('.hero h1');
+            if (heroH1) heroH1.innerHTML = t.heroTitle;
+
+            const heroP = document.querySelector('.hero > p');
+            if (heroP) heroP.textContent = t.heroDesc;
+
+            const tocTitle = document.querySelector('.toc-title');
+            if (tocTitle) tocTitle.textContent = t.tocTitle;
+
+            const tocList = document.querySelector('.toc-list');
+            if (tocList) {
+                const items = tocList.querySelectorAll('li a');
+                items.forEach((a, i) => {
+                    if (t.sections[i]) {
+                        a.innerHTML = `<span class="num">${i + 1}</span> ${t.sections[i].title}`;
+                    }
+                });
+            }
+
+            const sections = document.querySelectorAll('.section');
+            sections.forEach((sec, i) => {
+                if (t.sections[i]) {
+                    const numEl = sec.querySelector('.section-number');
+                    const h2 = sec.querySelector('h2');
+                    if (numEl) numEl.textContent = i + 1;
+                    if (h2) h2.innerHTML = t.sections[i].heading + ' <span class="dot">.</span>';
+                    const body = sec.querySelector('p, ul, ol, div');
+                    sec.innerHTML = '';
+                    if (numEl) sec.appendChild(numEl);
+                    if (h2) sec.appendChild(h2);
+                    const temp = document.createElement('div');
+                    temp.innerHTML = t.sections[i].content;
+                    while (temp.firstChild) sec.appendChild(temp.firstChild);
+                }
+            });
+
+            const footerMeta = document.querySelector('.footer-meta');
+            if (footerMeta) {
+                footerMeta.innerHTML = `${t.footerUpdate} <span>${t.footerDate}</span> | ${t.footerVersion} <span>1.0</span>`;
+            }
+
+            const footerCopy = document.querySelector('.footer-copy');
+            if (footerCopy) footerCopy.innerHTML = t.footerCopy;
+
+            const tocToggleBtn = document.getElementById('tocToggle');
+            if (tocToggleBtn) tocToggleBtn.textContent = t.tocToggleText;
+
+            langButtons.forEach(b => b.classList.remove('active'));
+            const activeBtn = langDropdown.querySelector(`button[data-lang="${lang}"]`);
+            if (activeBtn) activeBtn.classList.add('active');
+
+            // Update ARIA labels
+            const skipLink = document.querySelector('.skip-link');
+            if (skipLink) {
+                skipLink.textContent = lang === 'ar' ? 'تخطي إلى المحتوى الرئيسي' : lang === 'fr' ? 'Aller au contenu principal' : 'Skip to main content';
+            }
+        }
+
+        langToggle.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const isOpen = langDropdown.classList.toggle('open');
+            langToggle.setAttribute('aria-expanded', isOpen);
+        });
+
+        langButtons.forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                applyLang(this.dataset.lang);
+                langDropdown.classList.remove('open');
+                langToggle.setAttribute('aria-expanded', 'false');
+            });
+        });
+
+        document.addEventListener('click', function() {
+            langDropdown.classList.remove('open');
+            langToggle.setAttribute('aria-expanded', 'false');
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                langDropdown.classList.remove('open');
+                langToggle.setAttribute('aria-expanded', 'false');
+            }
+        });
+
+        // --- Hamburger ---
+        const hamburgerBtn = document.getElementById('hamburgerBtn');
+        const navLinks = document.getElementById('navLinks');
+        hamburgerBtn.addEventListener('click', function() {
+            const isOpen = navLinks.classList.toggle('mobile-open');
+            this.setAttribute('aria-expanded', isOpen);
+            this.textContent = isOpen ? '✕' : '☰';
+        });
+
+        // --- TOC Toggle ---
+        const tocToggle = document.getElementById('tocToggle');
+        const tocNav = document.getElementById('tocNav');
+        tocToggle.addEventListener('click', function() {
+            const isOpen = tocNav.classList.toggle('mobile-open');
+            this.setAttribute('aria-expanded', isOpen);
+            this.textContent = isOpen
+                ? (currentLang === 'ar' ? '▴ إخفاء جدول المحتويات' : currentLang === 'fr' ? '▴ Masquer la table' : '▴ Hide contents')
+                : (translations[currentLang].tocToggleText || '▾ عرض جدول المحتويات');
+        });
+
+        // --- Back to Top ---
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 400) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
+        backToTop.addEventListener('click', function() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // --- Active TOC tracking ---
+        const tocLinks = document.querySelectorAll('.toc-list a');
+        const sectionEls = document.querySelectorAll('.section[id]');
+
+        function updateActiveToc() {
+            let current = '';
+            sectionEls.forEach(function(sec) {
+                const rect = sec.getBoundingClientRect();
+                if (rect.top <= 120) {
+                    current = sec.id;
+                }
+            });
+            tocLinks.forEach(function(link) {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', updateActiveToc, { passive: true });
+        updateActiveToc();
+
+        // --- Keyboard navigation for TOC ---
+        tocLinks.forEach(function(link, index) {
+            link.addEventListener('keydown', function(e) {
+                let target = null;
+                if (e.key === 'ArrowDown' || e.key === 'ArrowLeft') {
+                    e.preventDefault();
+                    target = tocLinks[(index + 1) % tocLinks.length];
+                } else if (e.key === 'ArrowUp' || e.key === 'ArrowRight') {
+                    e.preventDefault();
+                    target = tocLinks[(index - 1 + tocLinks.length) % tocLinks.length];
+                } else if (e.key === 'Home') {
+                    e.preventDefault();
+                    target = tocLinks[0];
+                } else if (e.key === 'End') {
+                    e.preventDefault();
+                    target = tocLinks[tocLinks.length - 1];
+                }
+                if (target) target.focus();
+            });
+        });
+
+    })();
+    </script>
+</body>
+</html>

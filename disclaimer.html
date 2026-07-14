@@ -1,0 +1,1322 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="إخلاء المسؤولية - منصة قطرة للتبرع بالblood في الجزائر">
+    <meta name="theme-color" content="#05060B">
+    <title>إخلاء المسؤولية | Qatra - قطرة</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #05060B;
+            --bg-secondary: #0C0E17;
+            --bg-card: #10131E;
+            --bg-card-hover: #161A29;
+            --text-primary: #EAF0FB;
+            --text-secondary: #9BA3B8;
+            --text-muted: #6B7394;
+            --accent: #FF1B4C;
+            --accent-glow: rgba(255, 27, 76, 0.3);
+            --accent-soft: rgba(255, 27, 76, 0.12);
+            --cyan: #00E5FF;
+            --cyan-glow: rgba(0, 229, 255, 0.25);
+            --cyan-soft: rgba(0, 229, 255, 0.08);
+            --warning-yellow: #FFB800;
+            --warning-yellow-soft: rgba(255, 184, 0, 0.1);
+            --border: rgba(255, 255, 255, 0.06);
+            --border-accent: rgba(255, 27, 76, 0.25);
+            --radius-sm: 8px;
+            --radius-md: 14px;
+            --radius-lg: 20px;
+            --radius-xl: 28px;
+            --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.5);
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: 'Cairo', 'Tajawal', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.8;
+            min-height: 100vh;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body[dir="ltr"] {
+            font-family: 'Tajawal', 'Cairo', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        /* Background decorations */
+        .bg-decoration {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .bg-decoration .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.35;
+        }
+
+        .bg-decoration .orb-1 {
+            width: 600px;
+            height: 600px;
+            background: var(--accent);
+            top: -200px;
+            right: -150px;
+            opacity: 0.12;
+        }
+
+        .bg-decoration .orb-2 {
+            width: 500px;
+            height: 500px;
+            background: var(--cyan);
+            bottom: -200px;
+            left: -150px;
+            opacity: 0.08;
+        }
+
+        .bg-decoration .orb-3 {
+            width: 300px;
+            height: 300px;
+            background: var(--accent);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0.04;
+        }
+
+        /* Grid pattern */
+        .bg-grid {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+
+        /* Header */
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(5, 6, 11, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            padding: 0 24px;
+        }
+
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 68px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+        .logo-icon {
+            width: 42px;
+            height: 42px;
+            background: linear-gradient(135deg, var(--accent), #FF4D7A);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            box-shadow: 0 4px 20px var(--accent-glow);
+        }
+
+        .logo-text {
+            font-size: 1.35rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        .logo-text .highlight {
+            color: var(--accent);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* Language Switcher */
+        .lang-switcher {
+            position: relative;
+        }
+
+        .lang-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .lang-btn:hover,
+        .lang-btn:focus-visible {
+            border-color: var(--cyan);
+            background: var(--bg-card-hover);
+            outline: none;
+        }
+
+        .lang-btn:focus-visible {
+            box-shadow: 0 0 0 3px var(--cyan-glow);
+        }
+
+        .lang-btn svg {
+            width: 16px;
+            height: 16px;
+            opacity: 0.7;
+        }
+
+        .lang-dropdown {
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 0;
+            right: auto;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 6px;
+            min-width: 160px;
+            box-shadow: var(--shadow-lg);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-8px);
+            transition: var(--transition);
+            z-index: 200;
+        }
+
+        [dir="rtl"] .lang-dropdown {
+            left: auto;
+            right: 0;
+        }
+
+        .lang-dropdown.open {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .lang-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            padding: 10px 14px;
+            background: transparent;
+            border: none;
+            border-radius: var(--radius-sm);
+            color: var(--text-secondary);
+            font-family: inherit;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: start;
+        }
+
+        .lang-option:hover {
+            background: var(--accent-soft);
+            color: var(--text-primary);
+        }
+
+        .lang-option.active {
+            background: var(--accent-soft);
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        .lang-option:focus-visible {
+            outline: 2px solid var(--cyan);
+            outline-offset: -2px;
+        }
+
+        /* Main */
+        .main {
+            position: relative;
+            z-index: 1;
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 48px 24px 80px;
+        }
+
+        /* Top Warning Banner */
+        .warning-banner {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 20px 28px;
+            background: linear-gradient(135deg, rgba(255, 27, 76, 0.12), rgba(255, 27, 76, 0.05));
+            border: 2px solid var(--border-accent);
+            border-radius: var(--radius-lg);
+            margin-bottom: 40px;
+            animation: pulse-border 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse-border {
+            0%, 100% { border-color: rgba(255, 27, 76, 0.25); }
+            50% { border-color: rgba(255, 27, 76, 0.55); }
+        }
+
+        .warning-banner-icon {
+            font-size: 2.5rem;
+            line-height: 1;
+            flex-shrink: 0;
+            animation: bounce-icon 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce-icon {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .warning-banner-text h2 {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--accent);
+            margin-bottom: 4px;
+        }
+
+        .warning-banner-text p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Page Title */
+        .page-title {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .page-title .disclaimer-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 18px;
+            background: var(--accent-soft);
+            border: 1px solid var(--border-accent);
+            border-radius: 100px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 20px;
+        }
+
+        .page-title h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 900;
+            line-height: 1.3;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-title .subtitle {
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .last-updated {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 16px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .last-updated svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        /* Critical Alert Box */
+        .critical-alert {
+            display: flex;
+            align-items: stretch;
+            gap: 0;
+            background: var(--bg-card);
+            border: 2px solid var(--accent);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            margin-bottom: 48px;
+            box-shadow: 0 0 40px var(--accent-glow);
+        }
+
+        .critical-alert-sidebar {
+            width: 8px;
+            background: linear-gradient(180deg, var(--accent), #FF4D7A, var(--accent));
+            flex-shrink: 0;
+        }
+
+        .critical-alert-content {
+            padding: 28px 32px;
+            flex: 1;
+        }
+
+        .critical-alert-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .critical-alert-header .alert-icon {
+            font-size: 1.8rem;
+        }
+
+        .critical-alert-header h2 {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--accent);
+        }
+
+        .critical-alert p {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            line-height: 1.9;
+        }
+
+        .emergency-number {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 20px;
+            padding: 14px 24px;
+            background: linear-gradient(135deg, var(--accent), #FF4D7A);
+            border-radius: var(--radius-md);
+            color: #fff;
+            font-size: 1.15rem;
+            font-weight: 800;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .emergency-number:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px var(--accent-glow);
+        }
+
+        .emergency-number:focus-visible {
+            outline: 3px solid var(--cyan);
+            outline-offset: 3px;
+        }
+
+        .emergency-number .num {
+            font-size: 1.5rem;
+            letter-spacing: 0.05em;
+        }
+
+        /* Disclaimer Sections */
+        .disclaimer-section {
+            margin-bottom: 32px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .section-header .section-icon {
+            font-size: 1.5rem;
+        }
+
+        .section-header h2 {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: var(--text-primary);
+        }
+
+        /* Warning Cards */
+        .warning-cards {
+            display: grid;
+            gap: 16px;
+        }
+
+        .warning-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            padding: 22px 24px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-right: 4px solid var(--accent);
+            border-radius: var(--radius-md);
+            transition: var(--transition);
+        }
+
+        [dir="ltr"] .warning-card {
+            border-right: 1px solid var(--border);
+            border-left: 4px solid var(--accent);
+        }
+
+        .warning-card:hover {
+            background: var(--bg-card-hover);
+            border-color: rgba(255, 27, 76, 0.2);
+            transform: translateX(-4px);
+        }
+
+        [dir="ltr"] .warning-card:hover {
+            transform: translateX(4px);
+        }
+
+        .warning-card .card-icon {
+            font-size: 1.6rem;
+            line-height: 1;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .warning-card .card-content h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+        }
+
+        .warning-card .card-content p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* Info Cards (Cyan accent) */
+        .info-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            padding: 22px 24px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-right: 4px solid var(--cyan);
+            border-radius: var(--radius-md);
+            transition: var(--transition);
+        }
+
+        [dir="ltr"] .info-card {
+            border-right: 1px solid var(--border);
+            border-left: 4px solid var(--cyan);
+        }
+
+        .info-card:hover {
+            background: var(--bg-card-hover);
+            transform: translateX(-4px);
+        }
+
+        [dir="ltr"] .info-card:hover {
+            transform: translateX(4px);
+        }
+
+        .info-card .card-icon {
+            font-size: 1.6rem;
+            line-height: 1;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .info-card .card-content h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+        }
+
+        .info-card .card-content p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* Yellow Warning Cards */
+        .caution-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            padding: 22px 24px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-right: 4px solid var(--warning-yellow);
+            border-radius: var(--radius-md);
+            transition: var(--transition);
+        }
+
+        [dir="ltr"] .caution-card {
+            border-right: 1px solid var(--border);
+            border-left: 4px solid var(--warning-yellow);
+        }
+
+        .caution-card:hover {
+            background: var(--bg-card-hover);
+            transform: translateX(-4px);
+        }
+
+        [dir="ltr"] .caution-card:hover {
+            transform: translateX(4px);
+        }
+
+        .caution-card .card-icon {
+            font-size: 1.6rem;
+            line-height: 1;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .caution-card .card-content h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+        }
+
+        .caution-card .card-content p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* Highlighted List */
+        .highlight-list {
+            list-style: none;
+            padding: 0;
+            margin: 16px 0;
+        }
+
+        .highlight-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px 16px;
+            border-radius: var(--radius-sm);
+            transition: var(--transition);
+        }
+
+        .highlight-list li:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .highlight-list li .li-icon {
+            font-size: 1.1rem;
+            flex-shrink: 0;
+            margin-top: 3px;
+        }
+
+        .highlight-list li p {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .highlight-list li strong {
+            color: var(--text-primary);
+            font-weight: 700;
+        }
+
+        /* Final Notice */
+        .final-notice {
+            display: flex;
+            align-items: stretch;
+            gap: 0;
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
+            border: 2px solid var(--cyan);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            margin-top: 48px;
+            box-shadow: 0 0 40px var(--cyan-glow);
+        }
+
+        .final-notice-sidebar {
+            width: 8px;
+            background: linear-gradient(180deg, var(--cyan), #00B8D4, var(--cyan));
+            flex-shrink: 0;
+        }
+
+        .final-notice-content {
+            padding: 28px 32px;
+            flex: 1;
+        }
+
+        .final-notice-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+
+        .final-notice-header .notice-icon {
+            font-size: 1.6rem;
+        }
+
+        .final-notice-header h2 {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--cyan);
+        }
+
+        .final-notice p {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 12px;
+        }
+
+        .final-notice p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Footer */
+        .footer {
+            position: relative;
+            z-index: 1;
+            border-top: 1px solid var(--border);
+            padding: 32px 24px;
+            text-align: center;
+        }
+
+        .footer-inner {
+            max-width: 960px;
+            margin: 0 auto;
+        }
+
+        .footer p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        .footer a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .footer a:hover {
+            color: #FF4D7A;
+            text-decoration: underline;
+        }
+
+        .footer a:focus-visible {
+            outline: 2px solid var(--cyan);
+            outline-offset: 2px;
+            border-radius: 2px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-top: 16px;
+            flex-wrap: wrap;
+        }
+
+        /* Skip Link */
+        .skip-link {
+            position: absolute;
+            top: -100%;
+            left: 16px;
+            padding: 12px 24px;
+            background: var(--accent);
+            color: #fff;
+            font-weight: 700;
+            border-radius: var(--radius-sm);
+            z-index: 999;
+            text-decoration: none;
+            transition: top 0.2s;
+        }
+
+        .skip-link:focus {
+            top: 16px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-inner {
+                height: 60px;
+            }
+
+            .logo-text {
+                font-size: 1.15rem;
+            }
+
+            .main {
+                padding: 32px 16px 60px;
+            }
+
+            .warning-banner {
+                flex-direction: column;
+                text-align: center;
+                padding: 20px;
+            }
+
+            .critical-alert-content {
+                padding: 20px;
+            }
+
+            .final-notice-content {
+                padding: 20px;
+            }
+
+            .warning-card,
+            .info-card,
+            .caution-card {
+                padding: 18px 16px;
+            }
+
+            .page-title h1 {
+                font-size: 1.75rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .lang-btn span {
+                display: none;
+            }
+
+            .lang-btn {
+                padding: 8px 12px;
+            }
+
+            .warning-banner-icon {
+                font-size: 2rem;
+            }
+
+            .warning-banner-text h2 {
+                font-size: 1.1rem;
+            }
+
+            .emergency-number {
+                width: 100%;
+                justify-content: center;
+                font-size: 1rem;
+            }
+
+            .emergency-number .num {
+                font-size: 1.3rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-in {
+            animation: fadeInUp 0.6s ease-out forwards;
+            opacity: 0;
+        }
+
+        .animate-in:nth-child(1) { animation-delay: 0.05s; }
+        .animate-in:nth-child(2) { animation-delay: 0.1s; }
+        .animate-in:nth-child(3) { animation-delay: 0.15s; }
+        .animate-in:nth-child(4) { animation-delay: 0.2s; }
+        .animate-in:nth-child(5) { animation-delay: 0.25s; }
+        .animate-in:nth-child(6) { animation-delay: 0.3s; }
+        .animate-in:nth-child(7) { animation-delay: 0.35s; }
+        .animate-in:nth-child(8) { animation-delay: 0.4s; }
+        .animate-in:nth-child(9) { animation-delay: 0.45s; }
+        .animate-in:nth-child(10) { animation-delay: 0.5s; }
+        .animate-in:nth-child(11) { animation-delay: 0.55s; }
+        .animate-in:nth-child(12) { animation-delay: 0.6s; }
+
+        /* Focus styles */
+        :focus-visible {
+            outline: 2px solid var(--cyan);
+            outline-offset: 2px;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Print */
+        @media print {
+            .header, .bg-decoration, .bg-grid { display: none; }
+            body { background: #fff; color: #000; }
+            .main { padding: 20px; }
+            .warning-card, .info-card, .caution-card { border-color: #ccc; background: #f9f9f9; }
+            .critical-alert, .final-notice { border-color: #999; box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+    <a href="#main-content" class="skip-link" aria-label="Skip to main content">تخطي إلى المحتوى الرئيسي</a>
+
+    <div class="bg-decoration" aria-hidden="true">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+    <div class="bg-grid" aria-hidden="true"></div>
+
+    <!-- Header -->
+    <header class="header" role="banner">
+        <div class="header-inner">
+            <a href="/" class="logo" aria-label="Qatra - الصفحة الرئيسية">
+                <div class="logo-icon" aria-hidden="true">🩸</div>
+                <span class="logo-text"><span class="highlight">قطرة</span> | Qatra</span>
+            </a>
+            <div class="header-actions">
+                <div class="lang-switcher">
+                    <button class="lang-btn" id="langToggle" aria-haspopup="listbox" aria-expanded="false" aria-label="Change language">
+                        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                        <span id="currentLangLabel">العربية</span>
+                        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                    </button>
+                    <div class="lang-dropdown" id="langDropdown" role="listbox" aria-label="Available languages">
+                        <button class="lang-option active" role="option" aria-selected="true" data-lang="ar" data-dir="rtl" data-label="العربية">🇸🇦 العربية</button>
+                        <button class="lang-option" role="option" aria-selected="false" data-lang="fr" data-dir="ltr" data-label="Français">🇫🇷 Français</button>
+                        <button class="lang-option" role="option" aria-selected="false" data-lang="en" data-dir="ltr" data-label="English">🇬🇧 English</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main" id="main-content" role="main">
+
+        <!-- Top Warning Banner -->
+        <div class="warning-banner animate-in" role="alert">
+            <div class="warning-banner-icon" aria-hidden="true">⚠️</div>
+            <div class="warning-banner-text">
+                <h2 data-ar="مستند قانوني مهم" data-fr="Document Juridique Important" data-en="Important Legal Document">مستند قانوني مهم</h2>
+                <p data-ar="يرجى قراءة هذا المستند بعناية قبل استخدام تطبيق قطرة. استخدامك للتطبيق يُعد قبولاً لهذه الشروط." data-fr="Veuillez lire attentivement ce document avant d'utiliser l'application Qatra. Votre utilisation de l'application constitue une acceptation de ces conditions." data-en="Please read this document carefully before using the Qatra application. Your use of the application constitutes acceptance of these terms.">يرجى قراءة هذا المستند بعناية قبل استخدام تطبيق قطرة. استخدامك للتطبيق يُعد قبولاً لهذه الشروط.</p>
+            </div>
+        </div>
+
+        <!-- Page Title -->
+        <div class="page-title animate-in">
+            <div class="disclaimer-badge" aria-hidden="true">
+                <span>⚠️</span>
+                <span data-ar="إخلاء المسؤولية" data-fr="AVERTISSEMENT" data-en="DISCLAIMER">إخلاء المسؤولية</span>
+            </div>
+            <h1 data-ar="إخلاء المسؤولية" data-fr="Avertissement / Décharge de Responsabilité" data-en="Disclaimer / Liability Waiver">إخلاء المسؤولية</h1>
+            <p class="subtitle" data-ar="منصة قطرة للتبرع بالدم في الجزائر — تفاصيل важة حول طبيعة التطبيق وحدود مسؤوليته" data-fr="Plateforme Qatra de don de sang en Algérie — Informations importantes sur la nature de l'application et les limites de sa responsabilité" data-en="Qatra Blood Donation Platform in Algeria — Important details about the nature of the application and the limits of its liability">منصة قطرة للتبرع بالدم في الجزائر — تفاصيل важة حول طبيعة التطبيق وحدود مسؤوليته</p>
+            <div class="last-updated">
+                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                <span data-ar="آخر تحديث: 13 يوليو 2026" data-fr="Dernière mise à jour : 13 juillet 2026" data-en="Last updated: July 13, 2026">آخر تحديث: 13 يوليو 2026</span>
+            </div>
+        </div>
+
+        <!-- Critical Emergency Notice -->
+        <section class="critical-alert animate-in" aria-labelledby="emergency-heading">
+            <div class="critical-alert-sidebar" aria-hidden="true"></div>
+            <div class="critical-alert-content">
+                <div class="critical-alert-header">
+                    <span class="alert-icon" aria-hidden="true">🚨</span>
+                    <h2 id="emergency-heading" data-ar="تنبيه طوارئ عاجل" data-fr="Avertissement d'Urgence" data-en="Critical Emergency Notice">تنبيه طوارئ عاجل</h2>
+                </div>
+                <p data-ar="في حالة طبية عاجلة، يجب عليك التواصل فوراً مع الجهات الصحية المختصة. تطبيق قطرة <strong>ليس بديلاً</strong> عن خدمات الطوارئ ولا يُستخدم للحالات الطبية العاجلة. لا تعتمد على التطبيق في أوقات الأزمات." data-fr="En cas d'urgence médicale, vous devez contacter immédiatement les autorités sanitaires compétentes. L'application Qatra <strong>n'est pas un substitut</strong> aux services d'urgence et ne doit pas être utilisée pour les situations médicales urgentes. Ne comptez pas sur l'application en temps de crise." data-en="In case of a medical emergency, you must immediately contact the relevant health authorities. The Qatra application <strong>is not a substitute</strong> for emergency services and should not be used for urgent medical situations. Do not rely on the application during crises." dir="rtl">
+                    في حالة طبية عاجلة، يجب عليك التواصل فوراً مع الجهات الصحية المختصة. تطبيق قطرة <strong>ليس بديلاً</strong> عن خدمات الطوارئ ولا يُستخدم للحالات الطبية العاجلة. لا تعتمد على التطبيق في أوقات الأزمات.
+                </p>
+                <a href="tel:115" class="emergency-number" aria-label="Call emergency number 115 - Ambulance in Algeria">
+                    <span aria-hidden="true">📞</span>
+                    <span data-ar="رقم الإسعاف في الجزائر" data-fr="Numéro d'urgence en Algérie" data-en="Ambulance Number in Algeria">رقم الإسعاف في الجزائر</span>
+                    <span class="num">115</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- Section 1: What the App Is NOT -->
+        <section class="disclaimer-section animate-in" aria-labelledby="section-not">
+            <div class="section-header">
+                <span class="section-icon" aria-hidden="true">⛔</span>
+                <h2 id="section-not" data-ar="ما ليسه تطبيق قطرة" data-fr="Ce que l'application Qatra N'EST PAS" data-en="What Qatra Is NOT">ما ليسه تطبيق قطرة</h2>
+            </div>
+            <div class="warning-cards">
+                <!-- Card 1 -->
+                <div class="warning-card animate-in">
+                    <span class="card-icon" aria-hidden="true">🏥</span>
+                    <div class="card-content">
+                        <h3 data-ar="ليس مستشفىً أو مؤسسة صحية" data-fr="Ce n'est pas un hôpital ni un établissement de santé" data-en="Not a Hospital or Health Institution">ليس مستشفىً أو مؤسسة صحية</h3>
+                        <p data-ar="تطبيق قطرة هو منصة رقمية للتواصل والتوعية، وليست مؤسسة طبية أو مستشفىً أو عيادة. لا يقدم التطبيق أي خدمات طبية مباشرة ولا يُصنّف كمؤسسة صحية بأي شكل من الأشكال." data-fr="Qatra est une plateforme numérique de connexion et de sensibilisation, et non un établissement médical, un hôpital ou une clinique. L'application ne fournit aucun service médical direct et ne peut être classée comme un établissement de santé sous quelque forme que ce soit." data-en="Qatra is a digital platform for connection and awareness, not a medical institution, hospital, or clinic. The application does not provide any direct medical services and cannot be classified as a health institution in any form.">تطبيق قطرة هو منصة رقمية للتواصل والتوعية، وليست مؤسسة طبية أو مستشفىً أو عيادة. لا يقدم التطبيق أي خدمات طبية مباشرة ولا يُصنّف كمؤسسة صحية بأي شكل من الأشكال.</p>
+                    </div>
+                </div>
+                <!-- Card 2 -->
+                <div class="warning-card animate-in">
+                    <span class="card-icon" aria-hidden="true">🩸</span>
+                    <div class="card-content">
+                        <h3 data-ar="ليس بنك دم أو مركز تجميع دم" data-fr="Ce n'est pas une banque de sang ni un centre de collecte" data-en="Not a Blood Bank or Collection Center">ليس بنك دم أو مركز تجميع دم</h3>
+                        <p data-ar="لا يمتلك التطبيق ولا يُشغّل بنك دم أو مركز لتجميع الدم. التطبيق لا يخزّن أو ينقل أو يُوزّع الدم أو المنتجات الدموية بأي طريقة كانت. جميع عمليات التبرع الفعلية تتم من خلال المؤسسات الصحية المعتمدة." data-fr="L'application ne possède ni n'exploite de banque de sang ni de centre de collecte. L'application ne stocke, ne transporte ni ne distribue de sang ou de produits sanguins de quelque manière que ce soit. Toutes les dons réels sont effectués par le biais des établissements de santé agréés." data-en="The application does not own or operate a blood bank or blood collection center. The application does not store, transport, or distribute blood or blood products in any way. All actual donations are made through certified health institutions.">لا يمتلك التطبيق ولا يُشغّل بنك دم أو مركز لتجميع الدم. التطبيق لا يخزّن أو ينقل أو يُوزّع الدم أو المنتجات الدموية بأي طريقة كانت. جميع عمليات التبرع الفعلية تتم من خلال المؤسسات الصحية المعتمدة.</p>
+                    </div>
+                </div>
+                <!-- Card 3 -->
+                <div class="warning-card animate-in">
+                    <span class="card-icon" aria-hidden="true">🏛️</span>
+                    <div class="card-content">
+                        <h3 data-ar="ليس جهة حكومية أو رسمية" data-fr="Ce n'est pas un organisme gouvernemental ou officiel" data-en="Not a Government or Official Entity">ليس جهة حكومية أو رسمية</h3>
+                        <p data-ar="تطبيق قطرة ليس تابعاً لأي جهة حكومية أو رسمية في الجزائر. لا يمثل التطبيق وزارة الصحة أو أي مؤسسة حكومية أخرى. أي انطباع بأن التطبيق رسمي أو حكومي هو خطأ ولا يعكس الواقع." data-fr="L'application Qatra n'est affiliée à aucun organisme gouvernemental ou officiel en Algérie. L'application ne représente pas le Ministère de la Santé ou toute autre institution gouvernementale. Toute impression que l'application est officielle ou gouvernementale est erronée." data-en="The Qatra application is not affiliated with any governmental or official entity in Algeria. The application does not represent the Ministry of Health or any other government institution. Any impression that the application is official or governmental is incorrect and does not reflect reality.">تطبيق قطرة ليس تابعاً لأي جهة حكومية أو رسمية في الجزائر. لا يمثل التطبيق وزارة الصحة أو أي مؤسسة حكومية أخرى. أي انطباع بأن التطبيق رسمي أو حكومي هو خطأ ولا يعكس الواقع.</p>
+                    </div>
+                </div>
+                <!-- Card 4 -->
+                <div class="warning-card animate-in">
+                    <span class="card-icon" aria-hidden="true">🚑</span>
+                    <div class="card-content">
+                        <h3 data-ar="ليس بديلاً عن خدمات الطوارئ" data-fr="Ce n'est pas un substitut aux services d'urgence" data-en="Not a Substitute for Emergency Services">ليس بديلاً عن خدمات الطوارئ</h3>
+                        <p data-ar="لا ينبغي استخدام التطبيق كبديل لأرقام الطوارئ أو خدمات الإسعاف. في أي حالة طبية عاجلة، اتصل فوراً بالرقم 115 (الإسعاف) أو توجه أقرب مركز صحي. التطبيق مصمم للتوعية والتواصل المسبق، وليست للطوارئ." data-fr="L'application ne doit pas être utilisée comme substitut aux numéros d'urgence ou aux services d'ambulance. En cas d'urgence médicale, appelez immédiatement le 115 (ambulance) ou rendez-vous au centre de santé le plus proche. L'application est conçue pour la sensibilisation et la connexion préalable, pas pour les urgences." data-en="The application should not be used as a substitute for emergency numbers or ambulance services. In any medical emergency, immediately call 115 (ambulance) or go to the nearest health center. The application is designed for awareness and pre-connection, not for emergencies.">لا ينبغي استخدام التطبيق كبديل لأرقام الطوارئ أو خدمات الإسعاف. في أي حالة طبية عاجلة، اتصل فوراً بالرقم 115 (الإسعاف) أو توجه أقرب مركز صحي. التطبيق مصمم للتوعية والتواصل المسبق، وليست للطوارئ.</p>
+                    </div>
+                </div>
+                <!-- Card 5 -->
+                <div class="warning-card animate-in">
+                    <span class="card-icon" aria-hidden="true">👨‍⚕️</span>
+                    <div class="card-content">
+                        <h3 data-ar="لا يقدم استشارات طبية أو صحية" data-fr="Ne fournit pas de conseils médicaux ou de santé" data-en="Does Not Provide Medical or Health Consultations">لا يقدم استشارات طبية أو صحية</h3>
+                        <p data-ar="أي معلومات طبية تظهر في التطبيق هي لأغراض توعوية عامة فقط، ولا تُعتبر استشارة طبية أو تشخيصاً أو وصفاً طبياً. لا تعتمد على معلومات التطبيق بدل استشارة طبيب مختص أو جهة صحية مختصة." data-fr="Toute information médicale affichée dans l'application est fournie à des fins de sensibilisation générale uniquement et ne constitue pas un avis médical, un diagnostic ou une ordonnance. Ne vous basez pas sur les informations de l'application au lieu de consulter un médecin qualifié." data-en="Any medical information displayed in the application is for general awareness purposes only and does not constitute medical advice, diagnosis, or prescription. Do not rely on the application's information instead of consulting a qualified physician or health authority.">أي معلومات طبية تظهر في التطبيق هي لأغراض توعوية عامة فقط، ولا تُعتبر استشارة طبية أو تشخيصاً أو وصفاً طبياً. لا تعتمد على معلومات التطبيق بدل استشارة طبيب مختص أو جهة صحية مختصة.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Limitations -->
+        <section class="disclaimer-section animate-in" aria-labelledby="section-limits">
+            <div class="section-header">
+                <span class="section-icon" aria-hidden="true">🔒</span>
+                <h2 id="section-limits" data-ar="حدود المسؤولية" data-fr="Limitations de Responsabilité" data-en="Limitations of Liability">حدود المسؤولية</h2>
+            </div>
+            <div class="warning-cards">
+                <!-- Card 6 -->
+                <div class="warning-card animate-in">
+                    <span class="card-icon" aria-hidden="true">❌</span>
+                    <div class="card-content">
+                        <h3 data-ar="لا يضمن توفر متبرعين في أي وقت" data-fr="Ne garantit pas la disponibilité de donneurs" data-en="Does Not Guarantee Donor Availability at Any Time">لا يضمن توفر متبرعين في أي وقت</h3>
+                        <p data-ar="لا يضمن التطبيق وجود متبرعين متاحين في أي وقت أو في أي منطقة. توفر المتبرعين يعتمد على إرادتهم الطوعية ولا سيطرة للتطبيق عليهم. قد لا تجد متبرعاً في بعض الأوقات أو المناطق." data-fr="L'application ne garantit pas la disponibilité de donneurs à tout moment ou dans toute région. La disponibilité des donneurs dépend de leur volonté et l'application n'a aucun contrôle sur eux. Il est possible que vous ne trouviez pas de donneur à certains moments ou dans certaines zones." data-en="The application does not guarantee the availability of donors at any time or in any area. Donor availability depends on their voluntary will and the application has no control over them. You may not find a donor at certain times or in certain areas.">لا يضمن التطبيق وجود متبرعين متاحين في أي وقت أو في أي منطقة. توفر المتبرعين يعتمد على إرادتهم الطوعية ولا سيطرة للتطبيق عليهم. قد لا تجد متبرعاً في بعض الأوقات أو المناطق.</p>
+                    </div>
+                </div>
+                <!-- Card 7 -->
+                <div class="warning-card animate-in">
+                    <span class="card-icon" aria-hidden="true">🤝</span>
+                    <div class="card-content">
+                        <h3 data-ar="لا يتحمل المسؤولية عن أي اتفاقات أو ترتيبات بين المستخدمين" data-fr="N'assume aucune responsabilité pour les accords entre utilisateurs" data-en="Not Responsible for Any Agreements or Arrangements Between Users">لا يتحمل المسؤولية عن أي اتفاقات أو ترتيبات بين المستخدمين</h3>
+                        <p data-ar="التطبيق يوفّر منصة للتواصل فقط، ولا يتحمل أي مسؤولية عن أي اتفاقات أو ترتيبات أو تواصل يحدث بين المستخدمين. جميع الترتيبات والتواصل بين المتبرعين والمستفيدين هو مسؤولية الأطراف المعنية حصرياً." data-fr="L'application fournit uniquement une plateforme de mise en relation et n'assume aucune responsabilité pour tout accord, arrangement ou communication survenant entre les utilisateurs. Tous les accords et communications entre les donneurs et les bénéficiaires sont exclusivement de la responsabilité des parties concernées." data-en="The application provides a platform for connection only and assumes no responsibility for any agreements, arrangements, or communication occurring between users. All agreements and communication between donors and recipients are exclusively the responsibility of the concerned parties.">التطبيق يوفّر منصة للتواصل فقط، ولا يتحمل أي مسؤولية عن أي اتفاقات أو ترتيبات أو تواصل يحدث بين المستخدمين. جميع الترتيبات والتواصل بين المتبرعين والمستفيدين هو مسؤولية الأطراف المعنية حصرياً.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: User Responsibilities -->
+        <section class="disclaimer-section animate-in" aria-labelledby="section-user">
+            <div class="section-header">
+                <span class="section-icon" aria-hidden="true">👤</span>
+                <h2 id="section-user" data-ar="مسؤوليات المستخدم" data-fr="Responsabilités de l'Utilisateur" data-en="User Responsibilities">مسؤوليات المستخدم</h2>
+            </div>
+            <div class="warning-cards">
+                <!-- Card 8 -->
+                <div class="caution-card animate-in">
+                    <span class="card-icon" aria-hidden="true">⚡</span>
+                    <div class="card-content">
+                        <h3 data-ar="يجب الرجوع للجهات الصحية المختصة في الحالات الطبية العاجلة" data-fr="Contactez les autorités sanitaires compétentes en cas d'urgence" data-en="Consult Relevant Health Authorities in Medical Emergencies">يجب الرجوع للجهات الصحية المختصة في الحالات الطبية العاجلة</h3>
+                        <p data-ar="في أي حالة طبية عاجلة أو حالة وصفها طبيب بأنها تستدعي تدخلاً سريعاً، يجب الرجوع فوراً إلى الجهات الصحية المختصة أو الاتصال برقم الطوارئ 115. لا يُحل التطبيق محل أي جهة صحية مختصة." data-fr="Dans tout cas médical urgent ou une situation qu'un médecin a décrite comme nécessitant une intervention rapide, vous devez contacter immédiatement les autorités sanitaires compétentes ou appeler le numéro d'urgence 115. L'application ne remplace aucune autorité sanitaire." data-en="In any urgent medical situation or one described by a doctor as requiring immediate intervention, you must immediately contact the relevant health authorities or call the emergency number 115. The application does not replace any health authority.">في أي حالة طبية عاجلة أو حالة وصفها طبيب بأنها تستدعي تدخلاً سريعاً، يجب الرجوع فوراً إلى الجهات الصحية المختصة أو الاتصال برقم الطوارئ 115. لا يُحل التطبيق محل أي جهة صحية مختصة.</p>
+                    </div>
+                </div>
+                <!-- Card 9 -->
+                <div class="caution-card animate-in">
+                    <span class="card-icon" aria-hidden="true">📖</span>
+                    <div class="card-content">
+                        <h3 data-ar="المعلومات المقدمة لأغراض توعوية فقط" data-fr="Les informations fournies à des fins de sensibilisation uniquement" data-en="Information Provided for Awareness Purposes Only">المعلومات المقدمة لأغراض توعوية فقط</h3>
+                        <p data-ar="جميع المعلومات المقدمة عبر التطبيق هي لأغراض توعوية وتثقيفية عامة فقط، وتستمد من مصادر موثوقة لكنها لا تُغني عن استشارة طبية متخصصة. المعلومات قد لا تكون محدثة في جميع الأحيان وقد لا تناسب كل الحالات الفردية." data-fr="Toutes les informations fournies via l'application sont à des fins de sensibilisation et d'éducation générale uniquement, provenant de sources fiables mais ne remplacent pas un avis médical spécialisé. Les informations peuvent ne pas toujours être à jour et peuvent ne pas convenir à chaque cas individuel." data-en="All information provided through the application is for general awareness and educational purposes only, sourced from reliable references but does not replace specialized medical advice. Information may not always be up-to-date and may not suit every individual case.">جميع المعلومات المقدمة عبر التطبيق هي لأغراض توعوية وتثقيفية عامة فقط، وتستمد من مصادر موثوقة لكنها لا تُغني عن استشارة طبية متخصصة. المعلومات قد لا تكون محدثة في جميع الأحيان وقد لا تناسب كل الحالات الفردية.</p>
+                    </div>
+                </div>
+                <!-- Card 10 -->
+                <div class="caution-card animate-in">
+                    <span class="card-icon" aria-hidden="true">📜</span>
+                    <div class="card-content">
+                        <h3 data-ar="لا توجد علاقة تعاقدية بين المستخدمين والتطبيق" data-fr="Aucune relation contractuelle entre les utilisateurs et l'application" data-en="No Contractual Relationship Between Users and the Application">لا توجد علاقة تعاقدية بين المستخدمين والتطبيق</h3>
+                        <p data-ar="استخدام التطبيق لا يُنشئ أي علاقة تعاقدية أو اتفاقية ملزمة بين المستخدم وتطبيق قطرة. لا يوجد التزام قانوني أو مالي من قبل التطبيق تجاه المستخدمين أو العكس." data-fr="L'utilisation de l'application ne crée aucune relation contractuelle ou accord contraignant entre l'utilisateur et l'application Qatra. Il n'y a aucune obligation légale ou financière de l'application envers les utilisateurs ou vice versa." data-en="Use of the application does not create any contractual or binding agreement between the user and the Qatra application. There is no legal or financial obligation from the application towards users or vice versa.">استخدام التطبيق لا يُنشئ أي علاقة تعاقدية أو اتفاقية ملزمة بين المستخدم وتطبيق قطرة. لا يوجد التزام قانوني أو مالي من قبل التطبيق تجاه المستخدمين أو العكس.</p>
+                    </div>
+                </div>
+                <!-- Card 11 -->
+                <div class="caution-card animate-in">
+                    <span class="card-icon" aria-hidden="true">🛡️</span>
+                    <div class="card-content">
+                        <h3 data-ar="استخدام التطبيق على مسؤولية المستخدم الخاصة" data-fr="Utilisation de l'application sous votre propre responsabilité" data-en="Use of the Application at Your Own Risk">استخدام التطبيق على مسؤولية المستخدم الخاصة</h3>
+                        <p data-ar="يُستخدم التطبيق على مسؤولية المستخدم الخاصة والمباشرة. يقر المستخدم بأنه قرأ وفهم ووافق على شروط إخلاء المسؤولية هذه قبل استخدام التطبيق." data-fr="L'application est utilisée aux risques et périls de l'utilisateur. L'utilisateur reconnaît avoir lu, compris et accepté les présentes conditions de décharge de responsabilité avant d'utiliser l'application." data-en="The application is used at the user's own risk and responsibility. The user acknowledges that they have read, understood, and agreed to these disclaimer terms before using the application.">يُستخدم التطبيق على مسؤولية المستخدم الخاصة والمباشرة. يقر المستخدم بأنه قرأ وفهم ووافق على شروط إخلاء المسؤولية هذه قبل استخدام التطبيق.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Key Emergency Information -->
+        <section class="disclaimer-section animate-in" aria-labelledby="section-emergency">
+            <div class="section-header">
+                <span class="section-icon" aria-hidden="true">📞</span>
+                <h2 id="section-emergency" data-ar="معلومات الطوارئ" data-fr="Informations d'Urgence" data-en="Emergency Information">معلومات الطوارئ</h2>
+            </div>
+            <div class="warning-cards">
+                <div class="info-card animate-in">
+                    <span class="card-icon" aria-hidden="true">🚑</span>
+                    <div class="card-content">
+                        <h3 data-ar="رقم الإسعاف — الجزائر" data-fr="Numéro d'urgence — Algérie" data-en="Emergency Number — Algeria">رقم الإسعاف — الجزائر</h3>
+                        <p data-ar="في حالة طوارئ طبية، اتصل فوراً على الرقم <strong style="color: var(--accent);">115</strong> للإسعاف في الجزائر. هذا هو القناة الوحيدة الموثوقة للحالات الطارية." data-fr="En cas d'urgence médicale, appelez immédiatement le <strong style='color: var(--accent);'>115</strong> pour l'ambulance en Algérie. C'est le seul canal fiable pour les situations critiques." data-en="In case of a medical emergency, immediately call <strong style='color: var(--accent);'>115</strong> for ambulance services in Algeria. This is the only reliable channel for critical situations.">في حالة طوارئ طبية، اتصل فوراً على الرقم <strong style="color: var(--accent);">115</strong> للإسعاف في الجزائر. هذا هو القناة الوحيدة الموثوقة للحالات الطارية.</p>
+                    </div>
+                </div>
+            </div>
+            <ul class="highlight-list" aria-label="Key reminders">
+                <li class="animate-in">
+                    <span class="li-icon" aria-hidden="true">🔴</span>
+                    <p data-ar="التطبيق <strong>ليس مستشفىً</strong> ولا مؤسسة صحية ولا بنك دم" data-fr="L'application <strong>n'est pas un hôpital</strong>, ni un établissement de santé, ni une banque de sang" data-en="The application is <strong>not a hospital</strong>, not a health institution, and not a blood bank">التطبيق <strong>ليس مستشفىً</strong> ولا مؤسسة صحية ولا بنك دم</p>
+                </li>
+                <li class="animate-in">
+                    <span class="li-icon" aria-hidden="true">🔴</span>
+                    <p data-ar="التطبيق <strong>ليس جهة حكومية</strong> أو رسمية في الجزائر" data-fr="L'application <strong>n'est pas un organisme gouvernemental</strong> ou officiel en Algérie" data-en="The application is <strong>not a governmental</strong> or official entity in Algeria">التطبيق <strong>ليس جهة حكومية</strong> أو رسمية في الجزائر</p>
+                </li>
+                <li class="animate-in">
+                    <span class="li-icon" aria-hidden="true">🔴</span>
+                    <p data-ar="التطبيق <strong>ليس بديلاً</strong> عن خدمات الطوارئ — اتصل بـ 115" data-fr="L'application <strong>n'est pas un substitut</strong> aux services d'urgence — Appelez le 115" data-en="The application is <strong>not a substitute</strong> for emergency services — Call 115">التطبيق <strong>ليس بديلاً</strong> عن خدمات الطوارئ — اتصل بـ 115</p>
+                </li>
+                <li class="animate-in">
+                    <span class="li-icon" aria-hidden="true">🔴</span>
+                    <p data-ar="المعلومات المقدمة <strong>توعوية فقط</strong> وليست استشارة طبية" data-fr="Les informations fournies sont <strong>à titre de sensibilisation uniquement</strong> et ne constituent pas un avis médical" data-en="Information provided is <strong>for awareness only</strong> and does not constitute medical advice">المعلومات المقدمة <strong>توعوية فقط</strong> وليست استشارة طبية</p>
+                </li>
+                <li class="animate-in">
+                    <span class="li-icon" aria-hidden="true">🔴</span>
+                    <p data-ar="استخدام التطبيق <strong>على مسؤوليتك الخاصة</strong>" data-fr="L'utilisation de l'application est <strong>à vos propres risques</strong>" data-en="Use of the application is <strong>at your own risk</strong>">استخدام التطبيق <strong>على مسؤوليتك الخاصة</strong></p>
+                </li>
+            </ul>
+        </section>
+
+        <!-- Final Notice -->
+        <div class="final-notice animate-in" role="note" aria-labelledby="final-heading">
+            <div class="final-notice-sidebar" aria-hidden="true"></div>
+            <div class="final-notice-content">
+                <div class="final-notice-header">
+                    <span class="notice-icon" aria-hidden="true">ℹ️</span>
+                    <h2 id="final-heading" data-ar="ملاحظة ختامية" data-fr="Note Finale" data-en="Final Note">ملاحظة ختامية</h2>
+                </div>
+                <p data-ar="يُرجى ملاحظة أن تطبيق قطرة يعمل كمنصة للتواصل والتوعية فقط، ويهدف إلى تسهيل التواصل بين المتبرعين بالدم والمستفيدين في الجزائر. لا يتحمل التطبيق أي مسؤولية عن القرارات المتخذة بناءً على المعلومات المقدمة فيه أو عن أي نتائج مترتبة على استخدامه." data-fr="Veuillez noter que l'application Qatra fonctionne comme une plateforme de mise en relation et de sensibilisation uniquement, visant à faciliter la communication entre les donneurs de sang et les bénéficiaires en Algérie. L'application décline toute responsabilité pour les décisions prises sur la base des informations fournies ou pour toute conséquence résultant de son utilisation." data-en="Please note that the Qatra application operates as a platform for connection and awareness only, aimed at facilitating communication between blood donors and recipients in Algeria. The application assumes no responsibility for decisions made based on the information provided or for any consequences resulting from its use." dir="rtl">
+                    يُرجى ملاحظة أن تطبيق قطرة يعمل كمنصة للتواصل والتوعية فقط، ويهدف إلى تسهيل التواصل بين المتبرعين بالدم والمستفيدين في الجزائر. لا يتحمل التطبيق أي مسؤولية عن القرارات المتخذة بناءً على المعلومات المقدمة فيه أو عن أي نتائج مترتبة على استخدامه.
+                </p>
+                <p data-ar="باستخدامك لتطبيق قطرة، فأنت تقر بأنك قرأت وفهمت وقبلت جميع 조건ات إخلاء المسؤولية المذكورة أعلاه. إذا كنت لا توافق على هذه الشروط، يُرجى عدم استخدام التطبيق." data-fr="En utilisant l'application Qatra, vous reconnaissez avoir lu, compris et accepté toutes les conditions de décharge de responsabilité mentionnées ci-dessus. Si vous n'acceptez pas ces conditions, veuillez ne pas utiliser l'application." data-en="By using the Qatra application, you acknowledge that you have read, understood, and accepted all the disclaimer conditions mentioned above. If you do not agree to these terms, please do not use the application." dir="rtl">
+                    باستخدامك لتطبيق قطرة، فأنت تقر بأنك قرأت وفهمت وقبلت جميع 조نطات إخلاء المسؤولية المذكورة أعلاه. إذا كنت لا توافق على هذه الشروط، يُرجى عدم استخدام التطبيق.
+                </p>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
+        <div class="footer-inner">
+            <p data-ar="© 2026 قطرة | Qatra — جميع الحقوق محفوظة" data-fr="© 2026 Qatra — Tous droits réservés" data-en="© 2026 Qatra — All rights reserved">© 2026 قطرة | Qatra — جميع الحقوق محفوظة</p>
+            <div class="footer-links">
+                <a href="/" data-ar="الرئيسية" data-fr="Accueil" data-en="Home">الرئيسية</a>
+                <a href="/privacy.html" data-ar="سياسة الخصوصية" data-fr="Politique de Confidentialité" data-en="Privacy Policy">سياسة الخصوصية</a>
+                <a href="/terms.html" data-ar="شروط الاستخدام" data-fr="Conditions d'Utilisation" data-en="Terms of Use">شروط الاستخدام</a>
+                <a href="tel:115" data-ar="الطوارئ: 115" data-fr="Urgence: 115" data-en="Emergency: 115">الطوارئ: 115</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Language Switcher
+        (function () {
+            const langToggle = document.getElementById('langToggle');
+            const langDropdown = document.getElementById('langDropdown');
+            const langOptions = langDropdown.querySelectorAll('.lang-option');
+            const currentLangLabel = document.getElementById('currentLangLabel');
+            let currentLang = 'ar';
+
+            langToggle.addEventListener('click', function (e) {
+                e.stopPropagation();
+                const isOpen = langDropdown.classList.toggle('open');
+                langToggle.setAttribute('aria-expanded', isOpen);
+            });
+
+            document.addEventListener('click', function () {
+                langDropdown.classList.remove('open');
+                langToggle.setAttribute('aria-expanded', 'false');
+            });
+
+            langDropdown.addEventListener('click', function (e) {
+                e.stopPropagation();
+            });
+
+            langOptions.forEach(function (option) {
+                option.addEventListener('click', function () {
+                    const lang = this.dataset.lang;
+                    const dir = this.dataset.dir;
+                    const label = this.dataset.label;
+
+                    if (lang === currentLang) {
+                        langDropdown.classList.remove('open');
+                        langToggle.setAttribute('aria-expanded', 'false');
+                        return;
+                    }
+
+                    currentLang = lang;
+
+                    document.documentElement.lang = lang;
+                    document.documentElement.dir = dir;
+                    document.body.dir = dir;
+                    document.body.lang = lang;
+
+                    currentLangLabel.textContent = label;
+
+                    langOptions.forEach(function (opt) {
+                        opt.classList.remove('active');
+                        opt.setAttribute('aria-selected', 'false');
+                    });
+                    this.classList.add('active');
+                    this.setAttribute('aria-selected', 'true');
+
+                    document.querySelectorAll('[data-' + lang + ']').forEach(function (el) {
+                        const text = el.getAttribute('data-' + lang);
+                        if (text) {
+                            if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                                el.placeholder = text;
+                            } else {
+                                el.innerHTML = text;
+                            }
+                        }
+                    });
+
+                    langDropdown.classList.remove('open');
+                    langToggle.setAttribute('aria-expanded', 'false');
+                });
+            });
+
+            // Keyboard navigation for language dropdown
+            langToggle.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    langToggle.click();
+                    if (langDropdown.classList.contains('open')) {
+                        langOptions[0].focus();
+                    }
+                }
+                if (e.key === 'Escape') {
+                    langDropdown.classList.remove('open');
+                    langToggle.setAttribute('aria-expanded', 'false');
+                }
+            });
+
+            langOptions.forEach(function (option, index) {
+                option.addEventListener('keydown', function (e) {
+                    if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+                        e.preventDefault();
+                        var next = langOptions[index + 1] || langOptions[0];
+                        next.focus();
+                    }
+                    if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+                        e.preventDefault();
+                        var prev = langOptions[index - 1] || langOptions[langOptions.length - 1];
+                        prev.focus();
+                    }
+                    if (e.key === 'Escape') {
+                        langDropdown.classList.remove('open');
+                        langToggle.setAttribute('aria-expanded', 'false');
+                        langToggle.focus();
+                    }
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        option.click();
+                    }
+                });
+            });
+        })();
+
+        // Intersection Observer for animations
+        (function () {
+            if ('IntersectionObserver' in window) {
+                var observer = new IntersectionObserver(function (entries) {
+                    entries.forEach(function (entry) {
+                        if (entry.isIntersecting) {
+                            entry.target.style.animationPlayState = 'running';
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.1 });
+
+                document.querySelectorAll('.animate-in').forEach(function (el) {
+                    el.style.animationPlayState = 'paused';
+                    observer.observe(el);
+                });
+
+                // Immediately play first items
+                setTimeout(function () {
+                    document.querySelectorAll('.animate-in').forEach(function (el) {
+                        el.style.animationPlayState = 'running';
+                    });
+                }, 100);
+            }
+        })();
+    </script>
+</body>
+</html>
