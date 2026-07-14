@@ -3,11 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src https://wqlhjcchqtnkcjcocejf.supabase.co; frame-ancestors 'none'; base-uri 'self'; form-action 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src https://wqlhjcchqtnkcjcocejf.supabase.co; base-uri 'self'; form-action 'self'">
 <meta name="referrer" content="no-referrer">
 <meta name="robots" content="index, follow">
-<meta http-equiv="X-Content-Type-Options" content="nosniff">
-<meta http-equiv="X-Frame-Options" content="DENY">
 <meta name="theme-color" content="#05060B">
 <title>قطرة | Qatra — دليل المتبرعين بالدم</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' style='stop-color:%23ff4444'/><stop offset='100%25' style='stop-color:%23cc0000'/></linearGradient></defs><path d='M50 5 C50 5,85 45,85 62 C85 82,68 95,50 95 C32 95,15 82,15 62 C15 45,50 5,50 5Z' fill='url(%23g)'/></svg>">
@@ -1463,8 +1461,10 @@ document.querySelectorAll('.overlay').forEach(o => {
   o.addEventListener('click', e => { if (e.target === o) o.classList.remove('show'); });
 });
 
-document.getElementById('openPrivacy').onclick = (e) => { e.preventDefault(); openModal('overlayPrivacy'); };
-document.getElementById('openDelete').onclick = (e) => {
+const openPrivacyEl = document.getElementById('openPrivacy');
+if (openPrivacyEl) openPrivacyEl.onclick = (e) => { e.preventDefault(); openModal('overlayPrivacy'); };
+const openDeleteEl = document.getElementById('openDelete');
+if (openDeleteEl) openDeleteEl.onclick = (e) => {
   e.preventDefault();
   closeModal('overlayPrivacy');
   document.getElementById('deleteFormWrap').style.display = 'block';
