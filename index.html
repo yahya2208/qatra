@@ -429,6 +429,70 @@ font-weight:700;font-size:13px;cursor:pointer;transition:all .18s;
 .pg-btn.active{background:rgba(255,27,76,0.15);border-color:var(--red2);color:var(--red2)}
 .pg-btn:disabled{opacity:0.3;cursor:not-allowed}
 .pg-info{font-size:12px;color:var(--muted);display:flex;align-items:center}
+
+.auth-bar{
+position:fixed;top:14px;inset-inline-start:60px;z-index:200;
+display:flex;align-items:center;gap:8px;
+}
+.auth-btn{
+background:var(--glass2);border:1px solid var(--border);
+backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+color:var(--ink);font-weight:700;font-size:12px;
+padding:7px 14px;border-radius:999px;cursor:pointer;
+transition:all .2s;display:flex;align-items:center;gap:5px;
+}
+.auth-btn:hover{box-shadow:var(--glow-cyan);border-color:rgba(0,229,255,0.4)}
+.auth-btn.login{color:var(--cyan)}
+.auth-btn.account{color:var(--green)}
+.auth-user-name{font-size:12px;color:var(--green);font-weight:700;max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.auth-dropdown{
+position:absolute;top:100%;inset-inline-start:0;margin-top:6px;
+background:linear-gradient(180deg,#111630,var(--bg2));
+border:1px solid var(--border);border-radius:var(--radius);
+padding:12px;min-width:220px;display:none;
+box-shadow:0 8px 32px rgba(0,0,0,0.5);
+backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+}
+.auth-dropdown.show{display:block}
+.auth-dropdown-item{
+display:flex;align-items:center;gap:8px;
+padding:8px 10px;border-radius:var(--radius-sm);
+font-size:12.5px;color:var(--ink);cursor:pointer;
+transition:background .15s;
+}
+.auth-dropdown-item:hover{background:var(--glass2)}
+.auth-dropdown-item.danger{color:var(--red2)}
+.auth-dropdown-divider{height:1px;background:var(--border);margin:6px 0}
+.auth-dropdown-label{font-size:11px;color:var(--muted);padding:4px 10px}
+.auth-badge{
+font-size:10px;font-weight:700;padding:2px 8px;border-radius:999px;
+}
+.auth-badge.active{background:rgba(57,255,158,0.1);color:var(--green);border:1px solid rgba(57,255,158,0.3)}
+.auth-badge.pending{background:rgba(255,209,102,0.1);color:var(--amber);border:1px solid rgba(255,209,102,0.3)}
+.auth-badge.admin{background:rgba(0,229,255,0.1);color:var(--cyan);border:1px solid rgba(0,229,255,0.3)}
+.email-input,.pwd-input{position:relative}
+.email-input input,.pwd-input input{padding-inline-end:36px}
+.email-icon,.pwd-icon{position:absolute;top:50%;inset-inline-end:10px;transform:translateY(-50%);color:var(--muted);font-size:14px;pointer-events:none}
+.pwd-strength{margin-top:6px;display:flex;gap:4px;align-items:center}
+.pwd-strength-bar{height:4px;border-radius:2px;flex:1;background:var(--glass2);transition:background .3s}
+.pwd-strength-bar.weak{background:var(--red2)}
+.pwd-strength-bar.fair{background:var(--amber)}
+.pwd-strength-bar.strong{background:var(--green)}
+.pwd-strength-text{font-size:11px;color:var(--muted);margin-top:2px}
+.pwd-toggle{
+position:absolute;top:50%;inset-inline-end:10px;transform:translateY(-50%);
+background:none;border:none;color:var(--muted);cursor:pointer;font-size:14px;padding:2px;
+}
+.pwd-toggle:hover{color:var(--ink)}
+.auth-link{color:var(--cyan);font-size:12.5px;cursor:pointer;text-decoration:underline;background:none;border:none;font-weight:600;padding:0}
+.auth-link:hover{color:var(--cyan2)}
+.auth-divider{display:flex;align-items:center;gap:10px;margin:14px 0;color:var(--muted);font-size:12px}
+.auth-divider::before,.auth-divider::after{content:"";flex:1;height:1px;background:var(--border)}
+.email-confirm-box{
+padding:14px;border-radius:var(--radius-sm);
+background:rgba(0,229,255,0.06);border:1px solid rgba(0,229,255,0.2);
+text-align:center;font-size:13px;color:var(--cyan);line-height:1.7;
+}
 </style>
 </head>
 <body>
@@ -442,6 +506,32 @@ font-weight:700;font-size:13px;cursor:pointer;transition:all .18s;
 
 <div id="configBanner" class="config-banner" style="display:none"></div>
 <div class="rating-toast" id="ratingToast"></div>
+
+<div class="auth-bar" id="authBar">
+  <button class="auth-btn login" id="btnLogin" style="display:none">
+    <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+    <span data-i18n="loginBtn">دخول</span>
+  </button>
+  <div id="authUserWrap" style="display:none;position:relative">
+    <button class="auth-btn account" id="btnAuthUser">
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+      <span class="auth-user-name" id="authUserName"></span>
+    </button>
+    <div class="auth-dropdown" id="authDropdown">
+      <div class="auth-dropdown-label" id="authDropdownEmail"></div>
+      <div style="padding:4px 10px"><span class="auth-badge" id="authDropdownStatus"></span> <span class="auth-badge admin" id="authDropdownRole" style="display:none"></span></div>
+      <div class="auth-dropdown-divider"></div>
+      <div class="auth-dropdown-item" id="authAccountBtn">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+        <span data-i18n="accountManage">إدارة الحساب</span>
+      </div>
+      <div class="auth-dropdown-item danger" id="authLogoutBtn">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg>
+        <span data-i18n="logoutBtn">خروج</span>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div class="container">
   <div class="hero">
@@ -527,6 +617,22 @@ font-weight:700;font-size:13px;cursor:pointer;transition:all .18s;
       <button class="close-x" data-close="overlayRegister">✕</button>
     </div>
     <div id="registerFormWrap">
+      <label data-i18n="labelEmail">البريد الإلكتروني</label>
+      <input type="email" id="fEmail" placeholder="example@email.com" dir="ltr" style="text-align:left" required>
+
+      <label data-i18n="labelPassword">كلمة المرور</label>
+      <div class="pwd-input">
+        <input type="password" id="fPassword" placeholder="••••••••" dir="ltr" style="text-align:left" required>
+        <button class="pwd-toggle" type="button" data-target="fPassword">👁</button>
+      </div>
+      <div class="pwd-strength" id="pwdStrength">
+        <div class="pwd-strength-bar"></div>
+        <div class="pwd-strength-bar"></div>
+        <div class="pwd-strength-bar"></div>
+        <div class="pwd-strength-bar"></div>
+      </div>
+      <div class="pwd-strength-text" id="pwdStrengthText"></div>
+
       <label data-i18n="labelName">الاسم الكامل</label>
       <input type="text" id="fName" data-i18n-ph="phName" placeholder="اسمك الكامل" maxlength="100" required>
 
@@ -571,6 +677,12 @@ font-weight:700;font-size:13px;cursor:pointer;transition:all .18s;
         <input type="checkbox" id="fConsent">
         <span data-i18n="consentLabel">أوافق على عرض بياناتي علنًا في دليل المتبرعين</span>
       </div>
+
+      <div class="auth-divider"><span data-i18n="orLabel">أو</span></div>
+      <div style="text-align:center">
+        <span style="font-size:13px;color:var(--muted)" data-i18n="hasAccount">لديك حساب بالفعل؟</span>
+        <button class="auth-link" id="switchToLogin" data-i18n="loginInstead">سجّل الدخول</button>
+      </div>
     </div>
     <div class="success-box" id="registerSuccess" style="display:none">
       <div class="drop-logo"></div>
@@ -580,6 +692,12 @@ font-weight:700;font-size:13px;cursor:pointer;transition:all .18s;
       <div style="margin-top:8px;color:var(--muted);font-size:12.5px" data-i18n="successShareHint">شارك التطبيق لزيادة فرص إنقاذ الأرواح</div>
       <button class="share-link-btn" id="shareBtn" data-i18n="shareBtn">نسخ رابط المشاركة</button>
       <div class="review-prompt" id="reviewAfterRegister" style="margin-top:12px" data-i18n="reviewAfterRegister">💬 هل حصلت على الزمرة التي تبحث عنها؟ شارك تجربتك!</div>
+    </div>
+    <div class="email-confirm-box" id="registerEmailConfirm" style="display:none">
+      <div data-i18n="emailConfirmSent">تم إرسال رابط التحقق إلى بريدك الإلكتروني. يرجى التحقق من بريدك وتأكيد الحساب قبل تسجيل الدخول.</div>
+      <div style="margin-top:10px">
+        <button class="auth-link" id="switchToLoginFromConfirm" data-i18n="goToLogin">الذهاب إلى تسجيل الدخول</button>
+      </div>
     </div>
   </div>
 </div>
@@ -753,6 +871,106 @@ font-weight:700;font-size:13px;cursor:pointer;transition:all .18s;
   </div>
 </div>
 
+<!-- Login Modal -->
+<div class="overlay" id="overlayLogin">
+  <div class="modal">
+    <div class="modal-head">
+      <h2 data-i18n="loginModalTitle">تسجيل الدخول</h2>
+      <button class="close-x" data-close="overlayLogin">✕</button>
+    </div>
+    <div id="loginFormWrap">
+      <label data-i18n="labelEmail">البريد الإلكتروني</label>
+      <input type="email" id="loginEmail" placeholder="example@email.com" dir="ltr" style="text-align:left" required>
+
+      <label data-i18n="labelPassword">كلمة المرور</label>
+      <div class="pwd-input">
+        <input type="password" id="loginPassword" placeholder="••••••••" dir="ltr" style="text-align:left" required>
+        <button class="pwd-toggle" type="button" data-target="loginPassword">👁</button>
+      </div>
+
+      <button class="submit-btn" id="submitLogin" data-i18n="submitLogin">دخول</button>
+
+      <div style="text-align:center;margin-top:12px">
+        <button class="auth-link" id="forgotPasswordBtn" data-i18n="forgotPassword">نسيت كلمة المرور؟</button>
+      </div>
+
+      <div class="auth-divider"><span data-i18n="orLabel">أو</span></div>
+
+      <div style="text-align:center">
+        <span style="font-size:13px;color:var(--muted)" data-i18n="noAccount">ليس لديك حساب؟</span>
+        <button class="auth-link" id="switchToRegister" data-i18n="registerInstead">سجّل الآن</button>
+      </div>
+    </div>
+    <div class="success-box" id="loginSuccess" style="display:none">
+      <div class="drop-logo"></div>
+      <div data-i18n="loginSuccess">تم تسجيل الدخول بنجاح!</div>
+    </div>
+    <div class="email-confirm-box" id="loginEmailConfirm" style="display:none">
+      <div data-i18n="emailConfirmRequired">تم إرسال رابط التحقق إلى بريدك الإلكتروني. يرجى التحقق من بريدك وتأكيد الحساب قبل تسجيل الدخول.</div>
+      <button class="submit-btn" id="resendConfirmBtn" style="margin-top:10px" data-i18n="resendConfirm">إعادة إرسال رابط التحقق</button>
+    </div>
+  </div>
+</div>
+
+<!-- Account Management Modal -->
+<div class="overlay" id="overlayAccount">
+  <div class="modal">
+    <div class="modal-head">
+      <h2 data-i18n="accountModalTitle">إدارة الحساب</h2>
+      <button class="close-x" data-close="overlayAccount">✕</button>
+    </div>
+    <div id="accountInfoWrap">
+      <div style="text-align:center;margin-bottom:16px">
+        <div style="width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--green),rgba(57,255,158,0.3));display:flex;align-items:center;justify-content:center;margin:0 auto 10px;font-size:24px">
+          <svg viewBox="0 0 24 24" width="28" height="28" fill="#fff"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+        </div>
+        <div id="accountDisplayName" style="font-weight:800;font-size:16px"></div>
+        <div id="accountEmailDisplay" style="font-size:12px;color:var(--muted);margin-top:2px"></div>
+        <div style="margin-top:6px"><span class="auth-badge" id="accountStatusBadge"></span> <span class="auth-badge admin" id="accountRoleBadge" style="display:none"></span></div>
+      </div>
+
+      <label data-i18n="labelEmail">البريد الإلكتروني</label>
+      <input type="email" id="accountEmail" dir="ltr" style="text-align:left" disabled>
+
+      <label data-i18n="labelDisplayName">الاسم</label>
+      <input type="text" id="accountName" maxlength="100">
+
+      <button class="submit-btn" id="submitAccountUpdate" data-i18n="saveChanges" style="background:linear-gradient(135deg,var(--cyan2),var(--cyan))">حفظ التغييرات</button>
+
+      <div class="auth-divider"><span data-i18n="securityLabel">الأمان</span></div>
+
+      <label data-i18n="labelNewPassword">كلمة المرور الجديدة</label>
+      <div class="pwd-input">
+        <input type="password" id="accountNewPwd" placeholder="••••••••" dir="ltr" style="text-align:left">
+        <button class="pwd-toggle" type="button" data-target="accountNewPwd">👁</button>
+      </div>
+      <div class="pwd-strength" id="accountPwdStrength">
+        <div class="pwd-strength-bar"></div>
+        <div class="pwd-strength-bar"></div>
+        <div class="pwd-strength-bar"></div>
+        <div class="pwd-strength-bar"></div>
+      </div>
+      <div class="pwd-strength-text" id="accountPwdStrengthText"></div>
+
+      <label data-i18n="labelConfirmPassword">تأكيد كلمة المرور</label>
+      <div class="pwd-input">
+        <input type="password" id="accountConfirmPwd" placeholder="••••••••" dir="ltr" style="text-align:left">
+        <button class="pwd-toggle" type="button" data-target="accountConfirmPwd">👁</button>
+      </div>
+
+      <button class="submit-btn" id="submitPasswordChange" style="background:var(--glass2);border:1px solid var(--border);color:var(--cyan)" data-i18n="changePassword">تغيير كلمة المرور</button>
+
+      <div class="auth-divider"><span data-i18n="dangerZone" style="color:var(--red2)">منطقة الخطر</span></div>
+
+      <button class="submit-btn" id="submitAccountDelete" style="background:linear-gradient(135deg,#cc0000,#ff4444)" data-i18n="deleteMyAccount">حذف حسابي نهائياً</button>
+    </div>
+    <div class="success-box" id="accountSuccess" style="display:none">
+      <div class="drop-logo"></div>
+      <div data-i18n="accountUpdateSuccess">تم تحديث حسابك بنجاح!</div>
+    </div>
+  </div>
+</div>
+
 <script>
 /* ================================================================
    SUPABASE CONFIGURATION
@@ -767,8 +985,167 @@ const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 const isConfigured = !SUPABASE_URL.includes("YOUR-PROJECT") && !SUPABASE_ANON_KEY.includes("YOUR-ANON");
 let sb = null;
 if (isConfigured && window.supabase) {
-  sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, { auth: { autoRefreshToken: true, persistSession: true, detectSessionInUrl: true } });
 }
+
+/* ===================== AUTH MODULE ===================== */
+let currentUser = null;
+let currentProfile = null;
+let currentSession = null;
+
+function passwordStrength(pwd) {
+  if (!pwd) return { score: 0, label: '', cls: '' };
+  let score = 0;
+  if (pwd.length >= 8) score++;
+  if (/[A-Z]/.test(pwd)) score++;
+  if (/[a-z]/.test(pwd)) score++;
+  if (/[0-9]/.test(pwd)) score++;
+  if (/[^A-Za-z0-9]/.test(pwd)) score++;
+  if (score <= 2) return { score: 1, label: t('pwdStrengthWeak'), cls: 'weak' };
+  if (score <= 3) return { score: 2, label: t('pwdStrengthFair'), cls: 'fair' };
+  return { score: 3, label: t('pwdStrengthStrong'), cls: 'strong' };
+}
+
+function renderPwdStrength(containerId, textId, pwd) {
+  const bars = document.getElementById(containerId);
+  const text = document.getElementById(textId);
+  if (!bars || !text) return;
+  const s = passwordStrength(pwd);
+  const barEls = bars.querySelectorAll('.pwd-strength-bar');
+  barEls.forEach((b, i) => {
+    b.className = 'pwd-strength-bar';
+    if (i < s.score) b.classList.add(s.cls);
+  });
+  text.textContent = s.label;
+  text.style.color = s.cls === 'weak' ? 'var(--red2)' : s.cls === 'fair' ? 'var(--amber)' : s.cls === 'strong' ? 'var(--green)' : 'var(--muted)';
+}
+
+function validatePassword(pwd) {
+  if (!pwd || pwd.length < 8) return false;
+  let types = 0;
+  if (/[A-Z]/.test(pwd)) types++;
+  if (/[a-z]/.test(pwd)) types++;
+  if (/[0-9]/.test(pwd)) types++;
+  if (/[^A-Za-z0-9]/.test(pwd)) types++;
+  return types >= 2;
+}
+
+function updateAuthUI() {
+  const loginBtn = document.getElementById('btnLogin');
+  const userWrap = document.getElementById('authUserWrap');
+  const userName = document.getElementById('authUserName');
+  const ddEmail = document.getElementById('authDropdownEmail');
+  const ddStatus = document.getElementById('authDropdownStatus');
+  const ddRole = document.getElementById('authDropdownRole');
+
+  if (currentUser) {
+    loginBtn.style.display = 'none';
+    userWrap.style.display = 'block';
+    const name = currentProfile ? currentProfile.display_name : (currentUser.email || '').split('@')[0];
+    userName.textContent = name;
+    ddEmail.textContent = currentUser.email;
+    if (currentProfile) {
+      const s = currentProfile.status;
+      ddStatus.textContent = s === 'ACTIVE' ? 'Active' : s === 'PENDING' ? 'Pending' : s;
+      ddStatus.className = 'auth-badge ' + (s === 'ACTIVE' ? 'active' : 'pending');
+      if (currentProfile.role === 'admin' || currentProfile.role === 'moderator') {
+        ddRole.textContent = currentProfile.role;
+        ddRole.style.display = 'inline-block';
+      } else {
+        ddRole.style.display = 'none';
+      }
+    }
+  } else {
+    loginBtn.style.display = 'flex';
+    userWrap.style.display = 'none';
+  }
+}
+
+async function loadProfile() {
+  if (!sb || !currentUser) { currentProfile = null; return; }
+  try {
+    const { data, error } = await sb.from('profiles').select('id,user_id,display_name,role,status,email').eq('user_id', currentUser.id).single();
+    if (error) throw error;
+    currentProfile = data;
+  } catch (e) {
+    console.error('loadProfile', e);
+    currentProfile = null;
+  }
+}
+
+async function authSignUp(email, password, meta) {
+  if (!sb) throw new Error('not configured');
+  const { data, error } = await sb.auth.signUp({
+    email, password,
+    options: { data: meta, emailRedirectTo: window.location.origin + window.location.pathname }
+  });
+  if (error) throw error;
+  return data;
+}
+
+async function authSignIn(email, password) {
+  if (!sb) throw new Error('not configured');
+  const { data, error } = await sb.auth.signInWithPassword({ email, password });
+  if (error) throw error;
+  return data;
+}
+
+async function authSignOut() {
+  if (!sb) return;
+  const { error } = await sb.auth.signOut();
+  if (error) throw error;
+  currentUser = null;
+  currentProfile = null;
+  currentSession = null;
+  updateAuthUI();
+}
+
+async function authResetPassword(email) {
+  if (!sb) throw new Error('not configured');
+  const { error } = await sb.auth.resetPasswordForEmail(email, {
+    redirectTo: window.location.origin + window.location.pathname
+  });
+  if (error) throw error;
+}
+
+async function authUpdatePassword(newPassword) {
+  if (!sb) throw new Error('not configured');
+  const { error } = await sb.auth.updateUser({ password: newPassword });
+  if (error) throw error;
+}
+
+async function authUpdateProfile(updates) {
+  if (!sb || !currentProfile) throw new Error('not authenticated');
+  const { error } = await sb.from('profiles').update(updates).eq('user_id', currentUser.id);
+  if (error) throw error;
+}
+
+async function authSoftDelete() {
+  if (!sb || !currentUser) throw new Error('not authenticated');
+  const now = new Date().toISOString();
+  const { error: donorErr } = await sb.from('donors').update({ deleted_at: now, is_available: false }).eq('user_id', currentUser.id);
+  if (donorErr) console.error('soft delete donor', donorErr);
+  const { error: profileErr } = await sb.from('profiles').update({ deleted_at: now, status: 'DELETED' }).eq('user_id', currentUser.id);
+  if (profileErr) throw profileErr;
+  await authSignOut();
+}
+
+async function resendConfirmation(email) {
+  if (!sb) throw new Error('not configured');
+  const { error } = await sb.auth.resend({ type: 'signup', email });
+  if (error) throw error;
+}
+
+sb && sb.auth.onAuthStateChange(async (event, session) => {
+  currentSession = session;
+  currentUser = session ? session.user : null;
+  if (currentUser) {
+    await loadProfile();
+  } else {
+    currentProfile = null;
+  }
+  updateAuthUI();
+});
 
 /* ===================== GEOGRAPHIC DATA ===================== */
 const WILAYAS = [
@@ -919,7 +1296,33 @@ const T = {
     alertDeleteConfirm:"هل أنت متأكد من حذف بياناتك؟ هذا الإجراء لا يمكن التراجع عنه.",
     alertDeletePhone:"أدخل رقم هاتف صحيح للحذف",
     alertDeleteNotFound:"لم يتم العثور على حساب بهذا الرقم",
-    alertDeleteAuthRequired:"حذف الحساب يتطلب تسجيل الدخول. سيتم إضافة هذه الميزة قريباً."
+    alertDeleteAuthRequired:"حذف الحساب يتطلب تسجيل الدخول.",
+    loginBtn:"دخول", loginModalTitle:"تسجيل الدخول",
+    labelEmail:"البريد الإلكتروني", labelPassword:"كلمة المرور",
+    submitLogin:"دخول", loginSuccess:"تم تسجيل الدخول بنجاح!",
+    loginFailed:"البريد الإلكتروني أو كلمة المرور غير صحيحة",
+    forgotPassword:"نسيت كلمة المرور؟",
+    resetPasswordSent:"تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني",
+    orLabel:"أو", noAccount:"ليس لديك حساب؟", registerInstead:"سجّل الآن",
+    hasAccount:"لديك حساب بالفعل؟", loginInstead:"سجّل الدخول",
+    emailConfirmRequired:"تم إرسال رابط التحقق إلى بريدك الإلكتروني. يرجى التحقق من بريدك وتأكيد الحساب قبل تسجيل الدخول.",
+    emailConfirmSent:"تم إرسال رابط التحقق إلى بريدك الإلكتروني. يرجى التحقق من بريدك وتأكيد الحساب.",
+    resendConfirm:"إعادة إرسال رابط التحقق",
+    goToLogin:"الذهاب إلى تسجيل الدخول",
+    accountManage:"إدارة الحساب", accountModalTitle:"إدارة الحساب",
+    accountUpdateSuccess:"تم تحديث حسابك بنجاح!",
+    labelDisplayName:"الاسم", labelNewPassword:"كلمة المرور الجديدة",
+    labelConfirmPassword:"تأكيد كلمة المرور", saveChanges:"حفظ التغييرات",
+    changePassword:"تغيير كلمة المرور", securityLabel:"الأمان",
+    dangerZone:"منطقة الخطر", deleteMyAccount:"حذف حسابي نهائياً",
+    logoutBtn:"خروج", logoutSuccess:"تم تسجيل الخروج",
+    pwdStrengthWeak:"ضعيفة", pwdStrengthFair:"متوسطة", pwdStrengthStrong:"قوية",
+    pwdMinLength:"8 أحرف على الأقل", pwdNeedsUpper:"حرف كبير واحد على الأقل",
+    pwdNeedsLower:"حرف صغير واحد على الأقل", pwdNeedsDigit:"رقم واحد على الأقل",
+    pwdNeedsSymbol:"رمز واحد على الأقل", pwdNoMatch:"كلمتا المرور غير متطابقتين",
+    deleteAccountConfirm:"هل أنت متأكد من حذف حسابك؟ هذا الإجراء لا يمكن التراجع عنه.",
+    emailAlreadyRegistered:"البريد الإلكتروني مستخدم بالفعل",
+    weakPassword:"كلمة المرور ضعيفة جداً"
   },
   en: {
     brand:"Qatra", heroTitle:"Find a blood donor in seconds",
@@ -996,7 +1399,33 @@ const T = {
     alertDeleteConfirm:"Are you sure you want to delete your data? This action cannot be undone.",
     alertDeletePhone:"Enter a valid phone number to delete",
     alertDeleteNotFound:"No account found with this phone number",
-    alertDeleteAuthRequired:"Account deletion requires authentication. This feature will be available soon."
+    alertDeleteAuthRequired:"Account deletion requires authentication.",
+    loginBtn:"Login", loginModalTitle:"Sign In",
+    labelEmail:"Email", labelPassword:"Password",
+    submitLogin:"Sign In", loginSuccess:"Signed in successfully!",
+    loginFailed:"Invalid email or password",
+    forgotPassword:"Forgot password?",
+    resetPasswordSent:"Password reset link sent to your email",
+    orLabel:"or", noAccount:"Don't have an account?", registerInstead:"Register now",
+    hasAccount:"Already have an account?", loginInstead:"Sign in",
+    emailConfirmRequired:"A verification link has been sent to your email. Please verify your account before signing in.",
+    emailConfirmSent:"A verification link has been sent to your email. Please check and confirm your account.",
+    resendConfirm:"Resend verification link",
+    goToLogin:"Go to Sign In",
+    accountManage:"Account", accountModalTitle:"Account Settings",
+    accountUpdateSuccess:"Account updated successfully!",
+    labelDisplayName:"Display name", labelNewPassword:"New password",
+    labelConfirmPassword:"Confirm password", saveChanges:"Save changes",
+    changePassword:"Change password", securityLabel:"Security",
+    dangerZone:"Danger zone", deleteMyAccount:"Delete my account permanently",
+    logoutBtn:"Logout", logoutSuccess:"Signed out successfully",
+    pwdStrengthWeak:"Weak", pwdStrengthFair:"Fair", pwdStrengthStrong:"Strong",
+    pwdMinLength:"At least 8 characters", pwdNeedsUpper:"At least 1 uppercase letter",
+    pwdNeedsLower:"At least 1 lowercase letter", pwdNeedsDigit:"At least 1 digit",
+    pwdNeedsSymbol:"At least 1 symbol", pwdNoMatch:"Passwords do not match",
+    deleteAccountConfirm:"Are you sure you want to delete your account? This action cannot be undone.",
+    emailAlreadyRegistered:"Email is already registered",
+    weakPassword:"Password is too weak"
   },
   fr: {
     brand:"Qatra", heroTitle:"Trouvez un donneur de sang en quelques secondes",
@@ -1073,7 +1502,33 @@ const T = {
     alertDeleteConfirm:"Êtes-vous sûr de vouloir supprimer vos données ? Cette action est irréversible.",
     alertDeletePhone:"Saisissez un numéro de téléphone valide",
     alertDeleteNotFound:"Aucun compte trouvé avec ce numéro",
-    alertDeleteAuthRequired:"La suppression du compte nécessite une authentification. Cette fonctionnalité sera bientôt disponible."
+    alertDeleteAuthRequired:"La suppression du compte nécessite une authentification.",
+    loginBtn:"Connexion", loginModalTitle:"Se connecter",
+    labelEmail:"E-mail", labelPassword:"Mot de passe",
+    submitLogin:"Se connecter", loginSuccess:"Connexion réussie!",
+    loginFailed:"E-mail ou mot de passe invalide",
+    forgotPassword:"Mot de passe oublié?",
+    resetPasswordSent:"Lien de réinitialisation envoyé à votre e-mail",
+    orLabel:"ou", noAccount:"Pas de compte?", registerInstead:"S'inscrire maintenant",
+    hasAccount:"Déjà un compte?", loginInstead:"Se connecter",
+    emailConfirmRequired:"Un lien de vérification a été envoyé à votre e-mail. Veuillez vérifier et confirmer votre compte.",
+    emailConfirmSent:"Un lien de vérification a été envoyé à votre e-mail. Veuillez vérifier et confirmer votre compte.",
+    resendConfirm:"Renvoyer le lien de vérification",
+    goToLogin:"Aller à la connexion",
+    accountManage:"Compte", accountModalTitle:"Paramètres du compte",
+    accountUpdateSuccess:"Compte mis à jour avec succès!",
+    labelDisplayName:"Nom", labelNewPassword:"Nouveau mot de passe",
+    labelConfirmPassword:"Confirmer le mot de passe", saveChanges:"Enregistrer",
+    changePassword:"Changer le mot de passe", securityLabel:"Sécurité",
+    dangerZone:"Zone dangereuse", deleteMyAccount:"Supprimer mon compte définitivement",
+    logoutBtn:"Déconnexion", logoutSuccess:"Déconnecté avec succès",
+    pwdStrengthWeak:"Faible", pwdStrengthFair:"Moyen", pwdStrengthStrong:"Fort",
+    pwdMinLength:"Au moins 8 caractères", pwdNeedsUpper:"Au moins 1 majuscule",
+    pwdNeedsLower:"Au moins 1 minuscule", pwdNeedsDigit:"Au moins 1 chiffre",
+    pwdNeedsSymbol:"Au moins 1 symbole", pwdNoMatch:"Les mots de passe ne correspondent pas",
+    deleteAccountConfirm:"Êtes-vous sûr de vouloir supprimer votre compte? Cette action est irréversible.",
+    emailAlreadyRegistered:"Cet e-mail est déjà utilisé",
+    weakPassword:"Mot de passe trop faible"
   }
 };
 
@@ -1253,13 +1708,15 @@ async function loadDonors() {
 
 async function insertDonor(d) {
   const now = new Date().toISOString();
-  const { error } = await sb.from('donors').insert([{
+  const row = {
     full_name: d.fullName, phone: d.phone, blood_type: d.bloodType, facebook_url: d.facebook || null,
     wilaya_id: parseInt(d.wilayaCode), commune_id: parseInt(d.communeIdx),
     last_donation_date: d.lastDonation || null,
     consent_version: '1.0', consent_date: now, consent_method: 'registration_form',
     privacy_policy_version: '1.0', terms_version: '1.0'
-  }]);
+  };
+  if (d.userId) row.user_id = d.userId;
+  const { error } = await sb.from('donors').insert([row]);
   if (error) throw error;
 }
 
@@ -1476,18 +1933,235 @@ if (openDeleteEl) openDeleteEl.onclick = (e) => {
 document.getElementById('submitDelete').onclick = async () => {
   const phone = document.getElementById('delPhone').value.trim();
   if (!validatePhone(phone)) { alert(t('alertDeletePhone')); return; }
+  if (!currentUser) { alert(t('alertDeleteAuthRequired')); openModal('overlayLogin'); return; }
   if (!confirm(t('alertDeleteConfirm'))) return;
   if (!sb) { alert(t('configWarning')); return; }
   try {
-    const { data, error } = await sb.from('donors').select('id').eq('phone', phone).limit(1);
+    const { data, error } = await sb.from('donors').select('id,user_id').eq('phone', phone).limit(1);
     if (error) throw error;
     if (!data || data.length === 0) { alert(t('alertDeleteNotFound')); return; }
-    alert(t('alertDeleteAuthRequired'));
+    if (data[0].user_id !== currentUser.id) { alert(t('alertDeleteAuthRequired')); return; }
+    await authSoftDelete();
+    document.getElementById('deleteFormWrap').style.display = 'none';
+    document.getElementById('deleteSuccess').style.display = 'block';
+    await loadDonors();
+    document.getElementById('heroCount').textContent = donors.length;
+    renderResults();
   } catch (e) {
     console.error('deleteAccount', e);
     alert(t('errorGeneric'));
   }
 };
+
+/* ===================== AUTH EVENT HANDLERS ===================== */
+document.getElementById('btnLogin').onclick = () => {
+  document.getElementById('loginFormWrap').style.display = 'block';
+  document.getElementById('loginSuccess').style.display = 'none';
+  document.getElementById('loginEmailConfirm').style.display = 'none';
+  document.getElementById('loginEmail').value = '';
+  document.getElementById('loginPassword').value = '';
+  openModal('overlayLogin');
+};
+
+document.getElementById('submitLogin').onclick = async () => {
+  const email = document.getElementById('loginEmail').value.trim();
+  const password = document.getElementById('loginPassword').value;
+  if (!email || !password) { alert(t('alertFillRequired')); return; }
+  if (!sb) { alert(t('configWarning')); return; }
+  const btn = document.getElementById('submitLogin');
+  const orig = btn.textContent;
+  btn.textContent = t('savingText'); btn.disabled = true;
+  try {
+    const data = await authSignIn(email, password);
+    if (data.user && !data.user.confirmed_at) {
+      document.getElementById('loginFormWrap').style.display = 'none';
+      document.getElementById('loginEmailConfirm').style.display = 'block';
+    } else {
+      document.getElementById('loginFormWrap').style.display = 'none';
+      document.getElementById('loginSuccess').style.display = 'block';
+      setTimeout(() => closeModal('overlayLogin'), 1200);
+    }
+  } catch (e) {
+    console.error('login', e);
+    const msg = e.message || '';
+    if (msg.includes('confirmed') || msg.includes('email')) {
+      document.getElementById('loginFormWrap').style.display = 'none';
+      document.getElementById('loginEmailConfirm').style.display = 'block';
+    } else {
+      alert(t('loginFailed'));
+    }
+  } finally {
+    btn.textContent = orig; btn.disabled = false;
+  }
+};
+
+document.getElementById('forgotPasswordBtn').onclick = async () => {
+  const email = document.getElementById('loginEmail').value.trim();
+  if (!email) { alert(t('labelEmail') + ': ' + t('alertFillRequired')); return; }
+  try {
+    await authResetPassword(email);
+    alert(t('resetPasswordSent'));
+  } catch (e) {
+    console.error('resetPassword', e);
+    alert(t('errorGeneric'));
+  }
+};
+
+document.getElementById('resendConfirmBtn').onclick = async () => {
+  const email = document.getElementById('loginEmail').value.trim();
+  if (!email) return;
+  try {
+    await resendConfirmation(email);
+    alert(t('emailConfirmSent'));
+  } catch (e) {
+    console.error('resendConfirm', e);
+    alert(t('errorGeneric'));
+  }
+};
+
+document.getElementById('switchToRegister').onclick = () => {
+  closeModal('overlayLogin');
+  setTimeout(() => document.getElementById('btnRegister').click(), 200);
+};
+
+document.getElementById('switchToLogin').onclick = () => {
+  closeModal('overlayRegister');
+  setTimeout(() => document.getElementById('btnLogin').click(), 200);
+};
+
+document.getElementById('switchToLoginFromConfirm').onclick = () => {
+  closeModal('overlayRegister');
+  setTimeout(() => document.getElementById('btnLogin').click(), 200);
+};
+
+document.getElementById('btnAuthUser').onclick = () => {
+  const dd = document.getElementById('authDropdown');
+  dd.classList.toggle('show');
+};
+document.addEventListener('click', (e) => {
+  const wrap = document.getElementById('authUserWrap');
+  if (wrap && !wrap.contains(e.target)) {
+    document.getElementById('authDropdown').classList.remove('show');
+  }
+});
+
+document.getElementById('authAccountBtn').onclick = () => {
+  document.getElementById('authDropdown').classList.remove('show');
+  if (!currentUser || !currentProfile) return;
+  document.getElementById('accountDisplayName').textContent = currentProfile.display_name || currentUser.email;
+  document.getElementById('accountEmailDisplay').textContent = currentUser.email;
+  document.getElementById('accountEmail').value = currentUser.email;
+  document.getElementById('accountName').value = currentProfile.display_name || '';
+  const s = currentProfile.status;
+  const sBadge = document.getElementById('accountStatusBadge');
+  sBadge.textContent = s === 'ACTIVE' ? 'Active' : s === 'PENDING' ? 'Pending' : s;
+  sBadge.className = 'auth-badge ' + (s === 'ACTIVE' ? 'active' : 'pending');
+  const rBadge = document.getElementById('accountRoleBadge');
+  if (currentProfile.role === 'admin' || currentProfile.role === 'moderator') {
+    rBadge.textContent = currentProfile.role;
+    rBadge.style.display = 'inline-block';
+  } else {
+    rBadge.style.display = 'none';
+  }
+  document.getElementById('accountInfoWrap').style.display = 'block';
+  document.getElementById('accountSuccess').style.display = 'none';
+  document.getElementById('accountNewPwd').value = '';
+  document.getElementById('accountConfirmPwd').value = '';
+  renderPwdStrength('accountPwdStrength', 'accountPwdStrengthText', '');
+  openModal('overlayAccount');
+};
+
+document.getElementById('authLogoutBtn').onclick = async () => {
+  document.getElementById('authDropdown').classList.remove('show');
+  try {
+    await authSignOut();
+    showToast(t('logoutSuccess'));
+  } catch (e) {
+    console.error('logout', e);
+  }
+};
+
+document.getElementById('submitAccountUpdate').onclick = async () => {
+  if (!currentUser) return;
+  const newName = document.getElementById('accountName').value.trim();
+  if (!newName || newName.length < 2) { alert(t('alertInvalidName')); return; }
+  const btn = document.getElementById('submitAccountUpdate');
+  const orig = btn.textContent;
+  btn.textContent = t('savingText'); btn.disabled = true;
+  try {
+    await authUpdateProfile({ display_name: newName });
+    currentProfile.display_name = newName;
+    updateAuthUI();
+    document.getElementById('accountInfoWrap').style.display = 'none';
+    document.getElementById('accountSuccess').style.display = 'block';
+  } catch (e) {
+    console.error('updateProfile', e);
+    alert(t('errorGeneric'));
+  } finally {
+    btn.textContent = orig; btn.disabled = false;
+  }
+};
+
+document.getElementById('submitPasswordChange').onclick = async () => {
+  const newPwd = document.getElementById('accountNewPwd').value;
+  const confirmPwd = document.getElementById('accountConfirmPwd').value;
+  if (!newPwd || !confirmPwd) { alert(t('alertFillRequired')); return; }
+  if (newPwd !== confirmPwd) { alert(t('pwdNoMatch')); return; }
+  if (!validatePassword(newPwd)) { alert(t('weakPassword')); return; }
+  const btn = document.getElementById('submitPasswordChange');
+  const orig = btn.textContent;
+  btn.textContent = t('savingText'); btn.disabled = true;
+  try {
+    await authUpdatePassword(newPwd);
+    document.getElementById('accountNewPwd').value = '';
+    document.getElementById('accountConfirmPwd').value = '';
+    renderPwdStrength('accountPwdStrength', 'accountPwdStrengthText', '');
+    alert(t('accountUpdateSuccess'));
+  } catch (e) {
+    console.error('changePassword', e);
+    alert(t('errorGeneric'));
+  } finally {
+    btn.textContent = orig; btn.disabled = false;
+  }
+};
+
+document.getElementById('submitAccountDelete').onclick = async () => {
+  if (!currentUser) return;
+  if (!confirm(t('deleteAccountConfirm'))) return;
+  try {
+    await authSoftDelete();
+    closeModal('overlayAccount');
+    await loadDonors();
+    document.getElementById('heroCount').textContent = donors.length;
+    renderResults();
+    showToast(t('logoutSuccess'));
+  } catch (e) {
+    console.error('accountDelete', e);
+    alert(t('errorGeneric'));
+  }
+};
+
+/* Password toggles */
+document.querySelectorAll('.pwd-toggle').forEach(btn => {
+  btn.onclick = () => {
+    const targetId = btn.dataset.target;
+    const input = document.getElementById(targetId);
+    if (!input) return;
+    const isPassword = input.type === 'password';
+    input.type = isPassword ? 'text' : 'password';
+    btn.textContent = isPassword ? '🔒' : '👁';
+  };
+});
+
+/* Password strength indicators */
+const fPasswordEl = document.getElementById('fPassword');
+if (fPasswordEl) fPasswordEl.addEventListener('input', function() {
+  renderPwdStrength('pwdStrength', 'pwdStrengthText', this.value);
+});
+const accountNewPwdEl = document.getElementById('accountNewPwd');
+if (accountNewPwdEl) accountNewPwdEl.addEventListener('input', function() {
+  renderPwdStrength('accountPwdStrength', 'accountPwdStrengthText', this.value);
+});
 
 document.getElementById('brandAbout').onclick = () => {
   const countEl = document.getElementById('aboutDonorCount');
@@ -1501,6 +2175,7 @@ document.getElementById('aboutRegisterBtn').onclick = () => {
 document.getElementById('btnRegister').onclick = () => {
   document.getElementById('registerFormWrap').style.display = 'block';
   document.getElementById('registerSuccess').style.display = 'none';
+  document.getElementById('registerEmailConfirm').style.display = 'none';
   populateWilayaSelects();
   openModal('overlayRegister');
 };
@@ -1551,6 +2226,8 @@ function validateLastDonation(s, never) {
 
 /* ===================== REGISTER SUBMIT ===================== */
 document.getElementById('submitRegister').onclick = async () => {
+  const email = document.getElementById('fEmail').value.trim();
+  const password = document.getElementById('fPassword').value;
   const name = document.getElementById('fName').value.trim();
   const phone = document.getElementById('fPhone').value.trim();
   const bloodType = document.getElementById('fType').value;
@@ -1560,7 +2237,7 @@ document.getElementById('submitRegister').onclick = async () => {
   const lastDonation = never ? '' : document.getElementById('fLastDonation').value;
   const facebook = document.getElementById('fFacebook').value.trim();
 
-  if (!name || !phone || !bloodType || !wilayaCode || !communeIdx) { alert(t('alertFillRequired')); return; }
+  if (!email || !password || !name || !phone || !bloodType || !wilayaCode || !communeIdx) { alert(t('alertFillRequired')); return; }
   if (!sb) { alert(t('configWarning')); return; }
   if (!document.getElementById('fConsentPrivacy').checked || !document.getElementById('fConsentTerms').checked || !document.getElementById('fConsent').checked) { alert(t('alertConsentRequired')); return; }
 
@@ -1569,23 +2246,33 @@ document.getElementById('submitRegister').onclick = async () => {
   if (!validateName(name)) { alert(t('alertInvalidName') || 'Invalid name: 2-100 characters, no special characters'); return; }
   if (!validatePhone(phone)) { alert(t('alertInvalidPhone') || 'Invalid phone: must be 05/06/07 followed by 8 digits'); return; }
   if (!VALID_BLOOD.includes(bloodType)) { alert(t('alertFillRequired')); return; }
-  if (!validateFacebook(facebook)) { alert(t('alertInvalidFacebook') || 'Invalid Facebook URL: must start with https://facebook.com/ or https://fb.com/'); return; }
+  if (!validateFacebook(facebook)) { alert(t('alertInvalidFacebook') || 'Invalid Facebook URL'); return; }
   if (!validateLastDonation(lastDonation, never)) { alert(t('alertInvalidDate') || 'Last donation date cannot be in the future'); return; }
+  if (!validatePassword(password)) { alert(t('weakPassword') || 'Password must be 8+ chars with 2+ of: uppercase, lowercase, digit, symbol'); return; }
 
   const btn = document.getElementById('submitRegister');
   const orig = btn.textContent;
   btn.textContent = t('savingText'); btn.disabled = true;
 
   try {
-    await insertDonor({ fullName: name, phone, bloodType, wilayaCode, communeIdx, lastDonation, facebook });
+    const authData = await authSignUp(email, password, { name, display_name: name, phone });
+    const userId = authData.user ? authData.user.id : null;
+    await insertDonor({
+      fullName: name, phone, bloodType, wilayaCode, communeIdx, lastDonation, facebook,
+      userId: userId
+    });
     markAction('register');
     await loadDonors();
     document.getElementById('registerFormWrap').style.display = 'none';
-    document.getElementById('registerSuccess').style.display = 'block';
-    document.getElementById('totalAfter').textContent = donors.length;
+    if (authData.user && authData.user.identities && authData.user.identities.length > 0 && !authData.session) {
+      document.getElementById('registerEmailConfirm').style.display = 'block';
+    } else {
+      document.getElementById('registerSuccess').style.display = 'block';
+      document.getElementById('totalAfter').textContent = donors.length;
+    }
     document.getElementById('heroCount').textContent = donors.length;
     renderResults();
-    ['fName','fPhone'].forEach(id => document.getElementById(id).value = '');
+    ['fEmail','fPassword','fName','fPhone'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
     document.getElementById('fType').value = '';
     document.getElementById('fWilaya').value = '';
     document.getElementById('fCommune').value = '';
@@ -1594,8 +2281,20 @@ document.getElementById('submitRegister').onclick = async () => {
     document.getElementById('fNeverDonated').checked = false;
     document.getElementById('fLastDonation').disabled = false;
     document.getElementById('fFacebook').value = '';
+    document.getElementById('fConsentPrivacy').checked = false;
+    document.getElementById('fConsentTerms').checked = false;
+    document.getElementById('fConsent').checked = false;
+    renderPwdStrength('pwdStrength', 'pwdStrengthText', '');
   } catch (e) {
-    console.error(e); alert(t('errorGeneric'));
+    console.error(e);
+    const msg = e.message || '';
+    if (msg.includes('already') || msg.includes('registered')) {
+      alert(t('emailAlreadyRegistered'));
+    } else if (msg.includes('weak') || msg.includes('password')) {
+      alert(t('weakPassword'));
+    } else {
+      alert(t('errorGeneric'));
+    }
   } finally {
     btn.textContent = orig; btn.disabled = false;
   }
